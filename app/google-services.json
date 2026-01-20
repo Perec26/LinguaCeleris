@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "9852635098",
+    "project_id": "lingua-celeris",
+    "storage_bucket": "lingua-celeris.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9852635098:android:d073b710c8c28e6bf322e3",
+        "android_client_info": {
+          "package_name": "com.linguaceleris"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Ukw-qDAkF3r8w0M9kNvQLqm6L_1NMsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
