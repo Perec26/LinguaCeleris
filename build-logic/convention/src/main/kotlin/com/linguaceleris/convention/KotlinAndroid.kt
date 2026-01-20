@@ -12,16 +12,13 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
 
 internal fun Project.configureKotlinAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    commonExtension: CommonExtension,
 ) {
     commonExtension.apply {
         compileSdk = libs.findVersionInt("compileSdk")
 
-        defaultConfig {
-            minSdk = libs.findVersionInt("minSdk")
-        }
-
-        compileOptions {
+        defaultConfig.minSdk = libs.findVersionInt("minSdk")
+        compileOptions.apply {
             sourceCompatibility = JavaVersion.VERSION_21
             targetCompatibility = JavaVersion.VERSION_21
         }

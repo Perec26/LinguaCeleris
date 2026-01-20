@@ -12,8 +12,10 @@ import org.gradle.kotlin.dsl.configure
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            apply(plugin = "com.android.library")
+            //TODO: убрать после того как обновиться хилт для работы с градл 9
             apply(plugin = "org.jetbrains.kotlin.android")
+
+            apply(plugin = "com.android.library")
             apply(plugin = "linguaceleris.ktlint")
 
             extensions.configure<LibraryExtension> {
