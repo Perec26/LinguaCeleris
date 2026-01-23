@@ -11,7 +11,7 @@ espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.2"
 composeBom = "2026.01.00"
-hiltAndroid = "2.58"
+hiltAndroid = "2.59"
 hiltNavigationCompose = "1.3.0"
 serialization = "1.9.0"
 firebaseBom = "34.8.0"
@@ -22,12 +22,17 @@ lifecycleViewmodelNav3 = "2.10.0"
 kotlinSerialization = "2.1.21"
 kotlinxSerializationCore = "1.8.1"
 material3AdaptiveNav3 = "1.3.0-alpha06"
+turbine = "1.2.1"
+junitJupiter = "6.0.2"
+kotest = "6.1.0"
+mock = "1.14.7"
+coroutinesTest = "1.10.2"
 
 kotlinPlugin = "2.3.0"
 ktlintGradlePlugin = "14.0.1"
 ktlintPlugin = "14.0.1"
-hiltPlugin = "2.58"
-kspPlugin = "2.3.3"
+hiltPlugin = "2.59"
+kspPlugin = "2.3.4"
 firebasePlugin = "4.4.4"
 crashlyticsPlugin = "3.0.6"
 
@@ -73,6 +78,14 @@ androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", vers
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
 androidx-material3-adaptive-navigation3 = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation3", version.ref = "material3AdaptiveNav3" }
 
+# Tests
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+kotest = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotest" }
+kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mock" }
+
 #build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinPlugin" }
@@ -90,6 +103,7 @@ devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugin" }
 firebase = { id = "com.google.gms.google-services", version.ref = "firebasePlugin" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsPlugin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 
 
 #Project plugins
@@ -97,4 +111,7 @@ linguaceleris-android-application = { id = "linguaceleris.android.application", 
 linguaceleris-android-application-compose = { id = "linguaceleris.android.application.compose", version = "unspecified" }
 linguaceleris-android-library = { id = "linguaceleris.android.library", version = "unspecified" }
 linguaceleris-android-library-compose = { id = "linguaceleris.android.library.compose", version = "unspecified" }
+linguaceleris-android-feature = { id = "linguaceleris.android.feature", version = "unspecified" }
+linguaceleris-unittest = { id = "linguaceleris.unittest", version = "unspecified" }
+linguaceleris-hilt = { id = "linguaceleris.hilt", version = "unspecified" }
 

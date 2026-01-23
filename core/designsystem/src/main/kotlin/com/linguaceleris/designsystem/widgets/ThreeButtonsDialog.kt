@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.linguaceleris.designsystem.theme.LCTheme
+import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @Composable
 fun ThreeButtonsDialog(
@@ -87,7 +87,7 @@ fun ThreeButtonsDialog(
 @PreviewLightDark
 @Composable
 private fun ThreeButtonsDialogPreview() {
-    LCTheme {
+    LinguaCelerisTheme {
         ThreeButtonsDialog(
             title = "Dialog title",
             description = "Dialog description",

@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.linguaceleris.designsystem.theme.LCTheme
+import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @Composable
 fun DefaultDialog(
@@ -39,7 +39,7 @@ fun DefaultDialog(
 @PreviewLightDark
 @Composable
 private fun DefaultDialogPreview() {
-    LCTheme {
+    LinguaCelerisTheme {
         DefaultDialog(
             onDismissRequest = {},
         ) {

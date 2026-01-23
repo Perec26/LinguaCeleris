@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.linguaceleris.designsystem.theme.LCTheme
+import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @Composable
 fun CheckBoxWithText(
@@ -42,7 +42,7 @@ fun CheckBoxWithText(
 @PreviewLightDark
 @Composable
 private fun CheckBoxWithTextPreview() {
-    LCTheme {
+    LinguaCelerisTheme {
         Column {
             CheckBoxWithText(isChecked = true, text = "CheckBox checked") {}
             CheckBoxWithText(isChecked = false, text = "CheckBox unchecked") {}

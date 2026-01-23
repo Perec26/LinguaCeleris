@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import com.linguaceleris.designsystem.theme.LCTheme
+import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @Composable
 fun DefaultFilledButton(
@@ -52,7 +52,7 @@ fun DefaultTextButton(
 @PreviewLightDark
 @Composable
 private fun ButtonsPreview() {
-    LCTheme {
+    LinguaCelerisTheme {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             DefaultFilledButton(text = "Text") {}
             DefaultTextButton(text = "Text") {}

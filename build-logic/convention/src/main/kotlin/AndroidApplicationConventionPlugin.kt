@@ -15,10 +15,6 @@ import org.gradle.kotlin.dsl.dependencies
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-
-            //TODO: убрать после того как обновиться хилт для работы с градл 9
-            apply(plugin = "org.jetbrains.kotlin.android")
-
             apply(plugin = "com.android.application")
             apply(plugin = "linguaceleris.ktlint")
             apply(plugin = "linguaceleris.hilt")
