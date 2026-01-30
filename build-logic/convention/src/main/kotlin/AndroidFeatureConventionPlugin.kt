@@ -13,20 +13,22 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             apply(plugin = "linguaceleris.android.library.compose")
             apply(plugin = "linguaceleris.hilt")
             apply(plugin = "linguaceleris.unittest")
+            apply(plugin = "linguaceleris.ktlint")
             apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
 
             dependencies {
                 // TODO: проверить все ли библиотеки навигации нужны
-                add("implementation", libs.findLibraryString("androidx.navigation3.runtime"))
-                add("implementation", libs.findLibraryString("androidx.navigation3.ui"))
-                add("implementation", libs.findLibraryString("androidx.lifecycle.viewmodel.navigation3"))
-                add("implementation", libs.findLibraryString("androidx.material3.adaptive.navigation3"))
+                "implementation"(libs.findLibraryString("androidx.navigation3.runtime"))
+                "implementation"(libs.findLibraryString("androidx.navigation3.ui"))
+                "implementation"(libs.findLibraryString("androidx.lifecycle.viewmodel.navigation3"))
+                "implementation"(libs.findLibraryString("androidx.material3.adaptive.navigation3"))
 
-                add("implementation", libs.findLibraryString("androidx.hilt.navigation.compose"))
-                add("debugImplementation", libs.findLibraryString("androidx.ui.tooling"))
-                add("implementation", libs.findLibraryString("kotlinx.serialization.json"))
-                add("implementation", project(":core:designsystem"))
-                add("implementation", project(":core:ui"))
+                "implementation"(libs.findLibraryString("androidx.hilt.navigation.compose"))
+                "debugImplementation"(libs.findLibraryString("androidx.ui.tooling"))
+                "implementation"(libs.findLibraryString("kotlinx.serialization.json"))
+                "implementation"(project(":core:designsystem"))
+                "implementation"(project(":core:ui"))
+                "implementation"(project(":core:navigation"))
             }
         }
     }

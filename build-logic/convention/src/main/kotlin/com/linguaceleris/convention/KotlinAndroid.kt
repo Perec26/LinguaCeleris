@@ -3,6 +3,7 @@ package com.linguaceleris.convention
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -10,10 +11,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinBaseExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
-
-internal fun Project.configureKotlinAndroid(
-    commonExtension: CommonExtension,
-) {
+internal fun Project.configureKotlinAndroid(commonExtension: CommonExtension) {
     commonExtension.apply {
         compileSdk = libs.findVersionInt("compileSdk")
 
@@ -25,7 +23,6 @@ internal fun Project.configureKotlinAndroid(
     }
 
     configureKotlin<KotlinAndroidProjectExtension>()
-
 }
 
 private inline fun <reified T : KotlinBaseExtension> Project.configureKotlin() = configure<T> {
@@ -36,4 +33,13 @@ private inline fun <reified T : KotlinBaseExtension> Project.configureKotlin() =
     }.apply {
         jvmTarget = JvmTarget.JVM_21
     }
+}
+
+internal fun Project.configureKotlinJvm() {
+    extensions.configure<JavaPluginExtension> {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    configureKotlin<KotlinJvmProjectExtension>()
 }

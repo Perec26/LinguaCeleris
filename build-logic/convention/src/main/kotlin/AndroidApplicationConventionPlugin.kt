@@ -11,16 +11,15 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
-
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             apply(plugin = "com.android.application")
-            apply(plugin = "linguaceleris.ktlint")
-            apply(plugin = "linguaceleris.hilt")
             apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
             apply(plugin = "com.google.gms.google-services")
             apply(plugin = "com.google.firebase.crashlytics")
+            apply(plugin = "linguaceleris.ktlint")
+            apply(plugin = "linguaceleris.hilt")
 
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
@@ -28,15 +27,15 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                add("implementation", libs.findLibraryString("androidx.core.ktx"))
-                add("implementation", platform(libs.findLibraryString("firebase.bom")))
-                add("implementation", libs.findLibraryString("firebase.crashlytics"))
+                "implementation"(libs.findLibraryString("androidx.core.ktx"))
+                "implementation"(platform(libs.findLibraryString("firebase.bom")))
+                "implementation"(libs.findLibraryString("firebase.crashlytics"))
                 // TODO: проверить все ли библиотеки навигации нужны
-                add("implementation",libs.findLibraryString("kotlinx.serialization.json"))
-                add("implementation", libs.findLibraryString("androidx.navigation3.runtime"))
-                add("implementation", libs.findLibraryString("androidx.navigation3.ui"))
-                add("implementation", libs.findLibraryString("androidx.lifecycle.viewmodel.navigation3"))
-                add("implementation", libs.findLibraryString("androidx.material3.adaptive.navigation3"))
+                "implementation"(libs.findLibraryString("kotlinx.serialization.json"))
+                "implementation"(libs.findLibraryString("androidx.navigation3.runtime"))
+                "implementation"(libs.findLibraryString("androidx.navigation3.ui"))
+                "implementation"(libs.findLibraryString("androidx.lifecycle.viewmodel.navigation3"))
+                "implementation"(libs.findLibraryString("androidx.material3.adaptive.navigation3"))
             }
         }
     }

@@ -18,11 +18,11 @@ class UnitTestConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                add("testImplementation", libs.findLibraryString("kotest"))
-                add("testImplementation", libs.findLibraryString("mockk"))
-                add("testImplementation", libs.findLibraryString("coroutines.test"))
-                add("testImplementation", libs.findLibraryString("kotest.assertions.core"))
-                add("testImplementation", libs.findLibraryString("turbine"))
+                "testImplementation"(libs.findLibraryString("kotest"))
+                "testImplementation"(libs.findLibraryString("mockk"))
+                "testImplementation"(libs.findLibraryString("coroutines.test"))
+                "testImplementation"(libs.findLibraryString("kotest.assertions.core"))
+                "testImplementation"(libs.findLibraryString("turbine"))
             }
         }
     }

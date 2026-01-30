@@ -11,11 +11,11 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 class KtlintConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-
             apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
             extensions.configure<KtlintExtension> {
                 android = true
+
                 reporters {
                     reporter(ReporterType.PLAIN)
                     reporter(ReporterType.CHECKSTYLE)

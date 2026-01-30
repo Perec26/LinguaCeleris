@@ -1,0 +1,15 @@
+package com.linguaceleris.navigation
+
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
+
+class Navigator(
+    startKey: NavKey,
+) {
+
+    val backStack: NavBackStack<NavKey> = NavBackStack(startKey)
+
+    fun navigateTo(destination: NavKey) {
+        backStack.add(destination)
+    }
+}

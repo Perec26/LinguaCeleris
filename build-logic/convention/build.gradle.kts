@@ -49,5 +49,9 @@ gradlePlugin {
             id = "linguaceleris.unittest"
             implementationClass = "UnitTestConventionPlugin"
         }
+        register("featureApi") {
+            id = "linguaceleris.feature.api"
+            implementationClass = "FeatureApiConventionPlugin"
+        }
     }
 }

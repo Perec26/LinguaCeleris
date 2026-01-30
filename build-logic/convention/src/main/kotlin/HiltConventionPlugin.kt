@@ -13,8 +13,8 @@ class HiltConventionPlugin : Plugin<Project> {
             apply(plugin = "com.google.devtools.ksp")
 
             dependencies {
-                add("ksp", libs.findLibraryString("hilt.android.compiler"))
-                add("implementation", libs.findLibraryString("hilt.android"))
+                "ksp"(libs.findLibraryString("hilt.android.compiler"))
+                "implementation"(libs.findLibraryString("hilt.android"))
             }
 
             pluginManager.withPlugin("com.android.base") {

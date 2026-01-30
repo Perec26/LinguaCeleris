@@ -18,7 +18,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -33,9 +33,10 @@ dependencies {
     // Project
     implementation(projects.core.ui)
     implementation(projects.core.designsystem)
-    implementation(projects.feature.start)
-
-
+    implementation(projects.feature.start.impl)
+    implementation(projects.feature.start.api)
+    implementation(projects.feature.login.impl)
+    implementation(projects.core.navigation)
 }
 
 fun getBuildNumber(): Int {

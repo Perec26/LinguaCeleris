@@ -9,24 +9,25 @@ junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.10.0"
-activityCompose = "1.12.2"
-composeBom = "2026.01.00"
+activityCompose = "1.12.3"
+composeBom = "2026.01.01"
 hiltAndroid = "2.59"
 hiltNavigationCompose = "1.3.0"
-serialization = "1.9.0"
+serialization = "1.10.0"
 firebaseBom = "34.8.0"
 lifecycleViewmodelCompose = "2.10.0"
-uiTooling = "1.10.1"
+uiTooling = "1.10.2"
 nav3Core = "1.0.0"
 lifecycleViewmodelNav3 = "2.10.0"
 kotlinSerialization = "2.1.21"
 kotlinxSerializationCore = "1.8.1"
-material3AdaptiveNav3 = "1.3.0-alpha06"
+material3AdaptiveNav3 = "1.3.0-alpha07"
 turbine = "1.2.1"
 junitJupiter = "6.0.2"
-kotest = "6.1.0"
-mock = "1.14.7"
+kotest = "6.1.2"
+mock = "1.14.9"
 coroutinesTest = "1.10.2"
+androidxSavedStateCompose = "1.4.0"
 
 kotlinPlugin = "2.3.0"
 ktlintGradlePlugin = "14.0.1"
@@ -77,6 +78,7 @@ androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runt
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
 androidx-material3-adaptive-navigation3 = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation3", version.ref = "material3AdaptiveNav3" }
+androidx-savedstate-compose = { group = "androidx.savedstate", name = "savedstate-compose", version.ref = "androidxSavedStateCompose" }
 
 # Tests
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
@@ -91,7 +93,6 @@ android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", ver
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinPlugin" }
 compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlinPlugin" }
 ktlint-gradlePlugin = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlintGradlePlugin" }
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -112,6 +113,6 @@ linguaceleris-android-application-compose = { id = "linguaceleris.android.applic
 linguaceleris-android-library = { id = "linguaceleris.android.library", version = "unspecified" }
 linguaceleris-android-library-compose = { id = "linguaceleris.android.library.compose", version = "unspecified" }
 linguaceleris-android-feature = { id = "linguaceleris.android.feature", version = "unspecified" }
+linguaceleris-feature-api = { id = "linguaceleris.feature.api", version = "unspecified" }
 linguaceleris-unittest = { id = "linguaceleris.unittest", version = "unspecified" }
 linguaceleris-hilt = { id = "linguaceleris.hilt", version = "unspecified" }
-
