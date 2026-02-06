@@ -28,7 +28,6 @@ gradlePlugin {
             id = "linguaceleris.android.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
-
         register("ktlint") {
             id = "linguaceleris.ktlint"
             implementationClass = "KtlintConventionPlugin"
@@ -52,6 +51,10 @@ gradlePlugin {
         register("featureApi") {
             id = "linguaceleris.feature.api"
             implementationClass = "FeatureApiConventionPlugin"
+        }
+        register("jvmLibrary") {
+            id = "linguaceleris.jvm.library"
+            implementationClass = "JvmLibraryConventionPlugin"
         }
     }
 }

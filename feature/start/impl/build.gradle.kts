@@ -9,4 +9,5 @@ android {
 dependencies {
     implementation(projects.feature.start.api)
     implementation(projects.feature.login.api)
+    implementation(projects.data.quiz)
 }
