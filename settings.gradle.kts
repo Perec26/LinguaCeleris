@@ -14,6 +14,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -35,3 +36,5 @@ include(":feature:start:api")
 include(":feature:start:impl")
 include(":feature:login:api")
 include(":feature:login:impl")
+include(":feature:quiz:api")
+include(":feature:quiz:impl")

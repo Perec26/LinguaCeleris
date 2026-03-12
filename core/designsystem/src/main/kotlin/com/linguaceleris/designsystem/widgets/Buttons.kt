@@ -23,10 +23,7 @@ fun DefaultFilledButton(
         enabled = isEnable,
         onClick = onClick,
     ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelLarge,
-        )
+        Text(text = text)
     }
 }
 

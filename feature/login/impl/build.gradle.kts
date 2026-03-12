@@ -4,6 +4,7 @@ plugins {
 
 android {
     namespace = "com.linguaceleris.login.impl"
+    resourcePrefix = "login_"
 }
 
 dependencies {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quiz_select_correct_answer">Выбери правильный перевод слова</string>
+    <string name="quiz_matching">Сопоставь слова</string>
+    <string name="quiz_check">Проверить</string>
+    <string name="quiz_continue">Продолжить</string>
+</resources>
