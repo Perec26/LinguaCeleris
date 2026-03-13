@@ -26,6 +26,7 @@ import com.linguaceleris.quiz.impl.ui.model.WordCardUI
 internal fun MatchWidget(
     modifier: Modifier = Modifier,
     task: TaskUI.Matching,
+    onAudioClick: (String?) -> Unit = {},
     onContinueButtonClick: () -> Unit,
     onVariantSelected: (WordCardUI) -> Unit,
 ) {
@@ -53,6 +54,7 @@ internal fun MatchWidget(
                 selectedVariant = task.selectedVariant,
                 correctVariant = task.correctVariant,
                 disabledVariants = task.disabledVariants,
+                onAudioClick = onAudioClick,
                 onVariantSelected = onVariantSelected,
             )
             MatchColumnWidget(
@@ -63,6 +65,7 @@ internal fun MatchWidget(
                 selectedVariant = task.selectedVariant,
                 correctVariant = task.correctVariant,
                 disabledVariants = task.disabledVariants,
+                onAudioClick = onAudioClick,
                 onVariantSelected = onVariantSelected,
             )
         }

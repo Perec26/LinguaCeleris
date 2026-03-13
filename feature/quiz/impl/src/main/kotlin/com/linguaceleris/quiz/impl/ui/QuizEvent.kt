@@ -5,9 +5,12 @@ import com.linguaceleris.quiz.impl.ui.model.WordCardUI
 internal sealed class QuizEvent {
 
     data class SelectAnswer(
-        val variant: WordCardUI
+        val variant: WordCardUI,
     ) : QuizEvent()
 
     data object OnCheckButtonClick : QuizEvent()
     data object OnContinueButtonClick : QuizEvent()
+    data class OnAudioClick(
+        val audio: String?
+    ) : QuizEvent()
 }

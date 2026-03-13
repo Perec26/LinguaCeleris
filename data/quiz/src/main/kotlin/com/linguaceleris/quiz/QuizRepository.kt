@@ -1,5 +1,6 @@
 package com.linguaceleris.quiz
 
+import com.linguaceleris.network.AudioLoadService
 import com.linguaceleris.network.ImageLoadService
 import com.linguaceleris.quiz.dataSource.QuizDataSource
 import com.linguaceleris.quiz.model.QuizDTO
@@ -9,6 +10,7 @@ import javax.inject.Inject
 
 class QuizRepository @Inject constructor(
     private val imageLoadService: ImageLoadService,
+    private val audioLoadService: AudioLoadService,
     private val dataSource: QuizDataSource,
 ) {
 
@@ -18,7 +20,17 @@ class QuizRepository @Inject constructor(
             .map(TaskDTO::data)
             .flatMap(TaskDataDTO::getImages)
         preloadImages(images)
+
+        val audios = quiz.tasks
+            .map(TaskDTO::data)
+            .flatMap(TaskDataDTO::getAudios)
+
+        preloadAudios(audios)
         return quiz
+    }
+
+    private suspend fun preloadAudios(audios: List<String>) {
+        audios.forEach { audioLoadService.loadAudio(it) }
     }
 
     private suspend fun preloadImages(images: List<String>) {

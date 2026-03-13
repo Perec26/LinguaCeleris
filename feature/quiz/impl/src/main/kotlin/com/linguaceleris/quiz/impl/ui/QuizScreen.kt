@@ -75,6 +75,7 @@ private fun Quiz(state: QuizUiState, onEvent: (QuizEvent) -> Unit) {
                 MatchWidget(
                     task = currentTask,
                     onContinueButtonClick = { onEvent(QuizEvent.OnContinueButtonClick) },
+                    onAudioClick = { onEvent(QuizEvent.OnAudioClick(it)) },
                     onVariantSelected = { variant -> onEvent(QuizEvent.SelectAnswer(variant)) },
                 )
             }

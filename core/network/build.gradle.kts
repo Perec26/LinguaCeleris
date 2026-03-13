@@ -13,4 +13,5 @@ dependencies {
     api(libs.firebase.firestore)
     api(libs.kotlinx.serialization.json)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.androidx.media3)
 }

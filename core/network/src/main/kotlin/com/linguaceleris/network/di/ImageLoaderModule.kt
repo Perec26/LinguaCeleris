@@ -12,11 +12,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ImageLoaderModule {
+class ImageLoaderModule {
 
     @Provides
     @Singleton
-    fun provideImageLoader(@ApplicationContext context: Context,): ImageLoader =
+    fun provideImageLoader(@ApplicationContext context: Context): ImageLoader =
         ImageLoader.Builder(context)
             .crossfade(true)
             .build()

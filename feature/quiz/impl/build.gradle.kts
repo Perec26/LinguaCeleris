@@ -8,6 +8,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.media3)
+    implementation(projects.core.media)
     implementation(projects.data.quiz)
     implementation(projects.feature.quiz.api)
 }

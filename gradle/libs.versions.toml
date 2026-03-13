@@ -30,6 +30,7 @@ coroutinesTest = "1.10.2"
 androidxSavedStateCompose = "1.4.0"
 splashScreen = "1.2.0"
 coil = "3.4.0"
+media3 = "1.9.2"
 
 ktlint = "14.1.0"
 kspPlugin = "2.3.6"
@@ -74,9 +75,12 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashScreen" }
 
-#Images
+# Images
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+
+# Media
+androidx-media3 = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
 
 # Navigation
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }

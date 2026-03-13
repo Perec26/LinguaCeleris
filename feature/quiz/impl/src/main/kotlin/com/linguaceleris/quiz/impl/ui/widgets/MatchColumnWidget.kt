@@ -23,6 +23,7 @@ internal fun MatchColumnWidget(
     errorVariant: WordCardUI? = null,
     variants: List<WordCardUI>,
     disabledVariants: List<WordCardUI> = emptyList(),
+    onAudioClick: (String?) -> Unit = {},
     onVariantSelected: (WordCardUI) -> Unit,
 ) {
     Column(
@@ -42,7 +43,10 @@ internal fun MatchColumnWidget(
                 state = state,
                 enabled = !disabledVariants.contains(variant) && !hasError,
                 text = variant.text,
-                onClick = { onVariantSelected(variant) },
+                onClick = {
+                    onAudioClick(variant.audio)
+                    onVariantSelected(variant)
+                },
             )
         }
     }
