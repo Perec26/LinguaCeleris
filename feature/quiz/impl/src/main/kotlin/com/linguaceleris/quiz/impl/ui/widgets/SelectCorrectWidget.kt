@@ -4,21 +4,25 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 import com.linguaceleris.designsystem.widgets.CardState
 import com.linguaceleris.designsystem.widgets.DefaultFilledButton
@@ -26,6 +30,7 @@ import com.linguaceleris.designsystem.widgets.LCCardWithText
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.ui.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.model.WordCardUI
+import com.linguaceleris.quiz.impl.ui.selectCorrectAnswerImageMock
 import com.linguaceleris.quiz.impl.ui.selectCorrectAnswerMock
 
 @Composable
@@ -45,12 +50,24 @@ internal fun SelectCorrectWidget(
             text = stringResource(task.text),
         )
 
-        Text(
-            modifier = Modifier.padding(16.dp),
-            text = task.question.text,
-            color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.headlineLarge,
-        )
+        if (task.question.image != null) {
+            AsyncImage(
+                modifier = Modifier
+                    .padding(horizontal = 48.dp)
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .clip(RoundedCornerShape(48.dp)),
+                model = task.question.image,
+                contentDescription = null,
+            )
+        } else {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = task.question.text,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.headlineLarge,
+            )
+        }
 
         Box(
             modifier = Modifier.weight(1f),
@@ -121,11 +138,11 @@ private fun SelectCorrectWidgetPreview() {
 
 @PreviewLightDark
 @Composable
-private fun SelectCorrectWidgetTestPreview() {
+private fun SelectCorrectWidgetImagePreview() {
     LinguaCelerisTheme {
         Surface {
             SelectCorrectWidget(
-                task = selectCorrectAnswerMock,
+                task = selectCorrectAnswerImageMock,
             ) {}
         }
     }

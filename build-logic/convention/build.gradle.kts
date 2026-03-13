@@ -36,10 +36,6 @@ gradlePlugin {
             id = "linguaceleris.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
-        register("androidFeature") {
-            id = "linguaceleris.android.feature"
-            implementationClass = "AndroidFeatureConventionPlugin"
-        }
         register("androidLibraryCompose") {
             id = "linguaceleris.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
@@ -51,6 +47,10 @@ gradlePlugin {
         register("featureApi") {
             id = "linguaceleris.feature.api"
             implementationClass = "FeatureApiConventionPlugin"
+        }
+        register("featureImpl") {
+            id = "linguaceleris.feature.impl"
+            implementationClass = "FeatureImplConventionPlugin"
         }
         register("jvmLibrary") {
             id = "linguaceleris.jvm.library"

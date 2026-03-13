@@ -1,14 +1,17 @@
 package com.linguaceleris.quiz.impl.ui.model
 
 import androidx.annotation.StringRes
-import com.linguaceleris.quiz.impl.R
 
 sealed class TaskUI {
     @get:StringRes
     abstract val text: Int
 
+    @get:StringRes
+    abstract val info: Int
+
     data class SelectCorrectAnswer(
-        override val text: Int = R.string.quiz_select_correct_answer,
+        override val text: Int,
+        override val info: Int,
         val question: WordCardUI,
         val correctAnswer: WordCardUI,
         val answerVariants: List<WordCardUI>,
@@ -17,7 +20,8 @@ sealed class TaskUI {
     ) : TaskUI()
 
     data class Matching(
-        override val text: Int = R.string.quiz_matching,
+        override val text: Int,
+        override val info: Int,
         val pairs: List<MatchingPairUI>,
         val originalVariants: List<WordCardUI> = emptyList(),
         val translationVariants: List<WordCardUI> = emptyList(),

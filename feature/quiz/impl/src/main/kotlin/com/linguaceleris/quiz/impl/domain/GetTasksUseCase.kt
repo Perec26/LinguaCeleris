@@ -14,8 +14,8 @@ class GetTasksUseCase @Inject constructor(
         val quiz = repository.getQuiz()
         val tasks = quiz?.tasks?.toUi() ?: emptyList()
         if (tasks.size < TASK_REQUIRED_NUMBER) {
-            return tasks + (quiz?.extraPool?.toUi() ?: emptyList())
+            return (tasks + (quiz?.extraPool?.toUi() ?: emptyList())).shuffled()
         }
-        return tasks
+        return tasks.shuffled()
     }
 }

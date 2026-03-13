@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.linguaceleris.android.feature)
+    alias(libs.plugins.linguaceleris.feature.impl)
 }
 
 android {

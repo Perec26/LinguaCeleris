@@ -7,7 +7,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.dependencies
 
-class AndroidFeatureConventionPlugin : Plugin<Project> {
+class FeatureImplConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             apply(plugin = "linguaceleris.android.library.compose")
@@ -26,6 +26,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 "implementation"(libs.findLibraryString("androidx.hilt.navigation.compose"))
                 "debugImplementation"(libs.findLibraryString("androidx.ui.tooling"))
                 "implementation"(libs.findLibraryString("kotlinx.serialization.json"))
+                "implementation"(libs.findLibraryString("coil.compose"))
                 "implementation"(project(":core:designsystem"))
                 "implementation"(project(":core:ui"))
                 "implementation"(project(":core:navigation"))

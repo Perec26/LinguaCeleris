@@ -4,35 +4,35 @@ targetSdk = "36"
 compileSdk = "36"
 agp = "9.1.0"
 kotlin = "2.3.10"
-coreKtx = "1.17.0"
+coreKtx = "1.18.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.10.0"
-activityCompose = "1.12.4"
-composeBom = "2026.02.00"
-hilt = "2.59.1"
+activityCompose = "1.13.0"
+composeBom = "2026.03.00"
+hilt = "2.59.2"
 hiltNavigationCompose = "1.3.0"
 serialization = "1.10.0"
-firebaseBom = "34.9.0"
+firebaseBom = "34.10.0"
 lifecycleViewmodelCompose = "2.10.0"
-uiTooling = "1.10.3"
+uiTooling = "1.10.5"
 nav3Core = "1.0.1"
 lifecycleViewmodelNav3 = "2.10.0"
 kotlinSerialization = "2.1.21"
 kotlinxSerializationCore = "1.8.1"
-material3AdaptiveNav3 = "1.3.0-alpha08"
+material3AdaptiveNav3 = "1.3.0-alpha09"
 turbine = "1.2.1"
-junitJupiter = "6.0.2"
-kotest = "6.1.3"
+junitJupiter = "6.0.3"
+kotest = "6.1.6"
 mock = "1.14.9"
 coroutinesTest = "1.10.2"
 androidxSavedStateCompose = "1.4.0"
 splashScreen = "1.2.0"
+coil = "3.4.0"
 
-ktlintGradlePlugin = "14.0.1"
-ktlintPlugin = "14.0.1"
-kspPlugin = "2.3.4"
+ktlint = "14.1.0"
+kspPlugin = "2.3.6"
 firebasePlugin = "4.4.4"
 crashlyticsPlugin = "3.0.6"
 
@@ -74,6 +74,10 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashScreen" }
 
+#Images
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+
 # Navigation
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
@@ -93,13 +97,13 @@ mockk = { group = "io.mockk", name = "mockk", version.ref = "mock" }
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
-ktlint-gradlePlugin = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlintGradlePlugin" }
+ktlint-gradlePlugin = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlint" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
@@ -107,14 +111,13 @@ firebase = { id = "com.google.gms.google-services", version.ref = "firebasePlugi
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsPlugin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 
-
 #Project plugins
 linguaceleris-android-application = { id = "linguaceleris.android.application", version = "unspecified" }
 linguaceleris-android-application-compose = { id = "linguaceleris.android.application.compose", version = "unspecified" }
 linguaceleris-android-library = { id = "linguaceleris.android.library", version = "unspecified" }
 linguaceleris-android-library-compose = { id = "linguaceleris.android.library.compose", version = "unspecified" }
-linguaceleris-android-feature = { id = "linguaceleris.android.feature", version = "unspecified" }
 linguaceleris-feature-api = { id = "linguaceleris.feature.api", version = "unspecified" }
+linguaceleris-feature-impl = { id = "linguaceleris.feature.impl", version = "unspecified" }
 linguaceleris-unittest = { id = "linguaceleris.unittest", version = "unspecified" }
 linguaceleris-hilt = { id = "linguaceleris.hilt", version = "unspecified" }
 linguaceleris-ktlint = { id = "linguaceleris.ktlint", version = "unspecified" }

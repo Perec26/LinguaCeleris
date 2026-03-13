@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.coil.compose)
 
     // Project
     implementation(projects.core.ui)

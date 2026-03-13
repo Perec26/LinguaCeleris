@@ -10,4 +10,5 @@ android {
 
 dependencies {
     implementation(projects.core.network)
+    implementation(libs.coil.network.okhttp)
 }

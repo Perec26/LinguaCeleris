@@ -12,4 +12,5 @@ dependencies {
     api(platform(libs.firebase.bom))
     api(libs.firebase.firestore)
     api(libs.kotlinx.serialization.json)
+    implementation(libs.coil.network.okhttp)
 }

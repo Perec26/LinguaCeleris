@@ -4,4 +4,26 @@
     <string name="quiz_matching">Сопоставь слова</string>
     <string name="quiz_check">Проверить</string>
     <string name="quiz_continue">Продолжить</string>
+    <string name="quiz_short_select_translation">Выбери правильный перевод слова.</string>
+    <string name="quiz_long_select_translation">Смотри на слово в вопросе и выбери его точный перевод из вариантов. Обрати внимание на смысл, а не на похожее написание.</string>
+    <string name="quiz_short_listen_select_translation">Прослушай слово и выбери правильный перевод.</string>
+    <string name="quiz_long_listen_select_translation">Нажми на аудио в вопросе, внимательно послушай произношение и выбери правильный перевод из вариантов ответа.</string>
+    <string name="quiz_short_matching">Сопоставь слова и переводы.</string>
+    <string name="quiz_long_matching">Соедини каждое слово с его правильным переводом. Проверь все пары, чтобы не осталось лишних или неверных совпадений.</string>
+    <string name="quiz_short_audio_matching">Сопоставь слова и переводы по аудио.</string>
+    <string name="quiz_long_audio_matching">Ориентируйся на звук в парах: прослушай элементы и сопоставь слово с правильным переводом.</string>
+    <string name="quiz_short_homophones">Выбери правильное слово-омофон по переводу.</string>
+    <string name="quiz_long_homophones">В вопросе дан перевод, а варианты звучат похоже. Выбери именно то слово, которое соответствует переводу.</string>
+    <string name="quiz_short_find_correct">Найди слово с правильным написанием.</string>
+    <string name="quiz_long_find_correct">Варианты содержат похожие написания. Выбери единственный вариант без орфографической ошибки.</string>
+    <string name="quiz_short_fill_in_blank">Выбери слово, которое подходит в предложение.</string>
+    <string name="quiz_long_fill_in_blank">Прочитай предложение и выбери вариант, который лучше всего подходит по смыслу и грамматике.</string>
+    <string name="quiz_short_synonym_choice">Выбери синоним слова.</string>
+    <string name="quiz_long_synonym_choice">Найди вариант, который ближе всего по значению к слову в вопросе.</string>
+    <string name="quiz_short_antonym_choice">Выбери антоним слова.</string>
+    <string name="quiz_long_antonym_choice">Найди вариант с противоположным значением по отношению к слову в вопросе.</string>
+    <string name="quiz_short_image_select_word">Выбери слово, которое соответствует картинке.</string>
+    <string name="quiz_long_image_select_word">Посмотри на изображение и выбери слово, которое точнее всего описывает то, что показано на картинке.</string>
+    <string name="quiz_short_unknown">Что-то пошло не так</string>
+    <string name="quiz_long_unknown">Что-то пошло не так</string>
 </resources>
