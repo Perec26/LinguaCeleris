@@ -1,7 +1,7 @@
 package com.linguaceleris.quiz.impl.ui
 
-import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.ui.model.MatchingPairUI
+import com.linguaceleris.quiz.impl.ui.model.TaskTypeUI
 import com.linguaceleris.quiz.impl.ui.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.model.WordCardUI
 
@@ -25,23 +25,31 @@ internal val matchingMock = TaskUI.Matching(
         MatchingPairUI(first, second)
     },
     selectedVariant = WordCardUI(audio = "audio", text = "bat"),
-    text = R.string.quiz_short_matching,
-    info = R.string.quiz_long_matching,
+    type = TaskTypeUI.Matching,
 )
 
 internal val selectCorrectAnswerMock = TaskUI.SelectCorrectAnswer(
-    question = WordCardUI(audio = "audio", text = "кошка"),
+    question = WordCardUI(audio = "audio", text = "Кошка"),
     correctAnswer = WordCardUI(audio = "audio", text = "cat"),
     selectedVariant = WordCardUI(audio = "audio", text = "bat"),
     answerVariants = fourEnVariantsMock,
-    text = R.string.quiz_short_select_translation,
-    info = R.string.quiz_long_select_translation,
+    type = TaskTypeUI.SelectTranslationEn,
 )
 
-internal val selectCorrectAnswerImageMock = selectCorrectAnswerMock.copy(
+internal val fillInBlankMock = selectCorrectAnswerMock.copy(
+    question = WordCardUI(audio = "audio", text = "I have a cat"),
+    type = TaskTypeUI.FillInBlank,
+)
+
+internal val listenSelectTranslationMock = selectCorrectAnswerMock.copy(
+    question = WordCardUI(audio = "audio", text = "I have a cat"),
+    type = TaskTypeUI.ListenSelectTranslation,
+)
+
+internal val imageSelectWordTranslation = selectCorrectAnswerMock.copy(
     question = WordCardUI(audio = "audio", text = "кошка", image = "image"),
+    type = TaskTypeUI.ImageSelectWordTranslation,
 )
-
 internal val quizStateMock = QuizUiState(
     tasks = listOf(selectCorrectAnswerMock),
     screenState = ScreenState.CONTENT,

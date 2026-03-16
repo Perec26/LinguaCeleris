@@ -25,7 +25,6 @@ fun RowWithMoreElement(
     onElementsCounted: (Int) -> Unit = {},
     elements: @Composable () -> Unit,
 ) {
-
     val dividers = @Composable {
         repeat(50) {
             divider()
@@ -107,11 +106,7 @@ private fun GetPreviewElement(
 }
 
 @Composable
-private fun PreviewElement(
-    index: Int,
-    textColor: Color,
-    backgroundColor: Color,
-) {
+private fun PreviewElement(index: Int, textColor: Color, backgroundColor: Color,) {
     Box(
         modifier = Modifier
             .fillMaxHeight()

@@ -47,10 +47,7 @@ fun CustomTopAppBar(
 }
 
 @Composable
-private fun Title(
-    modifier: Modifier = Modifier,
-    title: String,
-) = Text(
+private fun Title(modifier: Modifier = Modifier, title: String,) = Text(
     modifier = modifier,
     text = title,
     style = MaterialTheme.typography.titleLarge,

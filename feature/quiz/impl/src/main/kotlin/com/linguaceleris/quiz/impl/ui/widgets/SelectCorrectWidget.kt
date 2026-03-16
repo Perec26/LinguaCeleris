@@ -3,34 +3,25 @@ package com.linguaceleris.quiz.impl.ui.widgets
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 import com.linguaceleris.designsystem.widgets.CardState
 import com.linguaceleris.designsystem.widgets.DefaultFilledButton
 import com.linguaceleris.designsystem.widgets.LCCardWithText
 import com.linguaceleris.quiz.impl.R
+import com.linguaceleris.quiz.impl.ui.imageSelectWordTranslation
 import com.linguaceleris.quiz.impl.ui.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.model.WordCardUI
-import com.linguaceleris.quiz.impl.ui.selectCorrectAnswerImageMock
 import com.linguaceleris.quiz.impl.ui.selectCorrectAnswerMock
 
 @Composable
@@ -38,6 +29,7 @@ internal fun SelectCorrectWidget(
     modifier: Modifier = Modifier,
     task: TaskUI.SelectCorrectAnswer,
     onVariantSelected: (WordCardUI) -> Unit = {},
+    onAudioClick: (String?) -> Unit = {},
     onCheckButtonClick: () -> Unit = {},
     onContinueButtonClick: () -> Unit = {},
 ) {
@@ -47,40 +39,21 @@ internal fun SelectCorrectWidget(
     ) {
         Text(
             modifier = Modifier.padding(16.dp),
-            text = stringResource(task.text),
+            text = stringResource(task.type.text),
         )
 
-        if (task.question.image != null) {
-            AsyncImage(
-                modifier = Modifier
-                    .padding(horizontal = 48.dp)
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .clip(RoundedCornerShape(48.dp)),
-                model = task.question.image,
-                contentDescription = null,
-            )
-        } else {
-            Text(
-                modifier = Modifier.padding(16.dp),
-                text = task.question.text,
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.headlineLarge,
-            )
-        }
+        TaskContentWidget(task = task, onAudioClick = onAudioClick)
 
         Box(
             modifier = Modifier.weight(1f),
             contentAlignment = Alignment.Center,
         ) {
-            LazyVerticalGrid(
-                modifier = Modifier,
-                columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(16.dp),
+            Column(
+                modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                items(task.answerVariants) { variant ->
+                task.answerVariants.forEach { variant ->
                     val isSelected = variant == task.selectedVariant
                     val isCorrect = variant == task.correctAnswer
 
@@ -90,7 +63,6 @@ internal fun SelectCorrectWidget(
                         isSelected -> CardState.SELECTED
                         else -> CardState.DEFAULT
                     }
-
                     LCCardWithText(
                         state = state,
                         enabled = !task.isChecked || isSelected,
@@ -106,6 +78,7 @@ internal fun SelectCorrectWidget(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
+                textModifier = Modifier.padding(8.dp),
                 text = stringResource(R.string.quiz_check),
                 isEnable = task.selectedVariant != null,
                 onClick = onCheckButtonClick,
@@ -117,6 +90,7 @@ internal fun SelectCorrectWidget(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
+                textModifier = Modifier.padding(8.dp),
                 text = stringResource(R.string.quiz_continue),
                 onClick = onContinueButtonClick,
             )
@@ -142,7 +116,7 @@ private fun SelectCorrectWidgetImagePreview() {
     LinguaCelerisTheme {
         Surface {
             SelectCorrectWidget(
-                task = selectCorrectAnswerImageMock,
+                task = imageSelectWordTranslation,
             ) {}
         }
     }

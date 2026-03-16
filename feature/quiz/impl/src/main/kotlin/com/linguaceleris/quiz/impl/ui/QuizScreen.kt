@@ -65,6 +65,7 @@ private fun Quiz(state: QuizUiState, onEvent: (QuizEvent) -> Unit) {
                 SelectCorrectWidget(
                     modifier = Modifier.weight(0.5f),
                     task = currentTask,
+                    onAudioClick = { onEvent(QuizEvent.OnAudioClick(it)) },
                     onCheckButtonClick = { onEvent(QuizEvent.OnCheckButtonClick) },
                     onContinueButtonClick = { onEvent(QuizEvent.OnContinueButtonClick) },
                     onVariantSelected = { variant -> onEvent(QuizEvent.SelectAnswer(variant)) },

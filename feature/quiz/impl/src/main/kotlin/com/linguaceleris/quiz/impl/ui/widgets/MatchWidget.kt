@@ -36,7 +36,7 @@ internal fun MatchWidget(
     ) {
         Text(
             modifier = Modifier.padding(16.dp),
-            text = stringResource(task.text),
+            text = stringResource(task.type.text),
         )
 
         Row(
@@ -74,6 +74,7 @@ internal fun MatchWidget(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
+            textModifier = Modifier.padding(8.dp),
             text = stringResource(R.string.quiz_continue),
             isEnable = task.hasError || task.isDone,
             onClick = onContinueButtonClick,

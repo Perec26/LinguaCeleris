@@ -24,11 +24,9 @@ fun ThreeButtonsDialog(
     onDismissRequest: () -> Unit,
 ) {
     DefaultDialog(onDismissRequest = onDismissRequest) {
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
             Text(
                 modifier = Modifier
                     .padding(16.dp)
@@ -50,7 +48,6 @@ fun ThreeButtonsDialog(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-
                 if (cancelButtonDescription != null) {
                     DefaultTextButton(
                         modifier = Modifier,
@@ -64,7 +61,6 @@ fun ThreeButtonsDialog(
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-
                     noButtonDescription?.let {
                         DefaultTextButton(
                             text = it.text,
