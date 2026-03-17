@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quiz_selection_basic">Базовый</string>
+    <string name="quiz_selection_intermediate">Средний</string>
+    <string name="quiz_selection_advanced">Продвинутый</string>
+</resources>

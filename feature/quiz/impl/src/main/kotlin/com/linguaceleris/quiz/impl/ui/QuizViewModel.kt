@@ -7,19 +7,22 @@ import com.linguaceleris.quiz.impl.domain.GetTasksUseCase
 import com.linguaceleris.quiz.impl.ui.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.model.WordCardUI
 import com.linguaceleris.ui.BaseViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class QuizViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = QuizViewModel.Factory::class)
+internal class QuizViewModel @AssistedInject constructor(
     private val navigator: Navigator,
     private val getTasksUseCase: GetTasksUseCase,
     private val playerManager: PlayerManager,
+    @Assisted val quizId: String,
 ) : BaseViewModel<QuizUiState, QuizEvent>(initialState = QuizUiState()) {
 
     init {
         launch {
-            val tasks = getTasksUseCase.invoke()
+            val tasks = getTasksUseCase(quizId)
             updateState { onTaskLoaded(tasks) }
         }
     }
@@ -76,5 +79,10 @@ internal class QuizViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         playerManager.release()
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(quizId: String): QuizViewModel
     }
 }

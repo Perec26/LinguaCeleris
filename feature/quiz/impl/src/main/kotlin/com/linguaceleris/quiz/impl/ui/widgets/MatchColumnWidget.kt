@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
@@ -26,6 +28,8 @@ internal fun MatchColumnWidget(
     onAudioClick: (String?) -> Unit = {},
     onVariantSelected: (WordCardUI) -> Unit,
 ) {
+    val haptic = LocalHapticFeedback.current
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -44,6 +48,7 @@ internal fun MatchColumnWidget(
                 enabled = !disabledVariants.contains(variant) && !hasError,
                 text = variant.text,
                 onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.KeyboardTap)
                     onAudioClick(variant.audio)
                     onVariantSelected(variant)
                 },

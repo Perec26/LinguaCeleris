@@ -13,6 +13,5 @@ data class QuizDTO(
     val dailyQuizId: String,
     @SerialName("extra_pool")
     val extraPool: List<TaskDTO>,
-    @SerialName("questions")
     val tasks: List<TaskDTO>,
 )

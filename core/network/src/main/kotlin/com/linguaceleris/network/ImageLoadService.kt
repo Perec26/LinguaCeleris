@@ -4,7 +4,7 @@ import android.content.Context
 import coil3.ImageLoader
 import coil3.request.ImageRequest
 import dagger.hilt.android.qualifiers.ApplicationContext
-import jakarta.inject.Inject
+import javax.inject.Inject
 
 class ImageLoadService @Inject constructor(
     private val imageLoader: ImageLoader,

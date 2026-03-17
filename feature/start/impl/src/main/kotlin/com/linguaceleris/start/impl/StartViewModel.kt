@@ -1,7 +1,7 @@
 package com.linguaceleris.start.impl
 
 import com.linguaceleris.navigation.Navigator
-import com.linguaceleris.quiz.api.QuizNavKey
+import com.linguaceleris.quizselection.api.QuizSelectionNavKey
 import com.linguaceleris.ui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -13,7 +13,7 @@ internal class StartViewModel @Inject constructor(
 
     override fun onEvent(event: StartEvent) {
         when (event) {
-            StartEvent.OnButtonClick -> navigator.navigateTo(QuizNavKey)
+            StartEvent.OnButtonClick -> navigator.navigateTo(QuizSelectionNavKey)
             StartEvent.OnButton2Click -> updateState { increaseNumber() }
         }
     }

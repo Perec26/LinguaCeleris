@@ -10,8 +10,8 @@ private const val TASK_REQUIRED_NUMBER = 12
 internal class GetTasksUseCase @Inject constructor(
     val repository: QuizRepository,
 ) {
-    suspend fun invoke(): List<TaskUI> {
-        val quiz = repository.getQuiz()
+    suspend operator fun invoke(quizId: String): List<TaskUI> {
+        val quiz = repository.getQuiz(quizId)
         val tasks = quiz?.tasks?.toUi() ?: emptyList()
         if (tasks.size < TASK_REQUIRED_NUMBER) {
             return (tasks + (quiz?.extraPool?.toUi() ?: emptyList())).shuffled()

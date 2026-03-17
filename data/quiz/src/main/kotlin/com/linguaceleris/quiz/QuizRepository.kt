@@ -14,8 +14,9 @@ class QuizRepository @Inject constructor(
     private val dataSource: QuizDataSource,
 ) {
 
-    suspend fun getQuiz(): QuizDTO? {
-        val quiz = dataSource.getQuiz() ?: return null
+    suspend fun getQuiz(quizId: String): QuizDTO? {
+        val quiz = dataSource.getQuiz(quizId) ?: return null
+
         val images = quiz.tasks
             .map(TaskDTO::data)
             .flatMap(TaskDataDTO::getImages)
@@ -28,6 +29,8 @@ class QuizRepository @Inject constructor(
         preloadAudios(audios)
         return quiz
     }
+
+    suspend fun getSchedule() = dataSource.getSchedule()
 
     private suspend fun preloadAudios(audios: List<String>) {
         audios.forEach { audioLoadService.loadAudio(it) }

@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -33,6 +35,7 @@ internal fun SelectCorrectWidget(
     onCheckButtonClick: () -> Unit = {},
     onContinueButtonClick: () -> Unit = {},
 ) {
+    val haptic = LocalHapticFeedback.current
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -67,7 +70,10 @@ internal fun SelectCorrectWidget(
                         state = state,
                         enabled = !task.isChecked || isSelected,
                         text = variant.text,
-                        onClick = { onVariantSelected(variant) },
+                        onClick = {
+                            haptic.performHapticFeedback(HapticFeedbackType.Confirm)
+                            onVariantSelected(variant)
+                        },
                     )
                 }
             }
