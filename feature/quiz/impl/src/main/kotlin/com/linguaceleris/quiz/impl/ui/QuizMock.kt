@@ -51,8 +51,14 @@ internal val imageSelectWordTranslation = selectCorrectAnswerMock.copy(
     type = TaskTypeUI.ImageSelectWordTranslation,
 )
 internal val quizStateMock = QuizUiState(
-    tasks = listOf(selectCorrectAnswerMock),
+    tasks = listOf(
+        selectCorrectAnswerMock,
+        matchingMock,
+        fillInBlankMock,
+        listenSelectTranslationMock,
+        imageSelectWordTranslation,
+    ),
     screenState = ScreenState.CONTENT,
-    currentTaskIndex = 0,
+    currentTaskIndex = 3,
     currentTask = selectCorrectAnswerMock,
 )

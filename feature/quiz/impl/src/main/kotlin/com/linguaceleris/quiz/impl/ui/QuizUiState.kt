@@ -8,6 +8,7 @@ internal data class QuizUiState(
     val currentTaskIndex: Int = 0,
     val currentTask: TaskUI? = null,
     val screenState: ScreenState = ScreenState.LOADING,
+    val lives: Int = 3,
 ) {
     val progressFloat = currentTaskIndex.toFloat() / tasks.size
     val lastTask = tasks.lastIndex == currentTaskIndex
@@ -20,21 +21,31 @@ internal data class QuizUiState(
 
     fun onCardClicked(variant: WordCardUI): QuizUiState {
         val currentTask = currentTask ?: return this
+        var liveLost = 0
         val updatedCurrentTask = when (currentTask) {
             is TaskUI.SelectCorrectAnswer -> currentTask.onCardClicked(variant)
-            is TaskUI.Matching -> currentTask.onCardClicked(variant)
+            is TaskUI.Matching -> {
+                val newTaskState = currentTask.onCardClicked(variant)
+                if (newTaskState.hasError) liveLost = 1
+                newTaskState
+            }
         }
         return copy(
             currentTask = updatedCurrentTask,
+            lives = lives - liveLost,
         )
     }
 
     fun onCheckClicked(): QuizUiState {
         val currentTask = currentTask ?: return this
         return when (currentTask) {
-            is TaskUI.SelectCorrectAnswer -> copy(
-                currentTask = currentTask.copy(isChecked = true),
-            )
+            is TaskUI.SelectCorrectAnswer -> {
+                val liveLost = if (currentTask.isCorrect) 0 else 1
+                copy(
+                    currentTask = currentTask.copy(isChecked = true),
+                    lives = lives - liveLost,
+                )
+            }
 
             is TaskUI.Matching -> this
         }
@@ -60,5 +71,7 @@ private fun TaskUI.Matching.onCardClicked(variant: WordCardUI): TaskUI.Matching 
             selectedVariant = null,
         )
     }
-    return copy(errorVariant = variant)
+    return copy(
+        errorVariant = variant,
+    )
 }

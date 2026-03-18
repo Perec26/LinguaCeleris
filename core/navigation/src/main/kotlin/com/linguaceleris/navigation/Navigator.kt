@@ -16,4 +16,9 @@ class Navigator(
     fun back() {
         backStack.removeLastOrNull()
     }
+
+    fun replace(destination: NavKey) {
+        backStack.removeLastOrNull()
+        backStack.add(destination)
+    }
 }

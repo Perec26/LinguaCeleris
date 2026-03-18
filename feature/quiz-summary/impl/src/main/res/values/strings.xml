@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quiz_summary_success_text">Вы выполнили все задания!</string>
+    <string name="quiz_summary_failure_text">В этот не получилось, попробуйте еще раз!</string>
+    <string name="quiz_summary_try_another_level">Попробовать другой уровень</string>
+    <string name="quiz_summary_try_again">Попробовать ещё раз</string>
+    <string name="quiz_summary_share">Поделится результатами</string>
+</resources>

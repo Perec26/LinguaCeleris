@@ -1,11 +1,11 @@
 package com.linguaceleris.services
 
+import javax.inject.Inject
+import kotlin.time.Instant
 import kotlinx.coroutines.tasks.await
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import javax.inject.Inject
 
 class TrustedTimeManager @Inject constructor(
     private val trustedTimeClientAccessor: TrustedTimeClientAccessor,

@@ -6,6 +6,7 @@ import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.domain.GetTasksUseCase
 import com.linguaceleris.quiz.impl.ui.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.model.WordCardUI
+import com.linguaceleris.quizsummary.api.QuizSummaryNavKey
 import com.linguaceleris.ui.BaseViewModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -29,10 +30,11 @@ internal class QuizViewModel @AssistedInject constructor(
 
     override fun onEvent(event: QuizEvent) {
         when (event) {
-            QuizEvent.OnCheckButtonClick -> onCheckClicked()
-            is QuizEvent.SelectAnswer -> onSelectAnswer(event.variant)
-            QuizEvent.OnContinueButtonClick -> onContinueButtonClick()
             is QuizEvent.OnAudioClick -> event.audio?.let(::onAudioClick)
+            is QuizEvent.SelectAnswer -> onSelectAnswer(event.variant)
+            QuizEvent.OnBackClick -> navigator.back()
+            QuizEvent.OnCheckButtonClick -> onCheckClicked()
+            QuizEvent.OnContinueButtonClick -> onContinueButtonClick()
         }
     }
 
@@ -48,11 +50,16 @@ internal class QuizViewModel @AssistedInject constructor(
     private fun onContinueButtonClick() {
         playerManager.stop()
 
-        if (currentState.lastTask) {
-            navigator.back()
-        } else {
-            updateState { showNextTask() }
+        if (currentState.lives <= 0) {
+            navigator.replace(QuizSummaryNavKey(false))
+            return
         }
+        if (currentState.lastTask) {
+            navigator.replace(QuizSummaryNavKey(true))
+            return
+        }
+
+        updateState { showNextTask() }
     }
 
     private fun onCheckClicked() {

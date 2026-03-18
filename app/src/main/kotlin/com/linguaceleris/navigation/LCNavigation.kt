@@ -8,6 +8,7 @@ import androidx.navigation3.ui.NavDisplay
 import com.linguaceleris.login.impl.navigation.loginEntry
 import com.linguaceleris.quiz.impl.navigation.quizEntry
 import com.linguaceleris.quizselection.impl.navigation.quizSelectionEntry
+import com.linguaceleris.quizsummary.impl.navigation.quizSummaryEntry
 import com.linguaceleris.start.impl.navigation.startEntry
 
 @Composable
@@ -16,6 +17,7 @@ internal fun LCApp(navigator: Navigator) {
         startEntry()
         quizEntry()
         quizSelectionEntry()
+        quizSummaryEntry()
         loginEntry()
     }
 

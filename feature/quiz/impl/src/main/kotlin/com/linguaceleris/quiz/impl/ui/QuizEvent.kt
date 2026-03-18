@@ -10,7 +10,9 @@ internal sealed class QuizEvent {
 
     data object OnCheckButtonClick : QuizEvent()
     data object OnContinueButtonClick : QuizEvent()
+    data object OnBackClick : QuizEvent()
+
     data class OnAudioClick(
-        val audio: String?
+        val audio: String?,
     ) : QuizEvent()
 }
