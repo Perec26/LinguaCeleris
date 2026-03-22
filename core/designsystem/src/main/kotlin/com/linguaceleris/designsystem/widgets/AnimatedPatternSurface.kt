@@ -27,11 +27,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
 import com.linguaceleris.designsystem.R
 import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
-import kotlinx.coroutines.isActive
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
+import kotlinx.coroutines.isActive
 
 private val patternAngleDeg = Random.nextInt(0, 360).toDouble()
 private val moveAngleDeg = Random.nextInt(0, 360).toDouble()

@@ -3,6 +3,7 @@ package com.linguaceleris.quizselection.impl.ui
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quiz.api.QuizNavKey
 import com.linguaceleris.quizselection.impl.domain.GetDayTasksUseCase
+import com.linguaceleris.quizselection.impl.domain.SignOutUseCase
 import com.linguaceleris.ui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -11,7 +12,10 @@ import javax.inject.Inject
 internal class QuizSelectionViewModel @Inject constructor(
     private val navigator: Navigator,
     private val getDayTasksUseCase: GetDayTasksUseCase,
-) : BaseViewModel<QuizSelectionUiState, QuizSelectionEvent>(initialState = QuizSelectionUiState()) {
+    private val signOutUseCase: SignOutUseCase,
+) : BaseViewModel<QuizSelectionUiState, QuizSelectionEvent>(
+    initialState = QuizSelectionUiState(),
+) {
 
     init {
         launch {
@@ -23,6 +27,7 @@ internal class QuizSelectionViewModel @Inject constructor(
     override fun onEvent(event: QuizSelectionEvent) {
         when (event) {
             is QuizSelectionEvent.OnQuizClick -> navigator.navigateTo(QuizNavKey(event.quizId))
+            QuizSelectionEvent.OnSignOut -> signOutUseCase()
         }
     }
 }

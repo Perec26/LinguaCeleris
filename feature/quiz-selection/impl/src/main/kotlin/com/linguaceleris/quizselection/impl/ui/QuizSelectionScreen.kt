@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
+import com.linguaceleris.designsystem.widgets.LCFilledButton
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.quizselection.impl.R
 import com.linguaceleris.quizselection.impl.ui.model.DayQuizzesUI
@@ -61,6 +62,10 @@ private fun QuizSelectionScreenContent(
                     },
                 )
             }
+            LCFilledButton(
+                text = "Выйти",
+                onClick = { onEvent(QuizSelectionEvent.OnSignOut) },
+            )
         }
     }
 }
@@ -68,7 +73,8 @@ private fun QuizSelectionScreenContent(
 @Composable
 private fun QuizButton(text: String, onClick: () -> Unit) {
     Button(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(16.dp),
         onClick = onClick,
     ) {

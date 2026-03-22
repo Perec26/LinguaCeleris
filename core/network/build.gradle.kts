@@ -14,4 +14,7 @@ dependencies {
     api(libs.kotlinx.serialization.json)
     implementation(libs.coil.network.okhttp)
     implementation(libs.androidx.media3)
+    implementation(libs.androidx.credentials)
+    implementation(libs.android.googleid)
+    implementation(libs.firebase.auth)
 }

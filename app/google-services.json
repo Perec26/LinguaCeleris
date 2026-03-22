@@ -12,7 +12,20 @@
           "package_name": "com.linguaceleris"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "9852635098-u4uv37phh3gcjsdmpijkg4l0ndsc7bah.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.linguaceleris",
+            "certificate_hash": "0a5da1a17a53a91ad8714aa0f25375d81f6f7168"
+          }
+        },
+        {
+          "client_id": "9852635098-6lio1r8hogckvlvboc6hisucp2uekus7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA4Ukw-qDAkF3r8w0M9kNvQLqm6L_1NMsk"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9852635098-6lio1r8hogckvlvboc6hisucp2uekus7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

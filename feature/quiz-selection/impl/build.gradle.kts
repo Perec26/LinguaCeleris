@@ -9,6 +9,7 @@ android {
 
 dependencies {
     implementation(projects.core.services)
+    implementation(projects.data.auth)
     implementation(projects.data.quiz)
     implementation(projects.feature.quizSelection.api)
     implementation(projects.feature.quiz.api)

@@ -1,7 +1,6 @@
 package com.linguaceleris.di
 
 import com.linguaceleris.navigation.Navigator
-import com.linguaceleris.start.api.StartNavKey
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +13,5 @@ internal object NavigationModule {
 
     @Provides
     @Singleton
-    fun providesNavigator(): Navigator = Navigator(StartNavKey)
+    fun providesNavigator(): Navigator = Navigator()
 }

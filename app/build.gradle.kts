@@ -31,18 +31,23 @@ android {
 dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.coil.compose)
+    implementation(libs.androidx.credentials)
+    implementation(libs.android.googleid)
 
     // Project
     implementation(projects.core.ui)
     implementation(projects.core.designsystem)
     implementation(projects.core.navigation)
+    implementation(projects.data.auth)
     implementation(projects.feature.start.impl)
-    implementation(projects.feature.start.api)
     implementation(projects.feature.login.impl)
     implementation(projects.feature.login.api)
     implementation(projects.feature.quiz.impl)
     implementation(projects.feature.quizSelection.impl)
+    implementation(projects.feature.quizSelection.api)
     implementation(projects.feature.quizSummary.impl)
+    implementation(projects.feature.auth.api)
+    implementation(projects.feature.auth.impl)
 }
 
 fun getBuildNumber(): Int {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_welcome_title">Добро пожаловать</string>
+    <string name="auth_welcome_subtitle">Войди, чтобы твои результаты и статистика были доступны на любом устройстве.</string>
+    <string name="auth_email_sign_in">Войти по почте</string>
+    <string name="auth_google_sign_in">Войти c Google</string>
+    <string name="auth_guest_sign_in">Войти как гость</string>
+</resources>
