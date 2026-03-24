@@ -2,6 +2,7 @@ package com.linguaceleris.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,5 +27,13 @@ abstract class BaseViewModel<STATE : Any, EVENT : Any>(
 
     fun launch(block: suspend CoroutineScope.() -> Unit): Job = viewModelScope.launch {
         block.invoke(this)
+    }
+
+    fun launchWithErrorHandler(
+        onError: (Throwable) -> Unit,
+        block: suspend CoroutineScope.() -> Unit,
+    ): Job {
+        val handler = CoroutineExceptionHandler { _, throwable -> onError(throwable) }
+        return viewModelScope.launch(handler, block = block)
     }
 }

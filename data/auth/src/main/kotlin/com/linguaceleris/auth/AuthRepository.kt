@@ -13,4 +13,14 @@ class AuthRepository @Inject constructor(
     fun isLoggedIn(): Boolean = credentialService.isLoggedIn()
 
     fun signOut() = credentialService.signOut()
+
+    suspend fun register(nickname: String, email: String, password: String) {
+        credentialService.register(nickname, email, password)
+    }
+
+    suspend fun sendEmailVerification() {
+        credentialService.sendEmailVerification()
+    }
+
+    fun getEmailVerification(): Boolean = credentialService.getEmailVerification()
 }

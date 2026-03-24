@@ -31,6 +31,7 @@ import com.linguaceleris.auth.impl.R
 import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 import com.linguaceleris.designsystem.widgets.ButtonSize
 import com.linguaceleris.designsystem.widgets.LCFilledButton
+import com.linguaceleris.designsystem.widgets.LCFilledTonalButton
 import com.linguaceleris.designsystem.widgets.LCTextButton
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.designsystem.widgets.SpacerHeight
@@ -41,6 +42,7 @@ internal fun SignInScreen(viewModel: SignInViewModel = hiltViewModel()) {
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
 
+    //TODO: переписать
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
@@ -125,18 +127,25 @@ private fun SignInScreenContent(state: SignInUiState, onEvent: (SignInEvent) -> 
         ) {
             LCFilledButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.auth_email_sign_in),
-                icon = painterResource(com.linguaceleris.designsystem.R.drawable.email_24),
-                buttonSize = ButtonSize.MEDIUM,
-                onClick = { onEvent(SignInEvent.OnEmailSignInClick) },
-            )
-
-            LCFilledButton(
-                modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.auth_google_sign_in),
                 icon = painterResource(com.linguaceleris.designsystem.R.drawable.add),
                 buttonSize = ButtonSize.MEDIUM,
                 onClick = { onEvent(SignInEvent.OnGoogleSignInClick) },
+            )
+
+            LCFilledButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.auth_email_sign_in),
+                icon = painterResource(com.linguaceleris.designsystem.R.drawable.email),
+                buttonSize = ButtonSize.MEDIUM,
+                onClick = { onEvent(SignInEvent.OnEmailSignInClick) },
+            )
+
+            LCFilledTonalButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.auth_registration),
+                buttonSize = ButtonSize.MEDIUM,
+                onClick = { onEvent(SignInEvent.OnRegistrationClick) },
             )
 
             LCTextButton(

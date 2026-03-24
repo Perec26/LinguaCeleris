@@ -8,4 +8,5 @@ internal sealed class SignInEvent {
     data object OnEmailSignInClick : SignInEvent()
     data object OnSignInAsGuestClick : SignInEvent()
     data object OnGoogleSignInClick : SignInEvent()
+    data object OnRegistrationClick : SignInEvent()
 }

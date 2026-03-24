@@ -12,8 +12,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -23,6 +25,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.R
 import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
@@ -129,20 +132,8 @@ fun LCFilledButton(
                 haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
                 onClick.invoke()
             },
-        ) {
-            if (icon != null) {
-                Icon(
-                    painter = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(ButtonDefaults.iconSizeFor(size)),
-                )
-                Spacer(Modifier.size(ButtonDefaults.iconSpacingFor(size)))
-            }
-            Text(
-                text = text,
-                style = ButtonDefaults.textStyleFor(size),
-            )
-        }
+            content = { ButtonContent(icon, size, text) },
+        )
     }
 }
 
@@ -167,21 +158,78 @@ fun LCTextButton(
                 haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
                 onClick.invoke()
             },
-        ) {
-            if (icon != null) {
-                Icon(
-                    painter = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(ButtonDefaults.iconSizeFor(size)),
-                )
-                Spacer(Modifier.size(ButtonDefaults.iconSpacingFor(size)))
-            }
-            Text(
-                text = text,
-                style = ButtonDefaults.textStyleFor(size),
-            )
-        }
+            content = { ButtonContent(icon, size, text) },
+        )
     }
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun LCFilledTonalButton(
+    modifier: Modifier = Modifier,
+    isEnable: Boolean = true,
+    text: String,
+    icon: Painter? = null,
+    buttonSize: ButtonSize = ButtonSize.SMALL,
+    onClick: () -> Unit,
+) {
+    val size = buttonSize.toContainerSize()
+
+    HapticElement { haptic ->
+        FilledTonalButton(
+            modifier = modifier,
+            enabled = isEnable,
+            contentPadding = ButtonDefaults.contentPaddingFor(size, hasStartIcon = icon != null),
+            onClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
+                onClick.invoke()
+            },
+            content = { ButtonContent(icon, size, text) },
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun LCOutlineButton(
+    modifier: Modifier = Modifier,
+    isEnable: Boolean = true,
+    text: String,
+    icon: Painter? = null,
+    buttonSize: ButtonSize = ButtonSize.SMALL,
+    onClick: () -> Unit,
+) {
+    val size = buttonSize.toContainerSize()
+
+    HapticElement { haptic ->
+        OutlinedButton(
+            modifier = modifier,
+            enabled = isEnable,
+            contentPadding = ButtonDefaults.contentPaddingFor(size, hasStartIcon = icon != null),
+            onClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
+                onClick.invoke()
+            },
+            content = { ButtonContent(icon, size, text) },
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun ButtonContent(icon: Painter? = null, size: Dp, text: String) {
+    if (icon != null) {
+        Icon(
+            painter = icon,
+            contentDescription = null,
+            modifier = Modifier.size(ButtonDefaults.iconSizeFor(size)),
+        )
+        Spacer(Modifier.size(ButtonDefaults.iconSpacingFor(size)))
+    }
+    Text(
+        text = text,
+        style = ButtonDefaults.textStyleFor(size),
+    )
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -230,7 +278,7 @@ private fun FilledButtonsWithIconPreview() {
             ButtonSize.entries.forEach {
                 LCFilledButton(
                     text = "Filled button with Icon",
-                    icon = painterResource(R.drawable.email_24),
+                    icon = painterResource(R.drawable.email),
                     buttonSize = it,
                 ) {}
             }
@@ -269,7 +317,85 @@ private fun TextButtonsWithIconPreview() {
             ButtonSize.entries.forEach {
                 LCTextButton(
                     text = "Text Button with Icon",
-                    icon = painterResource(R.drawable.email_24),
+                    icon = painterResource(R.drawable.email),
+                    buttonSize = it,
+                ) {}
+            }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun FilledTonalButtonsPreview() {
+    LinguaCelerisTheme {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            ButtonSize.entries.forEach {
+                LCFilledTonalButton(
+                    text = "Filled Tonal Button",
+                    buttonSize = it,
+                ) {}
+            }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun FilledTonalWithIconPreview() {
+    LinguaCelerisTheme {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            ButtonSize.entries.forEach {
+                LCFilledTonalButton(
+                    text = "Filled Tonal Button with Icon",
+                    icon = painterResource(R.drawable.email),
+                    buttonSize = it,
+                ) {}
+            }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun OutlineButtonsPreview() {
+    LinguaCelerisTheme {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            ButtonSize.entries.forEach {
+                LCOutlineButton(
+                    text = "OutLine Button",
+                    buttonSize = it,
+                ) {}
+            }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun OutlineButtonsWithIconPreview() {
+    LinguaCelerisTheme {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            ButtonSize.entries.forEach {
+                LCOutlineButton(
+                    text = "OutLine Button with Icon",
+                    icon = painterResource(R.drawable.email),
                     buttonSize = it,
                 ) {}
             }

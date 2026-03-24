@@ -25,11 +25,12 @@ fun ThreeButtonsDialog(
 ) {
     DefaultDialog(onDismissRequest = onDismissRequest) {
         Column(
+            modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
         ) {
             Text(
                 modifier = Modifier
-                    .padding(16.dp)
                     .align(Alignment.CenterHorizontally),
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
@@ -43,37 +44,32 @@ fun ThreeButtonsDialog(
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                if (cancelButtonDescription != null) {
+                cancelButtonDescription?.let {
                     DefaultTextButton(
                         modifier = Modifier,
-                        text = cancelButtonDescription.text,
-                        onClick = cancelButtonDescription.onClick,
+                        text = it.text,
+                        onClick = it.onClick,
                     )
-                } else {
-                    SpacerWidth(width = 1.dp)
                 }
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    noButtonDescription?.let {
-                        DefaultTextButton(
-                            text = it.text,
-                            onClick = it.onClick,
-                        )
-                    }
 
-                    okButtonDescription?.let {
-                        DefaultTextButton(
-                            text = it.text,
-                            onClick = it.onClick,
-                        )
-                    }
+                SpacerWidth(modifier = Modifier.weight(1f), width = 1.dp)
+
+                noButtonDescription?.let {
+                    DefaultTextButton(
+                        text = it.text,
+                        onClick = it.onClick,
+                    )
+                }
+
+                okButtonDescription?.let {
+                    DefaultTextButton(
+                        text = it.text,
+                        onClick = it.onClick,
+                    )
                 }
             }
         }
@@ -87,6 +83,20 @@ private fun ThreeButtonsDialogPreview() {
         ThreeButtonsDialog(
             title = "Dialog title",
             description = "Dialog description",
+            okButtonDescription = ButtonDescription("Ok"),
+            noButtonDescription = ButtonDescription("No"),
+            cancelButtonDescription = ButtonDescription("Cancel"),
+        ) {}
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ThreeButtonsDialogLongDescriptionPreview() {
+    LinguaCelerisTheme {
+        ThreeButtonsDialog(
+            title = "Dialog title",
+            description = "Мы отправили письмо. Пожалуйста, перейдите по ссылке, чтобы войти.",
             okButtonDescription = ButtonDescription("Ok"),
             noButtonDescription = ButtonDescription("No"),
             cancelButtonDescription = ButtonDescription("Cancel"),

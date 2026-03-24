@@ -1,5 +1,6 @@
 package com.linguaceleris.auth.impl.ui.signin
 
+import com.linguaceleris.auth.impl.navigation.RegistrationNavKey
 import com.linguaceleris.auth.impl.ui.signin.SignInEffect.SignInWithGoogle
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.network.CredentialService
@@ -25,6 +26,8 @@ internal class SignInViewModel @Inject constructor(
             )
 
             is SignInEvent.OnGoogleTokenReceived -> onGoogleTokenReceived(event.idToken)
+
+            SignInEvent.OnRegistrationClick -> navigator.navigateTo(RegistrationNavKey)
         }
     }
 
