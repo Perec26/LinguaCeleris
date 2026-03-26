@@ -9,4 +9,5 @@ android {
 
 dependencies {
     implementation(libs.androidx.lifecycle.viewModelCompose)
+    implementation(libs.androidx.compose.material3)
 }

@@ -32,26 +32,31 @@ class CredentialService @Inject constructor(
 
     fun getWebClientId(): String = webClientId
 
-    fun signOut(): Boolean {
+    fun signOut() {
         auth.signOut()
-        return currentUser == null
     }
 
-    suspend fun register(nickname: String, email: String, password: String) {
+    suspend fun register(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).await()
+    }
+
+    suspend fun updateDisplayName(nickname: String) {
         val updateRequest = userProfileChangeRequest {
             displayName = nickname
         }
         currentUser?.updateProfile(updateRequest)?.await()
-        sendEmailVerification()
     }
 
     suspend fun sendEmailVerification() {
         currentUser?.sendEmailVerification()?.await()
     }
 
-    fun getEmailVerification(): Boolean {
-        currentUser?.reload()
+    suspend fun reloadUser() {
+        currentUser?.reload()?.await()
+    }
+
+    suspend fun getEmailVerification(): Boolean {
+        reloadUser()
         return currentUser?.isEmailVerified ?: false
     }
 }

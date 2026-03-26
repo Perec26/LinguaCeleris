@@ -14,4 +14,5 @@ dependencies {
     implementation(projects.data.auth)
     implementation(libs.androidx.credentials.play.services)
     implementation(libs.android.googleid)
+    implementation(libs.firebase.auth)
 }

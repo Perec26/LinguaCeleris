@@ -19,8 +19,13 @@ import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.R
 
 @Composable
-fun LoadingWrapper(isLoading: Boolean, text: String? = null, content: @Composable () -> Unit) {
-    Box(modifier = Modifier.fillMaxSize()) {
+fun LoadingWrapper(
+    modifier: Modifier = Modifier,
+    isLoading: Boolean,
+    text: String? = null,
+    content: @Composable () -> Unit,
+) {
+    Box(modifier = modifier) {
         content()
         if (isLoading) {
             Box(

@@ -6,7 +6,5 @@ import javax.inject.Inject
 internal class SendEmailVerificationUseCase @Inject constructor(
     private val repository: AuthRepository,
 ) {
-    suspend operator fun invoke() {
-        repository.sendEmailVerification()
-    }
+    suspend operator fun invoke() = repository.sendEmailVerification()
 }

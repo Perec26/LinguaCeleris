@@ -21,7 +21,11 @@
     <string name="auth_enter_password">Введите пароль</string>
     <string name="auth_confirm_password">Подтверждение пароля</string>
     <string name="auth_enter_confirm_password">Подтвердите пароль</string>
-    <string name="auth_registration_confirm_message">Проверьте почту! Ссылка для активации уже там. Если письма нет — загляните в «Спам».</string>
+    <string name="auth_registration_success">Проверьте почту! Ссылка для активации уже там. Если письма нет — загляните в «Спам».</string>
+    <string name="auth_registration_weak_password">Пароль слишком слабый</string>
+    <string name="auth_registration_user_exist">Пользователь с таким email уже существует</string>
+    <string name="auth_registration_invalid_credentials">Некорректный формат Email</string>
+    <string name="auth_registration_unknown_error">Что-то пошло не так, попробуйте позже</string>
     <string name="auth_register">Зарегистрироваться</string>
     <string name="auth_continue">Продолжить</string>
     <string name="auth_loading">Идет загрузка</string>
@@ -33,4 +37,6 @@
     <string name="auth_ok">OK</string>
     <string name="auth_email_verification_dialog_title">Почта не подтверждена ✉️</string>
     <string name="auth_email_verification_dialog_description">Мы отправили письмо. Пожалуйста, перейдите по ссылке, чтобы войти.</string>
+    <string name="auth_email_verification_error">Не удалось проверить подтверждение почты, попробуйте позже</string>
+    <string name="auth_sending_verification_error">Не удалось отправить письмо, попробуйте позже</string>
 </resources>

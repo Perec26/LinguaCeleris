@@ -42,7 +42,7 @@ internal fun SignInScreen(viewModel: SignInViewModel = hiltViewModel()) {
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
 
-    //TODO: переписать
+    // TODO: переписать
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {

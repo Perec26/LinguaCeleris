@@ -15,6 +15,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -24,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -47,23 +49,30 @@ import com.linguaceleris.designsystem.widgets.LCOutlineButton
 import com.linguaceleris.designsystem.widgets.LoadingWrapper
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.designsystem.widgets.ThreeButtonsDialog
+import com.linguaceleris.ui.LocalSnackbarHostState
 
 @Composable
 internal fun RegistrationScreen(viewModel: RegistrationViewModel = hiltViewModel()) {
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
+    val snackbarHostState = LocalSnackbarHostState.current
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
-                is RegistrationEffect.OpenEmail -> {
-                    openEmailApp(context)
+                is RegistrationEffect.OpenEmail -> openEmailApp(context)
+
+                is RegistrationEffect.ShowSnackbarError -> {
+                    snackbarHostState.showSnackbar(
+                        message = effect.error.message.asString(context),
+                        withDismissAction = true,
+                    )
                 }
             }
         }
     }
 
-    RegistrationScreenContent(state = state, onEvent = viewModel::onEvent)
+    RegistrationScreenContent(state, viewModel::onEvent)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,189 +91,216 @@ private fun RegistrationScreenContent(
         else -> stringResource(R.string.auth_loading)
     }
     LoadingWrapper(
+        modifier = Modifier.fillMaxSize(),
         isLoading = state.isRegistrationInProgress || state.isSendingVerificationInProgress,
         text = loadingText,
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            CustomTopAppBar(
-                title = stringResource(id = R.string.auth_registration),
-                onNavigationClick = { onEvent(RegistrationEvent.OnBackClicked) },
-            )
-
+        Scaffold(
+            topBar = { TopBar(onEvent) },
+            containerColor = Color.Transparent,
+        ) { paddingValues ->
             Column(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                    .fillMaxSize()
+                    .padding(paddingValues),
             ) {
-                TextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = state.nickname,
-                    label = { Text(stringResource(R.string.auth_nickname)) },
-                    placeholder = { Text(stringResource(R.string.auth_enter_nickname)) },
-                    supportingText = { SupportText(state.validationState.nickname) },
-                    isError = state.validationState.nickname.isError,
-                    singleLine = true,
-                    onValueChange = { onEvent(RegistrationEvent.OnNickNameChanged(it)) },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        capitalization = KeyboardCapitalization.Sentences,
-                        imeAction = ImeAction.Next,
-                    ),
-                )
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = state.nickname,
+                        label = { Text(stringResource(R.string.auth_nickname)) },
+                        placeholder = { Text(stringResource(R.string.auth_enter_nickname)) },
+                        supportingText = { SupportText(state.validationState.nickname) },
+                        isError = state.validationState.nickname.isError,
+                        singleLine = true,
+                        onValueChange = { onEvent(RegistrationEvent.OnNickNameChanged(it)) },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text,
+                            capitalization = KeyboardCapitalization.Sentences,
+                            imeAction = ImeAction.Next,
+                        ),
+                    )
 
-                TextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = state.email,
-                    label = { Text(stringResource(R.string.auth_email)) },
-                    placeholder = { Text(stringResource(R.string.auth_enter)) },
-                    supportingText = { SupportText(state.validationState.email) },
-                    isError = state.validationState.email.isError,
-                    singleLine = true,
-                    onValueChange = { onEvent(RegistrationEvent.OnEmailChanged(it)) },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email,
-                        imeAction = ImeAction.Next,
-                    ),
-                )
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = state.email,
+                        label = { Text(stringResource(R.string.auth_email)) },
+                        placeholder = { Text(stringResource(R.string.auth_enter)) },
+                        supportingText = { SupportText(state.validationState.email) },
+                        isError = state.validationState.email.isError,
+                        singleLine = true,
+                        onValueChange = { onEvent(RegistrationEvent.OnEmailChanged(it)) },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Email,
+                            imeAction = ImeAction.Next,
+                        ),
+                    )
 
-                TextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = state.password,
-                    label = { Text(stringResource(R.string.auth_password)) },
-                    placeholder = { Text(stringResource(R.string.auth_enter_password)) },
-                    supportingText = { SupportText(state.validationState.password) },
-                    singleLine = true,
-                    isError = state.validationState.password.isError,
-                    visualTransformation = getVisualTransformation(state.isPasswordVisible),
-                    trailingIcon = {
-                        VisibilityIcon(
-                            state.isPasswordVisible,
-                            onClick = { onEvent(RegistrationEvent.OnPasswordVisibilityChanged) },
-                        )
-                    },
-                    onValueChange = { onEvent(RegistrationEvent.OnPasswordChanged(it)) },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Next,
-                    ),
-                )
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = state.password,
+                        label = { Text(stringResource(R.string.auth_password)) },
+                        placeholder = { Text(stringResource(R.string.auth_enter_password)) },
+                        supportingText = { SupportText(state.validationState.password) },
+                        singleLine = true,
+                        isError = state.validationState.password.isError,
+                        visualTransformation = getVisualTransformation(state.isPasswordVisible),
+                        trailingIcon = {
+                            VisibilityIcon(
+                                state.isPasswordVisible,
+                                onClick = {
+                                    onEvent(RegistrationEvent.OnPasswordVisibilityChanged)
+                                },
+                            )
+                        },
+                        onValueChange = { onEvent(RegistrationEvent.OnPasswordChanged(it)) },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Password,
+                            imeAction = ImeAction.Next,
+                        ),
+                    )
 
-                TextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = state.confirmPassword,
-                    label = { Text(stringResource(R.string.auth_confirm_password)) },
-                    placeholder = { Text(stringResource(R.string.auth_enter_confirm_password)) },
-                    supportingText = { SupportText(state.validationState.confirmPassword) },
-                    singleLine = true,
-                    isError = state.validationState.confirmPassword.isError,
-                    visualTransformation = getVisualTransformation(state.isConfirmPasswordVisible),
-                    trailingIcon = {
-                        VisibilityIcon(
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = state.confirmPassword,
+                        label = { Text(stringResource(R.string.auth_confirm_password)) },
+                        placeholder = {
+                            Text(stringResource(R.string.auth_enter_confirm_password))
+                        },
+                        supportingText = { SupportText(state.validationState.confirmPassword) },
+                        singleLine = true,
+                        isError = state.validationState.confirmPassword.isError,
+                        visualTransformation = getVisualTransformation(
                             state.isConfirmPasswordVisible,
-                            onClick = {
-                                onEvent(RegistrationEvent.OnConfirmPasswordVisibilityChanged)
-                            },
-                        )
-                    },
-                    onValueChange = { onEvent(RegistrationEvent.OnConfirmPasswordChanged(it)) },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Done,
-                    ),
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(80.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    if (state.showEmailConfirmationText) {
-                        Text(
-                            text = stringResource(
-                                R.string.auth_registration_confirm_message,
-                                state.email,
-                            ),
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.extendedColors.green.color,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-                }
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 32.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .alpha(if (state.showEmailConfirmationText) 1f else 0f),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        space = 8.dp,
-                        alignment = Alignment.CenterHorizontally,
-                    ),
-                ) {
-                    LCOutlineButton(
-                        text = stringResource(R.string.auth_open_mail),
-                        buttonSize = ButtonSize.SMALL,
-                        onClick = { onEvent(RegistrationEvent.OnOpenMailClicked) },
+                        ),
+                        trailingIcon = {
+                            VisibilityIcon(
+                                state.isConfirmPasswordVisible,
+                                onClick = {
+                                    onEvent(RegistrationEvent.OnConfirmPasswordVisibilityChanged)
+                                },
+                            )
+                        },
+                        onValueChange = { onEvent(RegistrationEvent.OnConfirmPasswordChanged(it)) },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Password,
+                            imeAction = ImeAction.Done,
+                        ),
                     )
 
-                    val sendAgainText = if (state.sendAgainEnable) {
-                        stringResource(R.string.auth_send_again)
+                    val registrationStateColor =
+                        if (state.registrationState == RegistrationState.SUCCESS) {
+                            MaterialTheme.extendedColors.green.color
+                        } else {
+                            MaterialTheme.colorScheme.error
+                        }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(80.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        state.registrationState?.let {
+                            Text(
+                                text = stringResource(
+                                    state.registrationState.message,
+                                    state.email,
+                                ),
+                                textAlign = TextAlign.Center,
+                                color = registrationStateColor,
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
+                    }
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    val rowAlpha =
+                        if (state.registrationState == RegistrationState.SUCCESS) 1f else 0f
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .alpha(rowAlpha),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            space = 8.dp,
+                            alignment = Alignment.CenterHorizontally,
+                        ),
+                    ) {
+                        LCOutlineButton(
+                            text = stringResource(R.string.auth_open_mail),
+                            buttonSize = ButtonSize.SMALL,
+                            onClick = { onEvent(RegistrationEvent.OnOpenMailClicked) },
+                        )
+
+                        val sendAgainText = if (state.sendAgainEnable) {
+                            stringResource(R.string.auth_send_again)
+                        } else {
+                            stringResource(R.string.auth_send_again_delay, state.sendAgainTimer)
+                        }
+                        LCOutlineButton(
+                            modifier = Modifier.weight(1f),
+                            text = sendAgainText,
+                            isEnable = state.sendAgainEnable,
+                            buttonSize = ButtonSize.SMALL,
+                            onClick = { onEvent(RegistrationEvent.OnSendAgainClicked) },
+                        )
+                    }
+
+                    if (state.registrationState == RegistrationState.SUCCESS) {
+                        LCFilledButton(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = stringResource(R.string.auth_continue),
+                            buttonSize = ButtonSize.MEDIUM,
+                            onClick = { onEvent(RegistrationEvent.OnContinueClicked) },
+                        )
                     } else {
-                        stringResource(R.string.auth_send_again_delay, state.sendAgainTimer)
+                        LCFilledButton(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = stringResource(R.string.auth_register),
+                            buttonSize = ButtonSize.MEDIUM,
+                            onClick = { onEvent(RegistrationEvent.OnRegisterClicked) },
+                        )
                     }
-                    LCOutlineButton(
-                        modifier = Modifier.weight(1f),
-                        text = sendAgainText,
-                        isEnable = state.sendAgainEnable,
-                        buttonSize = ButtonSize.SMALL,
-                        onClick = { onEvent(RegistrationEvent.OnSendAgainClicked) },
-                    )
-                }
-
-                if (state.showEmailConfirmationText) {
-                    LCFilledButton(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        text = stringResource(R.string.auth_continue),
-                        buttonSize = ButtonSize.MEDIUM,
-                        onClick = { onEvent(RegistrationEvent.OnContinueClicked) },
-                    )
-                } else {
-                    LCFilledButton(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        text = stringResource(R.string.auth_register),
-                        buttonSize = ButtonSize.MEDIUM,
-                        onClick = { onEvent(RegistrationEvent.OnRegisterClicked) },
-                    )
                 }
             }
         }
-    }
 
-    if (state.showEmailVerificationDialog) {
-        ThreeButtonsDialog(
-            title = stringResource(R.string.auth_email_verification_dialog_title),
-            description = stringResource(R.string.auth_email_verification_dialog_description),
-            okButtonDescription = ButtonDescription(
-                text = stringResource(R.string.auth_ok),
-                onClick = { onEvent(RegistrationEvent.OnHideEmailVerificationDialog) },
-            ),
-            onDismissRequest = { onEvent(RegistrationEvent.OnHideEmailVerificationDialog) },
-        )
+        if (state.showEmailVerificationDialog) {
+            ThreeButtonsDialog(
+                title = stringResource(R.string.auth_email_verification_dialog_title),
+                description = stringResource(R.string.auth_email_verification_dialog_description),
+                okButtonDescription = ButtonDescription(
+                    text = stringResource(R.string.auth_ok),
+                    onClick = { onEvent(RegistrationEvent.OnHideEmailVerificationDialog) },
+                ),
+                onDismissRequest = { onEvent(RegistrationEvent.OnHideEmailVerificationDialog) },
+            )
+        }
     }
+}
+
+@Composable
+private fun TopBar(onEvent: (RegistrationEvent) -> Unit) {
+    CustomTopAppBar(
+        title = stringResource(id = R.string.auth_registration),
+        onNavigationClick = { onEvent(RegistrationEvent.OnBackClicked) },
+    )
 }
 
 private fun getVisualTransformation(isVisible: Boolean): VisualTransformation = if (isVisible) {
@@ -319,7 +355,10 @@ private fun RegistrationScreenPreview() {
 private fun RegistrationSuccessScreenPreview() {
     LinguaCelerisTheme {
         Surface {
-            RegistrationScreenContent(RegistrationUiState(showEmailConfirmationText = true)) {}
+            RegistrationScreenContent(
+                RegistrationUiState(registrationState = RegistrationState.USER_EXIST),
+            ) {
+            }
         }
     }
 }

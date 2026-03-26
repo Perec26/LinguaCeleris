@@ -1,5 +1,8 @@
 package com.linguaceleris.auth.impl.ui.registration
 
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.linguaceleris.auth.impl.domain.GetEmailVerificationUseCase
 import com.linguaceleris.auth.impl.domain.RegisterUseCase
 import com.linguaceleris.auth.impl.domain.SendEmailVerificationUseCase
@@ -11,8 +14,8 @@ import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quizselection.api.QuizSelectionNavKey
 import com.linguaceleris.ui.EffectViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import javax.inject.Inject
+import kotlinx.coroutines.delay
 
 private const val SEND_AGAIN_TIMER = 60
 
@@ -73,11 +76,17 @@ internal class RegistrationViewModel @Inject constructor(
     }
 
     private fun onContinueClicked() {
-        if (getEmailVerificationUseCase()) {
-            navigator.navigateTo(QuizSelectionNavKey)
-        } else {
-            updateState { onShowEmailVerificationDialog() }
+        launch(::handleEmailVerificationError) {
+            if (getEmailVerificationUseCase()) {
+                navigator.navigateTo(QuizSelectionNavKey)
+            } else {
+                updateState { onShowEmailVerificationDialog() }
+            }
         }
+    }
+
+    private fun handleEmailVerificationError(exception: Exception) {
+        sendEffect(RegistrationEffect.ShowSnackbarError(SnackbarError.EMAIL_VERIFICATION_ERROR))
     }
 
     private fun onRegisterClicked() {
@@ -96,21 +105,39 @@ internal class RegistrationViewModel @Inject constructor(
             return
         }
 
-        launch {
+        launch(::handleRegistrationError) {
             updateState { onRegistrationStarted() }
             registerUseCase(currentState.nickname, currentState.email, currentState.password)
-            updateState { onRegistrationFinished() }
+            updateState { onRegistrationFinished(RegistrationState.SUCCESS) }
             startSendAgainTimer()
         }
     }
 
+    private fun handleRegistrationError(exception: Exception) {
+        val registrationState = when (exception) {
+            is FirebaseAuthUserCollisionException -> RegistrationState.USER_EXIST
+            is FirebaseAuthWeakPasswordException -> RegistrationState.WEAK_PASSWORD
+            is FirebaseAuthInvalidCredentialsException -> RegistrationState.INVALID_CREDENTIALS
+            else -> RegistrationState.UNKNOWN_ERROR
+        }
+        updateState { onRegistrationFinished(registrationState) }
+    }
+
     private fun onSendAgain() {
-        launch {
+        launch(
+            onError = ::handleSendingVerificationError,
+            doFinally = {
+                updateState { onSendingVerificationFinished() }
+                startSendAgainTimer()
+            },
+        ) {
             updateState { onSendingVerificationStarted() }
             sendEmailVerificationUseCase()
-            updateState { onSendingVerificationFinished() }
-            startSendAgainTimer()
         }
+    }
+
+    private fun handleSendingVerificationError(exception: Exception) {
+        sendEffect(RegistrationEffect.ShowSnackbarError(SnackbarError.SENDING_VERIFICATION_ERROR))
     }
 
     private fun startSendAgainTimer() {
