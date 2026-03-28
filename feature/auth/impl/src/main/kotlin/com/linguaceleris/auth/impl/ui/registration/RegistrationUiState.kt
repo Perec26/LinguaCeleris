@@ -5,17 +5,17 @@ import com.linguaceleris.auth.impl.R
 import com.linguaceleris.auth.impl.ui.registration.model.AuthValidationResult
 
 internal data class RegistrationUiState(
-    val nickname: String = "Test",
-    val email: String = "pepecprodakshn@gmail.com",
-    val password: String = "12345678",
-    val confirmPassword: String = "12345678",
+    val nickname: String = "",
+    val email: String = "",
+    val password: String = "",
+    val confirmPassword: String = "",
     val isPasswordVisible: Boolean = false,
     val isConfirmPasswordVisible: Boolean = false,
     val isRegistrationInProgress: Boolean = false,
     val isSendingVerificationInProgress: Boolean = false,
     val registrationState: RegistrationState? = null,
     val showEmailVerificationDialog: Boolean = false,
-    val validationState: ValidationState = ValidationState(),
+    val validationState: RegistrationValidationState = RegistrationValidationState(),
     val sendAgainTimer: Int = 0,
 ) {
     val sendAgainEnable = sendAgainTimer == 0
@@ -49,7 +49,7 @@ internal data class RegistrationUiState(
 
     fun onHideEmailVerificationDialog() = copy(showEmailVerificationDialog = false)
 
-    fun onValidationStateChanged(validationState: ValidationState) = copy(
+    fun onValidationStateChanged(validationState: RegistrationValidationState) = copy(
         validationState = validationState,
         registrationState = null,
     )
@@ -68,7 +68,7 @@ internal data class RegistrationUiState(
     fun setSendAgainTimer(sendAgainTimer: Int) = copy(sendAgainTimer = sendAgainTimer)
 }
 
-internal data class ValidationState(
+internal data class RegistrationValidationState(
     val nickname: AuthValidationResult = AuthValidationResult.Success,
     val email: AuthValidationResult = AuthValidationResult.Success,
     val password: AuthValidationResult = AuthValidationResult.Success,
@@ -87,7 +87,5 @@ internal enum class RegistrationState(
     USER_EXIST(R.string.auth_registration_user_exist),
     WEAK_PASSWORD(R.string.auth_registration_weak_password),
     INVALID_CREDENTIALS(R.string.auth_registration_invalid_credentials),
-    UNKNOWN_ERROR(R.string.auth_registration_unknown_error);
-
-    fun isError() = this != SUCCESS
+    UNKNOWN_ERROR(R.string.auth_unknown_error)
 }

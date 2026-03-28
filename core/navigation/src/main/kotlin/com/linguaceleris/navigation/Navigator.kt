@@ -19,4 +19,9 @@ class Navigator {
         backStack.removeLastOrNull()
         backStack.add(destination)
     }
+
+    fun startWith(destination: NavKey) {
+        backStack.clear()
+        backStack.add(destination)
+    }
 }

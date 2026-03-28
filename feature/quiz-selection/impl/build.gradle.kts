@@ -13,4 +13,5 @@ dependencies {
     implementation(projects.data.quiz)
     implementation(projects.feature.quizSelection.api)
     implementation(projects.feature.quiz.api)
+    implementation(projects.feature.auth.api)
 }

@@ -131,7 +131,7 @@ private fun RegistrationScreenContent(
                         modifier = Modifier.fillMaxWidth(),
                         value = state.email,
                         label = { Text(stringResource(R.string.auth_email)) },
-                        placeholder = { Text(stringResource(R.string.auth_enter)) },
+                        placeholder = { Text(stringResource(R.string.auth_type_email)) },
                         supportingText = { SupportText(state.validationState.email) },
                         isError = state.validationState.email.isError,
                         singleLine = true,
@@ -356,7 +356,7 @@ private fun RegistrationSuccessScreenPreview() {
     LinguaCelerisTheme {
         Surface {
             RegistrationScreenContent(
-                RegistrationUiState(registrationState = RegistrationState.USER_EXIST),
+                RegistrationUiState(registrationState = RegistrationState.SUCCESS),
             ) {
             }
         }

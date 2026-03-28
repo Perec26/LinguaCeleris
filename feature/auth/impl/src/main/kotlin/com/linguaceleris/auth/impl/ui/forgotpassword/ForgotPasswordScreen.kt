@@ -1,16 +1,13 @@
-package com.linguaceleris.auth.impl.ui.email
+package com.linguaceleris.auth.impl.ui.forgotpassword
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -21,40 +18,37 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.linguaceleris.auth.impl.R
 import com.linguaceleris.auth.impl.ui.registration.model.AuthValidationResult
 import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
+import com.linguaceleris.designsystem.theme.extendedColors
 import com.linguaceleris.designsystem.widgets.ButtonSize
 import com.linguaceleris.designsystem.widgets.CustomTopAppBar
 import com.linguaceleris.designsystem.widgets.LCFilledButton
-import com.linguaceleris.designsystem.widgets.LCTextButton
 import com.linguaceleris.designsystem.widgets.LoadingWrapper
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 
 @Composable
-internal fun EmailSignInScreen(viewModel: EmailSignInViewModel = hiltViewModel()) {
+internal fun ForgotPasswordScreen(viewModel: ForgotPasswordViewModel = hiltViewModel()) {
     val state = viewModel.state.collectAsState().value
-    EmailSignInScreenContent(state = state, onEvent = viewModel::onEvent)
+    ForgotPasswordScreenContent(state = state, onEvent = viewModel::onEvent)
 }
 
 @Composable
-private fun EmailSignInScreenContent(
-    state: EmailSignInUiState,
-    onEvent: (EmailSignInEvent) -> Unit,
+private fun ForgotPasswordScreenContent(
+    state: ForgotPasswordUiState,
+    onEvent: (ForgotPasswordEvent) -> Unit,
 ) {
     LoadingWrapper(
         modifier = Modifier.fillMaxSize(),
         isLoading = state.isLoading,
-        text = stringResource(R.string.auth_email_enter),
+        text = stringResource(R.string.auth_reset_password_loading),
     ) {
         Scaffold(
             topBar = { TopBar(onEvent) },
@@ -80,60 +74,26 @@ private fun EmailSignInScreenContent(
                         supportingText = { SupportText(state.validationState.email) },
                         isError = state.validationState.email.isError,
                         singleLine = true,
-                        onValueChange = { onEvent(EmailSignInEvent.OnEmailChanged(it)) },
+                        onValueChange = { onEvent(ForgotPasswordEvent.OnEmailChanged(it)) },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Email,
                             imeAction = ImeAction.Next,
                         ),
                     )
-
-                    TextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = state.password,
-                        label = { Text(stringResource(R.string.auth_password)) },
-                        placeholder = { Text(stringResource(R.string.auth_enter_password)) },
-                        supportingText = { SupportText(state.validationState.password) },
-                        singleLine = true,
-                        isError = state.validationState.password.isError,
-                        visualTransformation = getVisualTransformation(state.isPasswordVisible),
-                        trailingIcon = {
-                            VisibilityIcon(
-                                state.isPasswordVisible,
-                                onClick = {
-                                    onEvent(EmailSignInEvent.OnPasswordVisibilityChanged)
-                                },
-                            )
-                        },
-                        onValueChange = { onEvent(EmailSignInEvent.OnPasswordChanged(it)) },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Done,
-                        ),
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        LCTextButton(
-                            text = stringResource(R.string.auth_forgot_password),
-                            onClick = { onEvent(EmailSignInEvent.OnForgotPasswordClicked) },
-
-                        )
-                    }
-
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(80.dp),
                         contentAlignment = Alignment.Center,
                     ) {
-                        if (state.signInError != null) {
+                        if (state.showSuccess) {
                             Text(
-                                text = stringResource(state.signInError.message),
+                                text = stringResource(
+                                    R.string.auth_reset_password_success_message,
+                                    state.email,
+                                ),
                                 textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.error,
+                                color = MaterialTheme.extendedColors.green.color,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                         }
@@ -144,9 +104,10 @@ private fun EmailSignInScreenContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
-                    text = stringResource(R.string.auth_enter),
+                    text = stringResource(R.string.auth_reset_password),
                     buttonSize = ButtonSize.MEDIUM,
-                    onClick = { onEvent(EmailSignInEvent.OnEnterClick) },
+                    isEnable = !state.showSuccess,
+                    onClick = { onEvent(ForgotPasswordEvent.OnResetClick) },
                 )
             }
         }
@@ -154,30 +115,11 @@ private fun EmailSignInScreenContent(
 }
 
 @Composable
-private fun TopBar(onEvent: (EmailSignInEvent) -> Unit) {
+private fun TopBar(onEvent: (ForgotPasswordEvent) -> Unit) {
     CustomTopAppBar(
-        title = stringResource(id = R.string.auth_email_enter_title),
-        onNavigationClick = { onEvent(EmailSignInEvent.OnBackClicked) },
+        title = stringResource(id = R.string.auth_reset_password_title),
+        onNavigationClick = { onEvent(ForgotPasswordEvent.OnBackClicked) },
     )
-}
-
-private fun getVisualTransformation(isVisible: Boolean): VisualTransformation = if (isVisible) {
-    VisualTransformation.None
-} else {
-    PasswordVisualTransformation()
-}
-
-@Composable
-private fun VisibilityIcon(isVisible: Boolean, onClick: () -> Unit) {
-    val icon = if (isVisible) {
-        painterResource(id = R.drawable.auth_visibility_off)
-    } else {
-        painterResource(id = R.drawable.auth_visibility)
-    }
-
-    IconButton(onClick = onClick) {
-        Icon(painter = icon, contentDescription = null)
-    }
 }
 
 @Composable
@@ -191,12 +133,20 @@ private fun SupportText(validationResult: AuthValidationResult) {
 
 @ScreenPreviews
 @Composable
-private fun EmailSignInScreenPreview() {
+private fun ForgotPasswordScreenPreview() {
     LinguaCelerisTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            EmailSignInScreenContent(EmailSignInUiState()) {}
+        Surface {
+            ForgotPasswordScreenContent(ForgotPasswordUiState()) {}
+        }
+    }
+}
+
+@ScreenPreviews
+@Composable
+private fun ForgotPasswordResetSuccessScreenPreview() {
+    LinguaCelerisTheme {
+        Surface {
+            ForgotPasswordScreenContent(ForgotPasswordUiState(showSuccess = true)) {}
         }
     }
 }

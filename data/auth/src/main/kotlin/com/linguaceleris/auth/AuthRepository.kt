@@ -10,8 +10,6 @@ class AuthRepository @Inject constructor(
     suspend fun signInWithGoogle(idToken: String): Boolean =
         credentialService.signInWithGoogle(idToken)
 
-    fun isLoggedIn(): Boolean = credentialService.isLoggedIn()
-
     fun signOut() = credentialService.signOut()
 
     suspend fun register(nickname: String, email: String, password: String) {
@@ -22,5 +20,25 @@ class AuthRepository @Inject constructor(
 
     suspend fun sendEmailVerification() = credentialService.sendEmailVerification()
 
-    suspend fun getEmailVerification(): Boolean = credentialService.getEmailVerification()
+    suspend fun getEmailVerification(): Boolean {
+        credentialService.reloadUser()
+        return credentialService.getEmailVerification()
+    }
+
+    suspend fun signInWithEmail(email: String, password: String) {
+        credentialService.signInWithEmail(email, password)
+    }
+
+    suspend fun resetPassword(email: String) = credentialService.resetPassword(email)
+
+    fun getAuthState(): AuthState {
+        if (!credentialService.isLoggedIn()) return AuthState.NOT_LOGGED_IN
+        if (!credentialService.isAnonymous()) return AuthState.ANONYMOUS
+        if (!credentialService.getEmailVerification()) return AuthState.EMAIL_NOT_VERIFIED
+        return AuthState.LOGGED_IN
+    }
+
+    fun getWebClientId() = credentialService.getWebClientId()
+
+    suspend fun signInAnonymously() = credentialService.signInAnonymously()
 }

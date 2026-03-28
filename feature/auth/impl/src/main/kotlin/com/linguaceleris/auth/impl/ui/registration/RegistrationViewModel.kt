@@ -78,7 +78,7 @@ internal class RegistrationViewModel @Inject constructor(
     private fun onContinueClicked() {
         launch(::handleEmailVerificationError) {
             if (getEmailVerificationUseCase()) {
-                navigator.navigateTo(QuizSelectionNavKey)
+                navigator.startWith(QuizSelectionNavKey)
             } else {
                 updateState { onShowEmailVerificationDialog() }
             }
@@ -90,7 +90,7 @@ internal class RegistrationViewModel @Inject constructor(
     }
 
     private fun onRegisterClicked() {
-        val validationState = ValidationState(
+        val validationState = RegistrationValidationState(
             nickname = validateNicknameUseCase(state.value.nickname),
             email = validateEmailUseCase(state.value.email),
             password = validatePasswordUseCase(state.value.password),

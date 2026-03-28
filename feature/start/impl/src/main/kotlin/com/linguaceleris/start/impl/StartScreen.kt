@@ -1,10 +1,8 @@
 package com.linguaceleris.start.impl
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -25,21 +23,7 @@ private fun StartScreenContent(state: StartUiState, onEvent: (StartEvent) -> Uni
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(
-                onClick = { onEvent(StartEvent.OnButtonClick) },
-            ) {
-                Text("Start")
-            }
-
-            Button(
-                onClick = { onEvent(StartEvent.OnButton2Click) },
-            ) {
-                Text(state.number.toString())
-            }
-        }
+        CircularProgressIndicator()
     }
 }
 

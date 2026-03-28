@@ -39,15 +39,13 @@ dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.core.navigation)
     implementation(projects.data.auth)
+    implementation(projects.feature.auth.impl)
+    implementation(projects.feature.start.api)
     implementation(projects.feature.start.impl)
-    implementation(projects.feature.login.impl)
-    implementation(projects.feature.login.api)
     implementation(projects.feature.quiz.impl)
     implementation(projects.feature.quizSelection.impl)
     implementation(projects.feature.quizSelection.api)
     implementation(projects.feature.quizSummary.impl)
-    implementation(projects.feature.auth.api)
-    implementation(projects.feature.auth.impl)
 }
 
 fun getBuildNumber(): Int {

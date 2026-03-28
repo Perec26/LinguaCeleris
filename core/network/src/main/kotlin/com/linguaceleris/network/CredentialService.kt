@@ -25,10 +25,13 @@ class CredentialService @Inject constructor(
             .signInWithCredential(firebaseCredential)
             .await()
 
+        reloadUser()
         return authResult.user != null
     }
 
     fun isLoggedIn(): Boolean = currentUser != null
+
+    fun isAnonymous(): Boolean = currentUser?.isAnonymous == false
 
     fun getWebClientId(): String = webClientId
 
@@ -55,8 +58,19 @@ class CredentialService @Inject constructor(
         currentUser?.reload()?.await()
     }
 
-    suspend fun getEmailVerification(): Boolean {
+    fun getEmailVerification(): Boolean = currentUser?.isEmailVerified ?: false
+
+    suspend fun signInWithEmail(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password).await()
         reloadUser()
-        return currentUser?.isEmailVerified ?: false
+    }
+
+    suspend fun resetPassword(email: String) {
+        auth.sendPasswordResetEmail(email).await()
+    }
+
+    suspend fun signInAnonymously() {
+        auth.signInAnonymously().await()
+        reloadUser()
     }
 }

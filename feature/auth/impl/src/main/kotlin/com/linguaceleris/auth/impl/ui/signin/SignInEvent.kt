@@ -9,4 +9,9 @@ internal sealed class SignInEvent {
     data object OnSignInAsGuestClick : SignInEvent()
     data object OnGoogleSignInClick : SignInEvent()
     data object OnRegistrationClick : SignInEvent()
+    data object OnAnonymousSignInConfirmClick : SignInEvent()
+    data object OnAnonymousSignInCancelClick : SignInEvent()
+    data class OnGoogleGetCredentialException(
+        val exception: Exception
+    ) : SignInEvent()
 }

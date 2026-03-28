@@ -1,13 +1,16 @@
 package com.linguaceleris.auth.impl.ui.email
 
 internal sealed class EmailSignInEvent {
-    data class OnEmailChange(
-        val email: String
-    ) : EmailSignInEvent()
-    data class OnPasswordChange(
-        val password: String
+    data class OnEmailChanged(
+        val email: String,
     ) : EmailSignInEvent()
 
-    data object OnNextClick : EmailSignInEvent()
-    data object OnPasswordVisibilityChange : EmailSignInEvent()
+    data class OnPasswordChanged(
+        val password: String,
+    ) : EmailSignInEvent()
+
+    data object OnEnterClick : EmailSignInEvent()
+    data object OnPasswordVisibilityChanged : EmailSignInEvent()
+    data object OnBackClicked : EmailSignInEvent()
+    data object OnForgotPasswordClicked : EmailSignInEvent()
 }

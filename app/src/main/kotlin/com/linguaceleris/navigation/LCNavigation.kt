@@ -11,8 +11,7 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import com.linguaceleris.auth.impl.navigation.authSelectionEntry
-import com.linguaceleris.login.impl.navigation.loginEntry
+import com.linguaceleris.auth.impl.navigation.authEntry
 import com.linguaceleris.quiz.impl.navigation.quizEntry
 import com.linguaceleris.quizselection.impl.navigation.quizSelectionEntry
 import com.linguaceleris.quizsummary.impl.navigation.quizSummaryEntry
@@ -24,12 +23,11 @@ internal fun LCApp(navigator: Navigator) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     val entryProvider = entryProvider {
-        authSelectionEntry()
+        authEntry()
         startEntry()
         quizEntry()
         quizSelectionEntry()
         quizSummaryEntry()
-        loginEntry()
     }
 
     CompositionLocalProvider(LocalSnackbarHostState provides snackbarHostState) {
