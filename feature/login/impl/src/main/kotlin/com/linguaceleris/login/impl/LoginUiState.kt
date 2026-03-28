@@ -1,5 +1,3 @@
 package com.linguaceleris.login.impl
 
-internal data class LoginUiState(
-    val number: Int,
-)
+internal data class LoginUiState(val number: Int)

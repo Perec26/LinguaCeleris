@@ -10,9 +10,7 @@ private const val QUIZ_COLLECTION_NAME = "quizzes"
 private const val QUIZ_META_COLLECTION_NAME = "quiz_meta"
 private const val QUIZ_META_SCHEDULE_ID = "schedule"
 
-class QuizDataSource @Inject constructor(
-    private val service: FirestoreService,
-) {
+class QuizDataSource @Inject constructor(private val service: FirestoreService) {
     suspend fun getQuiz(quizId: String): QuizDTO? {
         val querySnapshot = service.getCollection(QUIZ_COLLECTION_NAME) ?: return null
         return querySnapshot.documents.firstOrNull {

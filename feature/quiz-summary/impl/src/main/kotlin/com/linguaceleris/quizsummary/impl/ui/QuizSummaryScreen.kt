@@ -13,8 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 import com.linguaceleris.designsystem.widgets.DefaultFilledButton
+import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.quizsummary.impl.R
 
@@ -56,7 +56,7 @@ private fun QuizSummaryScreenContent(
 @ScreenPreviews
 @Composable
 private fun QuizSummaryScreenPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         QuizSummaryScreenContent(QuizSummaryUiState()) {}
     }
 }

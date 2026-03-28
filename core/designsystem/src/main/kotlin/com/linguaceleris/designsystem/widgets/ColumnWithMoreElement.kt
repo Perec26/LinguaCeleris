@@ -14,7 +14,6 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @Composable
 fun ColumnWithMoreElement(
@@ -83,7 +82,7 @@ fun ColumnWithMoreElement(
 @PreviewLightDark
 @Composable
 private fun ColumnWithMoreElementPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         Box(modifier = Modifier.fillMaxSize()) {
             ColumnWithMoreElement(
                 elements = { (1..8).forEach { GetPreviewElement(it) } },
@@ -105,7 +104,7 @@ private fun GetPreviewElement(
 }
 
 @Composable
-private fun PreviewElement(index: Int, textColor: Color, backgroundColor: Color,) {
+private fun PreviewElement(index: Int, textColor: Color, backgroundColor: Color) {
     Box(
         modifier = Modifier
             .fillMaxWidth()

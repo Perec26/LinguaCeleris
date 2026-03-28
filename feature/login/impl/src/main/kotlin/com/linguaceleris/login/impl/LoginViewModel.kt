@@ -7,9 +7,8 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel(assistedFactory = LoginViewModel.Factory::class)
-internal class LoginViewModel @AssistedInject constructor(
-    @Assisted val number: Int,
-) : BaseViewModel<LoginUiState, LoginEvent>(initialState = LoginUiState(number)) {
+internal class LoginViewModel @AssistedInject constructor(@Assisted val number: Int) :
+    BaseViewModel<LoginUiState, LoginEvent>(initialState = LoginUiState(number)) {
 
     override fun onEvent(event: LoginEvent) {
         when (event) {

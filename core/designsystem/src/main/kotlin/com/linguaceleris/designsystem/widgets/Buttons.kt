@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -28,7 +29,6 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.R
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @Composable
 fun DefaultFilledButton(
@@ -250,154 +250,107 @@ enum class ButtonSize {
 @PreviewLightDark
 @Composable
 private fun FilledButtonsPreview() {
-    LinguaCelerisTheme {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            ButtonSize.entries.forEach {
-                LCFilledButton(
-                    text = "Filled button",
-                    buttonSize = it,
-                ) {}
-            }
-        }
+    ButtonPreview {
+        LCFilledButton(
+            text = "Filled button",
+            buttonSize = it,
+        ) {}
     }
 }
 
 @PreviewLightDark
 @Composable
 private fun FilledButtonsWithIconPreview() {
-    LinguaCelerisTheme {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            ButtonSize.entries.forEach {
-                LCFilledButton(
-                    text = "Filled button with Icon",
-                    icon = painterResource(R.drawable.email),
-                    buttonSize = it,
-                ) {}
-            }
-        }
+    ButtonPreview {
+        LCFilledButton(
+            text = "Filled button with Icon",
+            icon = painterResource(R.drawable.email),
+            buttonSize = it,
+        ) {}
     }
 }
 
 @PreviewLightDark
 @Composable
 private fun TextButtonsPreview() {
-    LinguaCelerisTheme {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            ButtonSize.entries.forEach {
-                LCTextButton(
-                    text = "Text Button",
-                    buttonSize = it,
-                ) {}
-            }
-        }
+    ButtonPreview {
+        LCTextButton(
+            text = "Text Button",
+            buttonSize = it,
+        ) {}
     }
 }
 
 @PreviewLightDark
 @Composable
 private fun TextButtonsWithIconPreview() {
-    LinguaCelerisTheme {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            ButtonSize.entries.forEach {
-                LCTextButton(
-                    text = "Text Button with Icon",
-                    icon = painterResource(R.drawable.email),
-                    buttonSize = it,
-                ) {}
-            }
-        }
+    ButtonPreview {
+        LCTextButton(
+            text = "Text Button with Icon",
+            icon = painterResource(R.drawable.email),
+            buttonSize = it,
+        ) {}
     }
 }
 
 @PreviewLightDark
 @Composable
 private fun FilledTonalButtonsPreview() {
-    LinguaCelerisTheme {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            ButtonSize.entries.forEach {
-                LCFilledTonalButton(
-                    text = "Filled Tonal Button",
-                    buttonSize = it,
-                ) {}
-            }
-        }
+    ButtonPreview {
+        LCFilledTonalButton(
+            text = "Filled Tonal Button",
+            buttonSize = it,
+        ) {}
     }
 }
 
 @PreviewLightDark
 @Composable
 private fun FilledTonalWithIconPreview() {
-    LinguaCelerisTheme {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            ButtonSize.entries.forEach {
-                LCFilledTonalButton(
-                    text = "Filled Tonal Button with Icon",
-                    icon = painterResource(R.drawable.email),
-                    buttonSize = it,
-                ) {}
-            }
-        }
+    ButtonPreview {
+        LCFilledTonalButton(
+            text = "Filled Tonal Button with Icon",
+            icon = painterResource(R.drawable.email),
+            buttonSize = it,
+        ) {}
     }
 }
 
 @PreviewLightDark
 @Composable
 private fun OutlineButtonsPreview() {
-    LinguaCelerisTheme {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            ButtonSize.entries.forEach {
-                LCOutlineButton(
-                    text = "OutLine Button",
-                    buttonSize = it,
-                ) {}
-            }
-        }
+    ButtonPreview {
+        LCOutlineButton(
+            text = "OutLine Button",
+            buttonSize = it,
+        ) {}
     }
 }
 
 @PreviewLightDark
 @Composable
 private fun OutlineButtonsWithIconPreview() {
-    LinguaCelerisTheme {
+    ButtonPreview {
+        LCOutlineButton(
+            text = "OutLine Button with Icon",
+            icon = painterResource(R.drawable.email),
+            buttonSize = it,
+        ) {}
+    }
+}
+
+@Composable
+private fun ButtonPreview(content: @Composable (ButtonSize) -> Unit) {
+    LCPreview {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             ButtonSize.entries.forEach {
-                LCOutlineButton(
-                    text = "OutLine Button with Icon",
-                    icon = painterResource(R.drawable.email),
-                    buttonSize = it,
-                ) {}
+                content(it)
             }
         }
     }

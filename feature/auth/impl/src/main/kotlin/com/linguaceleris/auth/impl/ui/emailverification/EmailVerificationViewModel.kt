@@ -2,8 +2,10 @@ package com.linguaceleris.auth.impl.ui.emailverification
 
 import com.linguaceleris.auth.api.SignInNavKey
 import com.linguaceleris.auth.impl.domain.GetEmailVerificationUseCase
+import com.linguaceleris.auth.impl.domain.GetSendAgainTimerUseCase
 import com.linguaceleris.auth.impl.domain.SendEmailVerificationUseCase
 import com.linguaceleris.auth.impl.domain.SignOutUseCase
+import com.linguaceleris.auth.impl.ui.VerificationSnackbarError
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quizselection.api.QuizSelectionNavKey
 import com.linguaceleris.ui.EffectViewModel
@@ -11,9 +13,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-
-private const val SEND_AGAIN_TIMER = 60
 
 @HiltViewModel(assistedFactory = EmailVerificationViewModel.Factory::class)
 internal class EmailVerificationViewModel @AssistedInject constructor(
@@ -21,6 +20,7 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
     private val getEmailVerificationUseCase: GetEmailVerificationUseCase,
     private val singOutUseCase: SignOutUseCase,
     private val sendEmailVerificationUseCase: SendEmailVerificationUseCase,
+    private val getSendAgainTimerUseCase: GetSendAgainTimerUseCase,
     @Assisted private val fromStart: Boolean,
 ) : EffectViewModel<EmailVerificationUiState, EmailVerificationEvent, EmailVerificationEffect>(
     initialState = EmailVerificationUiState(
@@ -80,9 +80,7 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
     }
 
     private fun handleEmailVerificationError(exception: Exception) {
-        sendEffect(
-            EmailVerificationEffect.ShowSnackbarError(SnackbarError.EMAIL_VERIFICATION_ERROR),
-        )
+        sendEffect(EmailVerificationEffect.ShowSnackbarError(VerificationSnackbarError.EMAIL))
     }
 
     private fun onSendAgain() {
@@ -99,20 +97,12 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
     }
 
     private fun handleSendingVerificationError(exception: Exception) {
-        sendEffect(
-            EmailVerificationEffect.ShowSnackbarError(SnackbarError.SENDING_VERIFICATION_ERROR),
-        )
+        sendEffect(EmailVerificationEffect.ShowSnackbarError(VerificationSnackbarError.SENDING))
     }
 
     private fun startSendAgainTimer() {
         launch {
-            var timerValue = SEND_AGAIN_TIMER
-            updateState { setSendAgainTimer(timerValue) }
-            while (timerValue > 0) {
-                delay(1000)
-                timerValue -= 1
-                updateState { setSendAgainTimer(timerValue) }
-            }
+            getSendAgainTimerUseCase().collect { updateState { setSendAgainTimer(it) } }
         }
     }
 

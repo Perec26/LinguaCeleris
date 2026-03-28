@@ -4,6 +4,4 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class QuizNavKey(
-    val quizId: String
-) : NavKey
+data class QuizNavKey(val quizId: String) : NavKey

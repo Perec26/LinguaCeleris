@@ -22,11 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
 import com.linguaceleris.designsystem.R
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -117,12 +116,10 @@ fun PatternSurface(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun PatternSurfacePreview() {
-    LinguaCelerisTheme {
-        PatternSurface(
-            modifier = Modifier.fillMaxSize(),
-        ) {}
+    LCPreview {
+        PatternSurface(modifier = Modifier.fillMaxSize()) {}
     }
 }

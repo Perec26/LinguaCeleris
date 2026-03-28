@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 import com.linguaceleris.designsystem.widgets.DefaultFilledButton
+import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.ui.matchingMock
 import com.linguaceleris.quiz.impl.ui.model.TaskUI
@@ -85,12 +84,10 @@ internal fun MatchWidget(
 @PreviewLightDark
 @Composable
 private fun MatchWidgetPreview() {
-    LinguaCelerisTheme {
-        Surface {
-            MatchWidget(
-                task = matchingMock,
-                onContinueButtonClick = {},
-            ) {}
-        }
+    LCPreview {
+        MatchWidget(
+            task = matchingMock,
+            onContinueButtonClick = {},
+        ) {}
     }
 }

@@ -4,20 +4,19 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.linguaceleris.auth.impl.domain.GetEmailVerificationUseCase
+import com.linguaceleris.auth.impl.domain.GetSendAgainTimerUseCase
 import com.linguaceleris.auth.impl.domain.RegisterUseCase
 import com.linguaceleris.auth.impl.domain.SendEmailVerificationUseCase
 import com.linguaceleris.auth.impl.domain.ValidateConfirmPasswordUseCase
 import com.linguaceleris.auth.impl.domain.ValidateEmailUseCase
 import com.linguaceleris.auth.impl.domain.ValidateNicknameUseCase
 import com.linguaceleris.auth.impl.domain.ValidatePasswordUseCase
+import com.linguaceleris.auth.impl.ui.VerificationSnackbarError
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quizselection.api.QuizSelectionNavKey
 import com.linguaceleris.ui.EffectViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.delay
-
-private const val SEND_AGAIN_TIMER = 60
 
 @HiltViewModel
 internal class RegistrationViewModel @Inject constructor(
@@ -29,6 +28,7 @@ internal class RegistrationViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
     private val sendEmailVerificationUseCase: SendEmailVerificationUseCase,
     private val getEmailVerificationUseCase: GetEmailVerificationUseCase,
+    private val getSendAgainTimerUseCase: GetSendAgainTimerUseCase,
 ) : EffectViewModel<RegistrationUiState, RegistrationEvent, RegistrationEffect>(
     initialState = RegistrationUiState(),
 ) {
@@ -86,19 +86,18 @@ internal class RegistrationViewModel @Inject constructor(
     }
 
     private fun handleEmailVerificationError(exception: Exception) {
-        sendEffect(RegistrationEffect.ShowSnackbarError(SnackbarError.EMAIL_VERIFICATION_ERROR))
+        sendEffect(RegistrationEffect.ShowSnackbarError(VerificationSnackbarError.EMAIL))
     }
 
     private fun onRegisterClicked() {
-        val validationState = RegistrationValidationState(
-            nickname = validateNicknameUseCase(state.value.nickname),
-            email = validateEmailUseCase(state.value.email),
-            password = validatePasswordUseCase(state.value.password),
-            confirmPassword = validateConfirmPasswordUseCase(
-                state.value.confirmPassword,
-                state.value.password,
-            ),
-        )
+        val validationState = state.value.run {
+            RegistrationValidationState(
+                nickname = validateNicknameUseCase(nickname),
+                email = validateEmailUseCase(email),
+                password = validatePasswordUseCase(password),
+                confirmPassword = validateConfirmPasswordUseCase(confirmPassword, password),
+            )
+        }
 
         if (!validationState.isSuccessful) {
             updateState { onValidationStateChanged(validationState) }
@@ -137,18 +136,12 @@ internal class RegistrationViewModel @Inject constructor(
     }
 
     private fun handleSendingVerificationError(exception: Exception) {
-        sendEffect(RegistrationEffect.ShowSnackbarError(SnackbarError.SENDING_VERIFICATION_ERROR))
+        sendEffect(RegistrationEffect.ShowSnackbarError(VerificationSnackbarError.SENDING))
     }
 
     private fun startSendAgainTimer() {
         launch {
-            var timerValue = SEND_AGAIN_TIMER
-            updateState { setSendAgainTimer(timerValue) }
-            while (timerValue > 0) {
-                delay(1000)
-                timerValue -= 1
-                updateState { setSendAgainTimer(timerValue) }
-            }
+            getSendAgainTimerUseCase().collect { updateState { setSendAgainTimer(it) } }
         }
     }
 }

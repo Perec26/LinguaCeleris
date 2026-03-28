@@ -3,15 +3,11 @@ package com.linguaceleris.auth.impl.ui.registration.model
 import androidx.annotation.StringRes
 import com.linguaceleris.auth.impl.R
 
-internal sealed class AuthValidationResult(
-    val isError: Boolean
-) {
+internal sealed class AuthValidationResult(val isError: Boolean) {
 
     object Success : AuthValidationResult(false)
 
-    sealed class Error(
-        @param:StringRes val messageResId: Int,
-    ) : AuthValidationResult(true) {
+    sealed class Error(@param:StringRes val messageResId: Int) : AuthValidationResult(true) {
         data object EmptyField : Error(
             messageResId = R.string.auth_validation_error_empty_field,
         )

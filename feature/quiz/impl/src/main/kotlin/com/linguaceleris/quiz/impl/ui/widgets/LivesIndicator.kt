@@ -7,8 +7,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.quiz.impl.R
 
 @Composable
@@ -29,10 +29,10 @@ internal fun LivesIndicator(totalLives: Int = 3, remainingLives: Int = 3) {
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun LivesIndicatorPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         Column {
             LivesIndicator(remainingLives = 3)
             LivesIndicator(remainingLives = 2)

@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.linguaceleris.designsystem.R
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @Composable
 fun DefaultCounter(
@@ -55,7 +54,7 @@ fun DefaultCounter(
 @PreviewLightDark
 @Composable
 private fun CounterPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         DefaultCounter()
     }
 }

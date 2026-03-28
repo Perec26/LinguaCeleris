@@ -37,9 +37,7 @@ internal data class EmailSignInValidationState(
         password is AuthValidationResult.Success
 }
 
-internal enum class EmailSignInError(
-    @param:StringRes val message: Int,
-) {
+internal enum class EmailSignInError(@param:StringRes val message: Int) {
     INVALID_CREDENTIALS(R.string.auth_email_sign_in_invalid_credentials),
     UNKNOWN_ERROR(R.string.auth_unknown_error)
 }

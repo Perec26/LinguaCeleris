@@ -28,9 +28,7 @@ sealed class TaskDataDTO {
     }
 
     @Serializable
-    data class MatchingDataDTO(
-        val pairs: List<MatchingPairDTO>,
-    ) : TaskDataDTO() {
+    data class MatchingDataDTO(val pairs: List<MatchingPairDTO>) : TaskDataDTO() {
 
         override fun getImages(): List<String> {
             val images = pairs.flatMap { listOf(it.left.image, it.right.image) }

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
+import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 
 @Composable
@@ -30,7 +30,7 @@ private fun LoginScreenContent(state: LoginUiState, onEvent: (LoginEvent) -> Uni
 @ScreenPreviews
 @Composable
 private fun LoginScreenPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         LoginScreenContent(LoginUiState(6)) {}
     }
 }

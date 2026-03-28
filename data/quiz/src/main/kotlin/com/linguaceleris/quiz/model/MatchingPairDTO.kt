@@ -5,7 +5,4 @@ import kotlinx.serialization.Serializable
 
 @OptIn(markerClass = [InternalSerializationApi::class])
 @Serializable
-data class MatchingPairDTO(
-    val left: VariantDTO,
-    val right: VariantDTO,
-)
+data class MatchingPairDTO(val left: VariantDTO, val right: VariantDTO)

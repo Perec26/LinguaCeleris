@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,8 +20,8 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 import com.linguaceleris.designsystem.widgets.DefaultImageButton
+import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.ui.fillInBlankMock
 import com.linguaceleris.quiz.impl.ui.imageSelectWordTranslation
@@ -39,7 +38,7 @@ internal fun TaskContentWidget(
     onAudioClick: (String?) -> Unit,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = 48.dp)
             .fillMaxWidth()
             .aspectRatio(1f),
@@ -115,16 +114,12 @@ private fun ImageTaskContent(task: WordCardUI) {
 @Composable
 @Preview
 private fun TaskContentWidgetTextPreview() {
-    LinguaCelerisTheme {
-        Surface {
-            Column(
-                verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                TaskContentWidget(
-                    task = fillInBlankMock,
-                ) {}
-            }
+    LCPreview {
+        Column(
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            TaskContentWidget(task = fillInBlankMock) {}
         }
     }
 }
@@ -132,35 +127,23 @@ private fun TaskContentWidgetTextPreview() {
 @Composable
 @Preview
 private fun TaskContentWidgetAudioPreview() {
-    LinguaCelerisTheme {
-        Surface {
-            TaskContentWidget(
-                task = listenSelectTranslationMock,
-            ) {}
-        }
+    LCPreview {
+        TaskContentWidget(task = listenSelectTranslationMock) {}
     }
 }
 
 @Composable
 @Preview
 private fun TaskContentWidgetTextAudioPreview() {
-    LinguaCelerisTheme {
-        Surface {
-            TaskContentWidget(
-                task = selectCorrectAnswerMock,
-            ) {}
-        }
+    LCPreview {
+        TaskContentWidget(task = selectCorrectAnswerMock) {}
     }
 }
 
 @Composable
 @Preview
 private fun TaskContentWidgetImageAudioPreview() {
-    LinguaCelerisTheme {
-        Surface {
-            TaskContentWidget(
-                task = imageSelectWordTranslation,
-            ) {}
-        }
+    LCPreview {
+        TaskContentWidget(task = imageSelectWordTranslation) {}
     }
 }

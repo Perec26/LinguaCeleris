@@ -21,9 +21,7 @@ internal data object EmailSignInNavKey : NavKey
 internal data object RegistrationNavKey : NavKey
 
 @Serializable
-internal data class ForgotPasswordNavKey(
-    val email: String,
-) : NavKey
+internal data class ForgotPasswordNavKey(val email: String) : NavKey
 
 fun EntryProviderScope<NavKey>.authEntry() {
     entry<SignInNavKey> { _ -> SignInScreen() }

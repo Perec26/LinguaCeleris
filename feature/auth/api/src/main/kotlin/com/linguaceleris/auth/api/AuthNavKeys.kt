@@ -7,6 +7,4 @@ import kotlinx.serialization.Serializable
 data object SignInNavKey : NavKey
 
 @Serializable
-data class EmailVerificationNavKey(
-    val fromStart: Boolean,
-) : NavKey
+data class EmailVerificationNavKey(val fromStart: Boolean) : NavKey

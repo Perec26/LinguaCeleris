@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 import com.linguaceleris.designsystem.widgets.LCFilledButton
+import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.quizselection.impl.R
 import com.linguaceleris.quizselection.impl.ui.model.DayQuizzesUI
@@ -88,7 +88,7 @@ private fun QuizButton(text: String, onClick: () -> Unit) {
 @ScreenPreviews
 @Composable
 private fun QuizSelectionScreenLoadingPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         QuizSelectionScreenContent(QuizSelectionUiState()) {}
     }
 }
@@ -96,7 +96,7 @@ private fun QuizSelectionScreenLoadingPreview() {
 @ScreenPreviews
 @Composable
 private fun QuizSelectionScreenContentPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         QuizSelectionScreenContent(
             state = QuizSelectionUiState(
                 isLoading = false,

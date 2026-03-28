@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
+import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.quiz.impl.ui.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.widgets.LivesIndicator
@@ -132,7 +132,7 @@ private fun TopPanel(progress: Float, lives: Int, onBackClick: () -> Unit) {
 @ScreenPreviews
 @Composable
 private fun QuizScreenLoadingPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         QuizScreenContent(
             state = quizStateMock.copy(screenState = ScreenState.LOADING),
         ) {}
@@ -142,7 +142,7 @@ private fun QuizScreenLoadingPreview() {
 @ScreenPreviews
 @Composable
 private fun QuizScreenContentPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         QuizScreenContent(
             state = quizStateMock,
         ) {}

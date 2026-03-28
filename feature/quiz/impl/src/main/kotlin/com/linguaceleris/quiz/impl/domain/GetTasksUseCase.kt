@@ -7,9 +7,7 @@ import javax.inject.Inject
 
 private const val TASK_REQUIRED_NUMBER = 12
 
-internal class GetTasksUseCase @Inject constructor(
-    val repository: QuizRepository,
-) {
+internal class GetTasksUseCase @Inject constructor(val repository: QuizRepository) {
     suspend operator fun invoke(quizId: String): List<TaskUI> {
         val quiz = repository.getQuiz(quizId)
         val tasks = quiz?.tasks?.toUi() ?: emptyList()

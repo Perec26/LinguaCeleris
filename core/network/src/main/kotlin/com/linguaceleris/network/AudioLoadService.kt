@@ -11,9 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @OptIn(UnstableApi::class)
-class AudioLoadService @Inject constructor(
-    private val cacheFactory: CacheDataSource.Factory,
-) {
+class AudioLoadService @Inject constructor(private val cacheFactory: CacheDataSource.Factory) {
 
     suspend fun loadAudio(url: String) {
         withContext(Dispatchers.IO) {

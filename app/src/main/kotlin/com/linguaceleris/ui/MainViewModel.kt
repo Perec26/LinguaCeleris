@@ -6,9 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-internal class MainViewModel @Inject constructor(
-    private val navigator: Navigator,
-) : BaseViewModel<MainState, MainEvent>(initialState = MainState) {
+internal class MainViewModel @Inject constructor(private val navigator: Navigator) :
+    BaseViewModel<MainState, MainEvent>(initialState = MainState) {
 
     init {
         navigator.startWith(StartNavKey)

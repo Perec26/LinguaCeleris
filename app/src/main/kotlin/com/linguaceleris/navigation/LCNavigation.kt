@@ -1,5 +1,11 @@
 package com.linguaceleris.navigation
 
+import androidx.compose.animation.core.EaseInOutCubic
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -29,6 +35,25 @@ internal fun LCApp(navigator: Navigator) {
         quizSelectionEntry()
         quizSummaryEntry()
     }
+    val duration = 300
+
+    val slideInFromLeft = slideInHorizontally(
+        initialOffsetX = { -it },
+        animationSpec = tween(duration, easing = EaseInOutCubic),
+    )
+    val slideOutToRight = slideOutHorizontally(
+        targetOffsetX = { it },
+        animationSpec = tween(duration, easing = EaseInOutCubic),
+    )
+
+    val slideInFromRight = slideInHorizontally(
+        initialOffsetX = { it },
+        animationSpec = tween(duration, easing = EaseInOutCubic),
+    )
+    val slideOutToLeft = slideOutHorizontally(
+        targetOffsetX = { -it },
+        animationSpec = tween(duration, easing = EaseInOutCubic),
+    )
 
     CompositionLocalProvider(LocalSnackbarHostState provides snackbarHostState) {
         Scaffold(
@@ -42,6 +67,17 @@ internal fun LCApp(navigator: Navigator) {
                     rememberViewModelStoreNavEntryDecorator(),
                 ),
                 backStack = navigator.backStack,
+                transitionSpec = {
+                    slideInFromRight togetherWith (slideOutToLeft + fadeOut(tween(duration)))
+                },
+
+                popTransitionSpec = {
+                    slideInFromLeft togetherWith (slideOutToRight + fadeOut(tween(duration)))
+                },
+
+                predictivePopTransitionSpec = {
+                    slideInFromLeft togetherWith (slideOutToRight + fadeOut(tween(duration)))
+                },
                 entryProvider = entryProvider,
                 onBack = navigator::back,
             )

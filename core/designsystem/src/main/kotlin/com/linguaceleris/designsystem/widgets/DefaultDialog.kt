@@ -11,10 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @Composable
-fun DefaultDialog(onDismissRequest: () -> Unit, content: @Composable () -> Unit,) {
+fun DefaultDialog(onDismissRequest: () -> Unit, content: @Composable () -> Unit) {
     Dialog(onDismissRequest = onDismissRequest) {
         Card(
             modifier = Modifier.padding(24.dp),
@@ -35,7 +34,7 @@ fun DefaultDialog(onDismissRequest: () -> Unit, content: @Composable () -> Unit,
 @PreviewLightDark
 @Composable
 private fun DefaultDialogPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         DefaultDialog(
             onDismissRequest = {},
         ) {

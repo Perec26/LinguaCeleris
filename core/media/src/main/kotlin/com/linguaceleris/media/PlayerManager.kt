@@ -7,9 +7,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import javax.inject.Inject
 
-class PlayerManager @Inject constructor(
-    private val player: ExoPlayer,
-) {
+class PlayerManager @Inject constructor(private val player: ExoPlayer) {
 
     fun playRaw(@RawRes rawId: Int) {
         val uri = Uri.Builder()

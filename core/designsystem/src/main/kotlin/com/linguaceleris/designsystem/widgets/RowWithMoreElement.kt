@@ -15,7 +15,6 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @Composable
 fun RowWithMoreElement(
@@ -84,7 +83,7 @@ fun RowWithMoreElement(
 @PreviewLightDark
 @Composable
 private fun RowWithMoreElementPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         Box(modifier = Modifier.fillMaxSize()) {
             RowWithMoreElement(
                 elements = { (1..8).forEach { GetPreviewElement(it) } },
@@ -106,7 +105,7 @@ private fun GetPreviewElement(
 }
 
 @Composable
-private fun PreviewElement(index: Int, textColor: Color, backgroundColor: Color,) {
+private fun PreviewElement(index: Int, textColor: Color, backgroundColor: Color) {
     Box(
         modifier = Modifier
             .fillMaxHeight()

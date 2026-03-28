@@ -17,7 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.R
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +58,7 @@ private fun CustomTopAppBarPreviewDark() {
 
 @Composable
 private fun CustomTopAppBarPreviewContent() {
-    LinguaCelerisTheme {
+    LCPreview {
         Column(Modifier.background(Color.Gray)) {
             CustomTopAppBar("Title") {}
             SpacerHeight(height = 8.dp)

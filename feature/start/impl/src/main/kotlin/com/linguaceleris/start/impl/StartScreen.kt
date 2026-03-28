@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
+import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 
 @Composable
@@ -30,7 +30,7 @@ private fun StartScreenContent(state: StartUiState, onEvent: (StartEvent) -> Uni
 @ScreenPreviews
 @Composable
 private fun StartScreenPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         StartScreenContent(StartUiState()) {}
     }
 }

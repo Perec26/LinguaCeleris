@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 
 @Composable
 fun ThreeButtonsDialog(
@@ -79,7 +78,7 @@ fun ThreeButtonsDialog(
 @PreviewLightDark
 @Composable
 private fun ThreeButtonsDialogPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         ThreeButtonsDialog(
             title = "Dialog title",
             description = "Dialog description",
@@ -93,7 +92,7 @@ private fun ThreeButtonsDialogPreview() {
 @PreviewLightDark
 @Composable
 private fun ThreeButtonsDialogLongDescriptionPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         ThreeButtonsDialog(
             title = "Dialog title",
             description = "Мы отправили письмо. Пожалуйста, перейдите по ссылке, чтобы войти.",
@@ -104,7 +103,4 @@ private fun ThreeButtonsDialogLongDescriptionPreview() {
     }
 }
 
-data class ButtonDescription(
-    val text: String,
-    val onClick: () -> Unit = {},
-)
+data class ButtonDescription(val text: String, val onClick: () -> Unit = {})

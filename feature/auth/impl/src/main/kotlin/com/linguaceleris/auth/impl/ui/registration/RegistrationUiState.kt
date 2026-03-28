@@ -80,9 +80,7 @@ internal data class RegistrationValidationState(
         confirmPassword is AuthValidationResult.Success
 }
 
-internal enum class RegistrationState(
-    @param:StringRes val message: Int,
-) {
+internal enum class RegistrationState(@param:StringRes val message: Int) {
     SUCCESS(R.string.auth_registration_success),
     USER_EXIST(R.string.auth_registration_user_exist),
     WEAK_PASSWORD(R.string.auth_registration_weak_password),

@@ -10,9 +10,9 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 import com.linguaceleris.designsystem.widgets.CardState
 import com.linguaceleris.designsystem.widgets.LCCardWithText
+import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.quiz.impl.ui.fourEnVariantsMock
 import com.linguaceleris.quiz.impl.ui.model.WordCardUI
 
@@ -60,7 +60,7 @@ internal fun MatchColumnWidget(
 @Composable
 @PreviewLightDark
 private fun MatchColumnWidgetPreview() {
-    LinguaCelerisTheme {
+    LCPreview {
         MatchColumnWidget(
             selectedVariant = WordCardUI("audio", "bat"),
             variants = fourEnVariantsMock,

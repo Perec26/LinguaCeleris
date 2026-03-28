@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.linguaceleris.designsystem.theme.LinguaCelerisTheme
 import com.linguaceleris.designsystem.theme.disabled
 import com.linguaceleris.designsystem.theme.extendedColors
 
@@ -86,19 +84,17 @@ fun LCCardWithText(
 @PreviewLightDark
 @Composable
 private fun LCCardWithTextPreview() {
-    LinguaCelerisTheme {
-        Surface {
-            Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                LCCardWithText(modifier = Modifier.fillMaxWidth(), text = "Preview") {}
-                LCCardWithText(text = "Selected Preview", state = CardState.SELECTED) {}
-                LCCardWithText(text = "Right Preview", state = CardState.RIGHT) {}
-                LCCardWithText(text = "Wrong Preview", state = CardState.WRONG) {}
-                LCCardWithText(text = "Disabled Preview") {}
-            }
+    LCPreview {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            LCCardWithText(modifier = Modifier.fillMaxWidth(), text = "Preview") {}
+            LCCardWithText(text = "Selected Preview", state = CardState.SELECTED) {}
+            LCCardWithText(text = "Right Preview", state = CardState.RIGHT) {}
+            LCCardWithText(text = "Wrong Preview", state = CardState.WRONG) {}
+            LCCardWithText(text = "Disabled Preview") {}
         }
     }
 }

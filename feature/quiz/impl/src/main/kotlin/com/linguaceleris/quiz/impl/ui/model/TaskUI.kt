@@ -1,8 +1,6 @@
 package com.linguaceleris.quiz.impl.ui.model
 
-internal sealed class TaskUI(
-    open val type: TaskTypeUI
-) {
+internal sealed class TaskUI(open val type: TaskTypeUI) {
 
     data class SelectCorrectAnswer(
         override val type: TaskTypeUI,
@@ -46,10 +44,7 @@ internal sealed class TaskUI(
     }
 }
 
-internal data class MatchingPairUI(
-    val original: WordCardUI,
-    val translation: WordCardUI,
-)
+internal data class MatchingPairUI(val original: WordCardUI, val translation: WordCardUI)
 
 internal data class WordCardUI(
     val text: String,
