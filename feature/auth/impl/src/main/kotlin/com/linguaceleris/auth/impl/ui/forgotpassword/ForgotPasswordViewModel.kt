@@ -25,21 +25,13 @@ internal class ForgotPasswordViewModel @AssistedInject constructor(
     override fun onEvent(event: ForgotPasswordEvent) {
         when (event) {
             ForgotPasswordEvent.OnBackClicked -> onBackClicked()
-
-            is ForgotPasswordEvent.OnEmailChanged -> {
-                updateState { onEmailChanged(event.email) }
-            }
-
+            is ForgotPasswordEvent.OnEmailChanged -> updateState { onEmailChanged(event.email) }
             ForgotPasswordEvent.OnResetClick -> onResetClick()
         }
     }
 
     private fun onBackClicked() {
-        if (currentState.showSuccess) {
-            navigator.startWith(SignInNavKey)
-        } else {
-            navigator.back()
-        }
+        if (currentState.showSuccess) navigator.startWith(SignInNavKey) else navigator.back()
     }
 
     private fun onResetClick() {
@@ -51,12 +43,12 @@ internal class ForgotPasswordViewModel @AssistedInject constructor(
             updateState { onValidationStateChanged(validationState) }
             return
         }
+        updateState { onLoadingStarted() }
 
         launch(
             onError = { },
             doFinally = { updateState { onPasswordReset() } },
         ) {
-            updateState { onLoadingStarted() }
             resetPasswordUseCase(currentState.email)
         }
     }

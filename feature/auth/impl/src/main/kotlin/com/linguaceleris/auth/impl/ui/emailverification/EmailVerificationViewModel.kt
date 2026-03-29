@@ -32,8 +32,6 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
         when (event) {
             EmailVerificationEvent.OnBackClicked -> navigator.back()
 
-            EmailVerificationEvent.OnContinueClicked -> onContinueClicked()
-
             EmailVerificationEvent.OnExitClicked -> onExitClicked()
 
             EmailVerificationEvent.OnOpenMailClicked -> sendEffect(
@@ -44,6 +42,8 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
 
             EmailVerificationEvent.OnVerifyEmailClicked -> onVerifyEmailClicked()
 
+            EmailVerificationEvent.OnContinueClicked -> onContinueClicked()
+
             EmailVerificationEvent.OnHideEmailVerificationDialog -> updateState {
                 onHideEmailVerificationDialog()
             }
@@ -51,6 +51,8 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
     }
 
     private fun onVerifyEmailClicked() {
+        updateState { onSendingVerificationStarted() }
+
         launch(
             onError = ::handleSendingVerificationError,
             doFinally = {
@@ -58,7 +60,6 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
                 startSendAgainTimer()
             },
         ) {
-            updateState { onSendingVerificationStarted() }
             sendEmailVerificationUseCase()
             updateState { onVerificationStateChanged(EmailVerificationState.SUCCESS) }
         }
@@ -84,6 +85,7 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
     }
 
     private fun onSendAgain() {
+        updateState { onSendingVerificationStarted() }
         launch(
             onError = ::handleSendingVerificationError,
             doFinally = {
@@ -91,7 +93,6 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
                 startSendAgainTimer()
             },
         ) {
-            updateState { onSendingVerificationStarted() }
             sendEmailVerificationUseCase()
         }
     }

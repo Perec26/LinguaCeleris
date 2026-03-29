@@ -22,11 +22,17 @@ internal data class EmailSignInUiState(
         validationState = validationState.copy(password = AuthValidationResult.Success),
     )
 
+    fun onLoadingStarted() = copy(isLoading = true)
+
+    fun onLoadingFinished() = copy(isLoading = false)
+
     fun onPasswordVisibilityChanged() = copy(isPasswordVisible = !isPasswordVisible)
 
     fun onValidationStateChanged(validationState: EmailSignInValidationState) = copy(
         validationState = validationState,
     )
+
+    fun onSignInError(error: EmailSignInError) = copy(signInError = error)
 }
 
 internal data class EmailSignInValidationState(

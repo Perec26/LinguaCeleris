@@ -29,12 +29,6 @@ internal class EmailSignInViewModel @Inject constructor(
 
             is EmailSignInEvent.OnEmailChanged -> updateState { onEmailChanged(event.email) }
 
-            EmailSignInEvent.OnEnterClick -> onEnterClick()
-
-            EmailSignInEvent.OnForgotPasswordClicked -> {
-                navigator.navigateTo(ForgotPasswordNavKey(currentState.email))
-            }
-
             is EmailSignInEvent.OnPasswordChanged -> updateState {
                 onPasswordChanged(event.password)
             }
@@ -42,6 +36,12 @@ internal class EmailSignInViewModel @Inject constructor(
             EmailSignInEvent.OnPasswordVisibilityChanged -> updateState {
                 onPasswordVisibilityChanged()
             }
+
+            EmailSignInEvent.OnForgotPasswordClicked -> {
+                navigator.navigateTo(ForgotPasswordNavKey(currentState.email))
+            }
+
+            EmailSignInEvent.OnEnterClick -> onEnterClick()
         }
     }
 
@@ -56,11 +56,12 @@ internal class EmailSignInViewModel @Inject constructor(
             return
         }
 
+        updateState { onLoadingStarted() }
+
         launch(
             onError = ::handleSignInError,
-            doFinally = { updateState { copy(isLoading = false) } },
+            doFinally = { updateState { onLoadingFinished() } },
         ) {
-            updateState { copy(isLoading = true) }
             signInWithEmailUseCase(
                 email = currentState.email,
                 password = currentState.password,
@@ -76,10 +77,10 @@ internal class EmailSignInViewModel @Inject constructor(
     private fun handleSignInError(exception: Exception) {
         when (exception) {
             is FirebaseAuthInvalidUserException, is FirebaseAuthInvalidCredentialsException -> {
-                updateState { copy(signInError = EmailSignInError.INVALID_CREDENTIALS) }
+                updateState { onSignInError(EmailSignInError.INVALID_CREDENTIALS) }
             }
 
-            else -> updateState { copy(signInError = EmailSignInError.UNKNOWN_ERROR) }
+            else -> updateState { onSignInError(EmailSignInError.UNKNOWN_ERROR) }
         }
     }
 }

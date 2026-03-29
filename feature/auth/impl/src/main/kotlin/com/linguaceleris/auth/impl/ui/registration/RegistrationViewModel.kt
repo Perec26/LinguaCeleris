@@ -37,24 +37,24 @@ internal class RegistrationViewModel @Inject constructor(
         when (event) {
             RegistrationEvent.OnBackClicked -> navigator.back()
 
-            is RegistrationEvent.OnConfirmPasswordChanged -> {
-                updateState { onConfirmPasswordChanged(event.confirmPassword) }
-            }
-
-            is RegistrationEvent.OnConfirmPasswordVisibilityChanged -> {
-                updateState { onConfirmPasswordVisibilityChanged() }
+            is RegistrationEvent.OnNickNameChanged -> {
+                updateState { onNicknameChanged(event.nickName) }
             }
 
             is RegistrationEvent.OnEmailChanged -> {
                 updateState { onEmailChanged(event.email) }
             }
 
-            is RegistrationEvent.OnNickNameChanged -> {
-                updateState { onNicknameChanged(event.nickName) }
-            }
-
             is RegistrationEvent.OnPasswordChanged -> {
                 updateState { onPasswordChanged(event.password) }
+            }
+
+            is RegistrationEvent.OnConfirmPasswordChanged -> {
+                updateState { onConfirmPasswordChanged(event.confirmPassword) }
+            }
+
+            is RegistrationEvent.OnConfirmPasswordVisibilityChanged -> {
+                updateState { onConfirmPasswordVisibilityChanged() }
             }
 
             is RegistrationEvent.OnPasswordVisibilityChanged -> {
@@ -104,8 +104,9 @@ internal class RegistrationViewModel @Inject constructor(
             return
         }
 
+        updateState { onRegistrationStarted() }
+
         launch(::handleRegistrationError) {
-            updateState { onRegistrationStarted() }
             registerUseCase(currentState.nickname, currentState.email, currentState.password)
             updateState { onRegistrationFinished(RegistrationState.SUCCESS) }
             startSendAgainTimer()
@@ -123,6 +124,7 @@ internal class RegistrationViewModel @Inject constructor(
     }
 
     private fun onSendAgain() {
+        updateState { onSendingVerificationStarted() }
         launch(
             onError = ::handleSendingVerificationError,
             doFinally = {
@@ -130,7 +132,6 @@ internal class RegistrationViewModel @Inject constructor(
                 startSendAgainTimer()
             },
         ) {
-            updateState { onSendingVerificationStarted() }
             sendEmailVerificationUseCase()
         }
     }

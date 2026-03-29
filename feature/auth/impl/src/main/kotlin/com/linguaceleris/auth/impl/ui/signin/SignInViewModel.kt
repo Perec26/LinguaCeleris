@@ -56,27 +56,28 @@ internal class SignInViewModel @Inject constructor(
     }
 
     private fun onAnonymousSignInConfirmClick() {
+        updateState { hideAnonymousSignInDialog() }
+        updateState { showLoading() }
+
         launch(
             onError = {
                 updateState { hideLoading() }
                 sendEffect(SignInEffect.SnackBarError(SignInError.SIGN_IN_WITH_ANONYMOUSLY_ERROR))
             },
         ) {
-            updateState { hideAnonymousSignInDialog() }
-            updateState { showLoading() }
             signInAnonymouslyUseCase()
             navigator.startWith(QuizSelectionNavKey)
         }
     }
 
     private fun onGoogleTokenReceived(idToken: String) {
+        updateState { showLoading() }
         launch(
             onError = {
                 updateState { hideLoading() }
                 sendEffect(SignInEffect.SnackBarError(SignInError.SIGN_IN_WITH_GOOGLE_ERROR))
             },
         ) {
-            updateState { showLoading() }
             signInWithGoogleUseCase(idToken)
             navigator.startWith(QuizSelectionNavKey)
         }
