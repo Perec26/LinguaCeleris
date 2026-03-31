@@ -1,14 +1,14 @@
 package com.linguaceleris.auth.impl.ui.emailverification
 
 import app.cash.turbine.test
-import com.linguaceleris.auth.api.SignInNavKey
+import com.linguaceleris.auth.api.startWithSignIn
 import com.linguaceleris.auth.impl.ui.VerificationSnackbarError
 import com.linguaceleris.auth.impl.ui.emailverification.EmailVerificationMocks.getEmailVerificationUseCase
 import com.linguaceleris.auth.impl.ui.emailverification.EmailVerificationMocks.getSendAgainTimerUseCase
 import com.linguaceleris.auth.impl.ui.emailverification.EmailVerificationMocks.navigator
 import com.linguaceleris.auth.impl.ui.emailverification.EmailVerificationMocks.sendEmailVerificationUseCase
 import com.linguaceleris.auth.impl.ui.emailverification.EmailVerificationMocks.signOutUseCase
-import com.linguaceleris.quizselection.api.QuizSelectionNavKey
+import com.linguaceleris.home.api.startWithHome
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
@@ -80,7 +80,7 @@ internal class EmailVerificationViewModelTest : BehaviorSpec(
                     viewModel.onEvent(EmailVerificationEvent.OnExitClicked)
 
                     verify { signOutUseCase() }
-                    verify { navigator.startWith(SignInNavKey) }
+                    verify { navigator.startWithSignIn() }
                 }
             }
 
@@ -166,13 +166,13 @@ internal class EmailVerificationViewModelTest : BehaviorSpec(
 
             When("OnContinueClicked is received") {
                 And("email is verified") {
-                    Then("it should navigate to QuizSelection") {
+                    Then("it should navigate to Home") {
                         coEvery { getEmailVerificationUseCase() } returns true
 
                         viewModel.onEvent(EmailVerificationEvent.OnContinueClicked)
                         testDispatcher.scheduler.advanceUntilIdle()
 
-                        verify { navigator.startWith(QuizSelectionNavKey) }
+                        verify { navigator.startWithHome() }
                     }
                 }
 

@@ -1,13 +1,13 @@
 package com.linguaceleris.auth.impl.ui.emailverification
 
-import com.linguaceleris.auth.api.SignInNavKey
+import com.linguaceleris.auth.api.startWithSignIn
 import com.linguaceleris.auth.impl.domain.GetEmailVerificationUseCase
 import com.linguaceleris.auth.impl.domain.GetSendAgainTimerUseCase
 import com.linguaceleris.auth.impl.domain.SendEmailVerificationUseCase
 import com.linguaceleris.auth.impl.domain.SignOutUseCase
 import com.linguaceleris.auth.impl.ui.VerificationSnackbarError
+import com.linguaceleris.home.api.startWithHome
 import com.linguaceleris.navigation.Navigator
-import com.linguaceleris.quizselection.api.QuizSelectionNavKey
 import com.linguaceleris.ui.EffectViewModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -23,9 +23,7 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
     private val getSendAgainTimerUseCase: GetSendAgainTimerUseCase,
     @Assisted private val fromStart: Boolean,
 ) : EffectViewModel<EmailVerificationUiState, EmailVerificationEvent, EmailVerificationEffect>(
-    initialState = EmailVerificationUiState(
-        navigationBackIsAvailable = !fromStart,
-    ),
+    initialState = EmailVerificationUiState(navigationBackIsAvailable = !fromStart),
 ) {
 
     override fun onEvent(event: EmailVerificationEvent) {
@@ -67,13 +65,13 @@ internal class EmailVerificationViewModel @AssistedInject constructor(
 
     private fun onExitClicked() {
         singOutUseCase()
-        navigator.startWith(SignInNavKey)
+        navigator.startWithSignIn()
     }
 
     private fun onContinueClicked() {
         launch(::handleEmailVerificationError) {
             if (getEmailVerificationUseCase()) {
-                navigator.startWith(QuizSelectionNavKey)
+                navigator.startWithHome()
             } else {
                 updateState { onShowEmailVerificationDialog() }
             }

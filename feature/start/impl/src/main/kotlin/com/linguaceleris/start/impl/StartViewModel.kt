@@ -1,11 +1,10 @@
 package com.linguaceleris.start.impl
 
-import androidx.navigation3.runtime.NavKey
 import com.linguaceleris.auth.AuthState
-import com.linguaceleris.auth.api.EmailVerificationNavKey
-import com.linguaceleris.auth.api.SignInNavKey
+import com.linguaceleris.auth.api.startWithEmailVerification
+import com.linguaceleris.auth.api.startWithSignIn
+import com.linguaceleris.home.api.startWithHome
 import com.linguaceleris.navigation.Navigator
-import com.linguaceleris.quizselection.api.QuizSelectionNavKey
 import com.linguaceleris.start.impl.domain.GetAuthStateUseCase
 import com.linguaceleris.ui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,12 +17,11 @@ internal class StartViewModel @Inject constructor(
 ) : BaseViewModel<StartUiState, StartEvent>(initialState = StartUiState()) {
 
     init {
-        val startDestination: NavKey = when (getAuthStateUseCase()) {
-            AuthState.NOT_LOGGED_IN -> SignInNavKey
-            AuthState.EMAIL_NOT_VERIFIED -> EmailVerificationNavKey(true)
-            AuthState.LOGGED_IN, AuthState.ANONYMOUS -> QuizSelectionNavKey
+        when (getAuthStateUseCase()) {
+            AuthState.NOT_LOGGED_IN -> navigator.startWithSignIn()
+            AuthState.EMAIL_NOT_VERIFIED -> navigator.startWithEmailVerification()
+            AuthState.LOGGED_IN, AuthState.ANONYMOUS -> navigator.startWithHome()
         }
-        navigator.startWith(startDestination)
     }
 
     override fun onEvent(event: StartEvent) {}

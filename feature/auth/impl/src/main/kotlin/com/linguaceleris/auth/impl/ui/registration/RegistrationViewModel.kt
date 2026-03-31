@@ -12,8 +12,8 @@ import com.linguaceleris.auth.impl.domain.ValidateEmailUseCase
 import com.linguaceleris.auth.impl.domain.ValidateNicknameUseCase
 import com.linguaceleris.auth.impl.domain.ValidatePasswordUseCase
 import com.linguaceleris.auth.impl.ui.VerificationSnackbarError
+import com.linguaceleris.home.api.startWithHome
 import com.linguaceleris.navigation.Navigator
-import com.linguaceleris.quizselection.api.QuizSelectionNavKey
 import com.linguaceleris.ui.EffectViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -78,7 +78,7 @@ internal class RegistrationViewModel @Inject constructor(
     private fun onContinueClicked() {
         launch(::handleEmailVerificationError) {
             if (getEmailVerificationUseCase()) {
-                navigator.startWith(QuizSelectionNavKey)
+                navigator.startWithHome()
             } else {
                 updateState { onShowEmailVerificationDialog() }
             }

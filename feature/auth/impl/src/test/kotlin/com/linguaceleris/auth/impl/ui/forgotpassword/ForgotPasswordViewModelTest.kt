@@ -1,6 +1,6 @@
 package com.linguaceleris.auth.impl.ui.forgotpassword
 
-import com.linguaceleris.auth.api.SignInNavKey
+import com.linguaceleris.auth.api.startWithSignIn
 import com.linguaceleris.auth.impl.ui.forgotpassword.ForgotPasswordMocks.navigator
 import com.linguaceleris.auth.impl.ui.forgotpassword.ForgotPasswordMocks.resetPasswordUseCase
 import com.linguaceleris.auth.impl.ui.forgotpassword.ForgotPasswordMocks.validateEmailUseCase
@@ -102,7 +102,7 @@ internal class ForgotPasswordViewModelTest : BehaviorSpec(
                         testDispatcher.scheduler.advanceUntilIdle()
 
                         viewModel.onEvent(ForgotPasswordEvent.OnBackClicked)
-                        verify { navigator.startWith(SignInNavKey) }
+                        verify { navigator.startWithSignIn() }
                     }
                 }
             }

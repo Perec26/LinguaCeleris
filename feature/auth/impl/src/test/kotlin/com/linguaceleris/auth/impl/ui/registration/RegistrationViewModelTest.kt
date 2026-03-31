@@ -15,7 +15,7 @@ import com.linguaceleris.auth.impl.ui.registration.RegistrationMocks.validateEma
 import com.linguaceleris.auth.impl.ui.registration.RegistrationMocks.validateNicknameUseCase
 import com.linguaceleris.auth.impl.ui.registration.RegistrationMocks.validatePasswordUseCase
 import com.linguaceleris.auth.impl.ui.registration.model.AuthValidationResult
-import com.linguaceleris.quizselection.api.QuizSelectionNavKey
+import com.linguaceleris.home.api.startWithHome
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
@@ -262,11 +262,11 @@ internal class RegistrationViewModelTest : BehaviorSpec(
 
             When("OnContinueClicked is received") {
                 And("email verification succeeds") {
-                    Then("it should navigate to QuizSelection") {
+                    Then("it should navigate to Home") {
                         coEvery { getEmailVerificationUseCase() } returns true
                         viewModel.onEvent(RegistrationEvent.OnContinueClicked)
                         testDispatcher.scheduler.advanceUntilIdle()
-                        verify { navigator.startWith(QuizSelectionNavKey) }
+                        verify { navigator.startWithHome() }
                     }
                 }
                 And("email not verified") {

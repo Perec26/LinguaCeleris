@@ -1,6 +1,6 @@
 package com.linguaceleris.quizselection.impl.ui
 
-import com.linguaceleris.auth.api.SignInNavKey
+import com.linguaceleris.auth.api.startWithSignIn
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quiz.api.QuizNavKey
 import com.linguaceleris.quizselection.impl.domain.GetDayTasksUseCase
@@ -31,7 +31,7 @@ internal class QuizSelectionViewModel @Inject constructor(
 
             QuizSelectionEvent.OnSignOut -> {
                 signOutUseCase()
-                navigator.startWith(SignInNavKey)
+                navigator.startWithSignIn()
             }
         }
     }

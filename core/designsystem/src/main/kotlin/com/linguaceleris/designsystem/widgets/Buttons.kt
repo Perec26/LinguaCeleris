@@ -245,6 +245,14 @@ enum class ButtonSize {
         LARGE -> ButtonDefaults.LargeContainerHeight
         EXTRA_LARGE -> ButtonDefaults.ExtraLargeContainerHeight
     }
+
+    @Composable
+    fun getShape() = when (this) {
+        SMALL -> MaterialTheme.shapes.small
+        MEDIUM -> MaterialTheme.shapes.medium
+        LARGE -> MaterialTheme.shapes.large
+        EXTRA_LARGE -> MaterialTheme.shapes.extraLarge
+    }
 }
 
 @PreviewLightDark

@@ -2,13 +2,13 @@ package com.linguaceleris.auth.impl.ui.signin
 
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import app.cash.turbine.test
-import com.linguaceleris.auth.impl.navigation.EmailSignInNavKey
-import com.linguaceleris.auth.impl.navigation.RegistrationNavKey
+import com.linguaceleris.auth.impl.navigation.navigateToEmailSignIn
+import com.linguaceleris.auth.impl.navigation.navigateToRegistration
 import com.linguaceleris.auth.impl.ui.signin.SignInMocks.getWebClientIdUseCase
 import com.linguaceleris.auth.impl.ui.signin.SignInMocks.navigator
 import com.linguaceleris.auth.impl.ui.signin.SignInMocks.signInAnonymouslyUseCase
 import com.linguaceleris.auth.impl.ui.signin.SignInMocks.signInWithGoogleUseCase
-import com.linguaceleris.quizselection.api.QuizSelectionNavKey
+import com.linguaceleris.home.api.startWithHome
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
@@ -50,14 +50,14 @@ internal class SignInViewModelTest : BehaviorSpec(
             When("OnEmailSignInClick event is received") {
                 Then("it should navigate to EmailSignInScreen") {
                     viewModel.onEvent(SignInEvent.OnEmailSignInClick)
-                    verify { navigator.navigateTo(EmailSignInNavKey) }
+                    verify { navigator.navigateToEmailSignIn() }
                 }
             }
 
             When("OnRegistrationClick event is received") {
                 Then("it should navigate to RegistrationScreen") {
                     viewModel.onEvent(SignInEvent.OnRegistrationClick)
-                    verify { navigator.navigateTo(RegistrationNavKey) }
+                    verify { navigator.navigateToRegistration() }
                 }
             }
 
@@ -94,7 +94,7 @@ internal class SignInViewModelTest : BehaviorSpec(
             }
 
             When("OnAnonymousSignInConfirmClick is called and succeeds") {
-                Then("it should hide dialog, show loading, and navigate to QuizSelection") {
+                Then("it should hide dialog, show loading, and navigate to Home") {
                     coEvery { signInAnonymouslyUseCase() } just Runs
 
                     viewModel.onEvent(SignInEvent.OnAnonymousSignInConfirmClick)
@@ -102,7 +102,7 @@ internal class SignInViewModelTest : BehaviorSpec(
                     viewModel.state.value.isLoading shouldBe true
                     testDispatcher.scheduler.advanceUntilIdle()
                     coVerify { signInAnonymouslyUseCase() }
-                    verify { navigator.startWith(QuizSelectionNavKey) }
+                    verify { navigator.startWithHome() }
                 }
             }
 
@@ -126,12 +126,12 @@ internal class SignInViewModelTest : BehaviorSpec(
                 val token = "google_token"
                 coEvery { signInWithGoogleUseCase(token) } returns true
 
-                Then("it should show loading and navigate to QuizSelection") {
+                Then("it should show loading and navigate to Home") {
                     viewModel.onEvent(SignInEvent.OnGoogleTokenReceived(token))
                     testDispatcher.scheduler.advanceUntilIdle()
                     viewModel.state.value.isLoading shouldBe true
                     coVerify { signInWithGoogleUseCase(token) }
-                    verify { navigator.startWith(QuizSelectionNavKey) }
+                    verify { navigator.startWithHome() }
                 }
             }
 

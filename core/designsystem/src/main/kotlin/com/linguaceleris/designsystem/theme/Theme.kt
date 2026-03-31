@@ -2,7 +2,9 @@ package com.linguaceleris.designsystem.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
@@ -10,6 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 
 val LocalExtendedColors = staticCompositionLocalOf { ExtendedColorScheme() }
 
@@ -45,3 +48,12 @@ fun LinguaCelerisTheme(
         )
     }
 }
+
+// TODO: Подумать надо ли оно
+val appShapes = Shapes(
+    extraSmall = CutCornerShape(8.dp),
+    small = CutCornerShape(12.dp),
+    medium = CutCornerShape(16.dp),
+    large = CutCornerShape(24.dp),
+    extraLarge = CutCornerShape(36.dp),
+)

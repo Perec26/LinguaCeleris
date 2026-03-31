@@ -17,19 +17,12 @@ class FeatureImplConventionPlugin : Plugin<Project> {
             apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
 
             dependencies {
-                // TODO: проверить все ли библиотеки навигации нужны
-                "implementation"(libs.findLibraryString("androidx.navigation3.runtime"))
-                "implementation"(libs.findLibraryString("androidx.navigation3.ui"))
-                "implementation"(libs.findLibraryString("androidx.lifecycle.viewmodel.navigation3"))
-                "implementation"(libs.findLibraryString("androidx.material3.adaptive.navigation3"))
-
                 "implementation"(libs.findLibraryString("androidx.hilt.navigation.compose"))
                 "debugImplementation"(libs.findLibraryString("androidx.ui.tooling"))
                 "implementation"(libs.findLibraryString("kotlinx.serialization.json"))
                 "implementation"(libs.findLibraryString("coil.compose"))
                 "implementation"(project(":core:designsystem"))
                 "implementation"(project(":core:ui"))
-                "implementation"(project(":core:navigation"))
             }
         }
     }

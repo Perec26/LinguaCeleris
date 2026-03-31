@@ -4,11 +4,11 @@ import androidx.credentials.exceptions.GetCredentialCancellationException
 import com.linguaceleris.auth.impl.domain.GetWebClientIdUseCase
 import com.linguaceleris.auth.impl.domain.SignInAnonymouslyUseCase
 import com.linguaceleris.auth.impl.domain.SignInWithGoogleUseCase
-import com.linguaceleris.auth.impl.navigation.EmailSignInNavKey
-import com.linguaceleris.auth.impl.navigation.RegistrationNavKey
+import com.linguaceleris.auth.impl.navigation.navigateToEmailSignIn
+import com.linguaceleris.auth.impl.navigation.navigateToRegistration
 import com.linguaceleris.auth.impl.ui.signin.SignInEffect.SignInWithGoogle
+import com.linguaceleris.home.api.startWithHome
 import com.linguaceleris.navigation.Navigator
-import com.linguaceleris.quizselection.api.QuizSelectionNavKey
 import com.linguaceleris.ui.EffectViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -23,7 +23,7 @@ internal class SignInViewModel @Inject constructor(
 
     override fun onEvent(event: SignInEvent) {
         when (event) {
-            SignInEvent.OnEmailSignInClick -> navigator.navigateTo(EmailSignInNavKey)
+            SignInEvent.OnEmailSignInClick -> navigator.navigateToEmailSignIn()
 
             SignInEvent.OnSignInAsGuestClick -> updateState { showAnonymousSignInDialog() }
 
@@ -31,7 +31,7 @@ internal class SignInViewModel @Inject constructor(
 
             is SignInEvent.OnGoogleTokenReceived -> onGoogleTokenReceived(event.idToken)
 
-            SignInEvent.OnRegistrationClick -> navigator.navigateTo(RegistrationNavKey)
+            SignInEvent.OnRegistrationClick -> navigator.navigateToRegistration()
 
             SignInEvent.OnAnonymousSignInConfirmClick -> onAnonymousSignInConfirmClick()
 
@@ -66,7 +66,7 @@ internal class SignInViewModel @Inject constructor(
             },
         ) {
             signInAnonymouslyUseCase()
-            navigator.startWith(QuizSelectionNavKey)
+            navigator.startWithHome()
         }
     }
 
@@ -79,7 +79,7 @@ internal class SignInViewModel @Inject constructor(
             },
         ) {
             signInWithGoogleUseCase(idToken)
-            navigator.startWith(QuizSelectionNavKey)
+            navigator.startWithHome()
         }
     }
 }

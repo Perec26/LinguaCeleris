@@ -40,6 +40,7 @@ dependencies {
     implementation(projects.core.navigation)
     implementation(projects.data.auth)
     implementation(projects.feature.auth.impl)
+    implementation(projects.feature.home.impl)
     implementation(projects.feature.start.api)
     implementation(projects.feature.start.impl)
     implementation(projects.feature.quiz.impl)

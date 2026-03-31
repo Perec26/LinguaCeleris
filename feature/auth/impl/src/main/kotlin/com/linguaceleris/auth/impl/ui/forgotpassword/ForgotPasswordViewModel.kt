@@ -1,6 +1,6 @@
 package com.linguaceleris.auth.impl.ui.forgotpassword
 
-import com.linguaceleris.auth.api.SignInNavKey
+import com.linguaceleris.auth.api.startWithSignIn
 import com.linguaceleris.auth.impl.domain.ResetPasswordUseCase
 import com.linguaceleris.auth.impl.domain.ValidateEmailUseCase
 import com.linguaceleris.navigation.Navigator
@@ -31,7 +31,7 @@ internal class ForgotPasswordViewModel @AssistedInject constructor(
     }
 
     private fun onBackClicked() {
-        if (currentState.showSuccess) navigator.startWith(SignInNavKey) else navigator.back()
+        if (currentState.showSuccess) navigator.startWithSignIn() else navigator.back()
     }
 
     private fun onResetClick() {

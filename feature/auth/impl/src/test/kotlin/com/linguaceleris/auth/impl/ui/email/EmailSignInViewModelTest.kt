@@ -1,15 +1,15 @@
 package com.linguaceleris.auth.impl.ui.email
 
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.linguaceleris.auth.api.EmailVerificationNavKey
-import com.linguaceleris.auth.impl.navigation.ForgotPasswordNavKey
+import com.linguaceleris.auth.api.navigateToEmailVerification
+import com.linguaceleris.auth.impl.navigation.navigateToForgotPassword
 import com.linguaceleris.auth.impl.ui.email.EmailSignInMocks.getEmailVerificationUseCase
 import com.linguaceleris.auth.impl.ui.email.EmailSignInMocks.navigator
 import com.linguaceleris.auth.impl.ui.email.EmailSignInMocks.signInWithEmailUseCase
 import com.linguaceleris.auth.impl.ui.email.EmailSignInMocks.validateEmailUseCase
 import com.linguaceleris.auth.impl.ui.email.EmailSignInMocks.validatePasswordUseCase
 import com.linguaceleris.auth.impl.ui.registration.model.AuthValidationResult
-import com.linguaceleris.quizselection.api.QuizSelectionNavKey
+import com.linguaceleris.home.api.startWithHome
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
@@ -85,7 +85,7 @@ internal class EmailSignInViewModelTest : BehaviorSpec(
                     val email = "forgot@test.com"
                     viewModel.onEvent(EmailSignInEvent.OnEmailChanged(email))
                     viewModel.onEvent(EmailSignInEvent.OnForgotPasswordClicked)
-                    verify { navigator.navigateTo(ForgotPasswordNavKey(email)) }
+                    verify { navigator.navigateToForgotPassword(email) }
                 }
             }
 
@@ -111,7 +111,7 @@ internal class EmailSignInViewModelTest : BehaviorSpec(
                     }
 
                     And("Sign in succeeds and email is verified") {
-                        Then("it should show loading and navigate to QuizSelection") {
+                        Then("it should show loading and navigate to Home") {
                             coEvery { signInWithEmailUseCase(any(), any()) } just Runs
                             coEvery { getEmailVerificationUseCase() } returns true
 
@@ -123,7 +123,7 @@ internal class EmailSignInViewModelTest : BehaviorSpec(
 
                             viewModel.state.value.isLoading shouldBe false
                             coVerify { signInWithEmailUseCase(any(), any()) }
-                            verify { navigator.startWith(QuizSelectionNavKey) }
+                            verify { navigator.startWithHome() }
                         }
                     }
 
@@ -138,7 +138,7 @@ internal class EmailSignInViewModelTest : BehaviorSpec(
                             testDispatcher.scheduler.advanceUntilIdle()
                             viewModel.state.value.isLoading shouldBe false
 
-                            verify { navigator.navigateTo(EmailVerificationNavKey(false)) }
+                            verify { navigator.navigateToEmailVerification() }
                         }
                     }
 

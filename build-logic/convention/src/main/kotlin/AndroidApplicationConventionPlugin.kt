@@ -30,12 +30,10 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 "implementation"(libs.findLibraryString("androidx.core.ktx"))
                 "implementation"(platform(libs.findLibraryString("firebase.bom")))
                 "implementation"(libs.findLibraryString("firebase.crashlytics"))
-                // TODO: проверить все ли библиотеки навигации нужны
                 "implementation"(libs.findLibraryString("kotlinx.serialization.json"))
                 "implementation"(libs.findLibraryString("androidx.navigation3.runtime"))
                 "implementation"(libs.findLibraryString("androidx.navigation3.ui"))
                 "implementation"(libs.findLibraryString("androidx.lifecycle.viewmodel.navigation3"))
-                "implementation"(libs.findLibraryString("androidx.material3.adaptive.navigation3"))
             }
         }
     }

@@ -12,6 +12,7 @@ import com.linguaceleris.auth.impl.ui.forgotpassword.ForgotPasswordScreen
 import com.linguaceleris.auth.impl.ui.forgotpassword.ForgotPasswordViewModel
 import com.linguaceleris.auth.impl.ui.registration.RegistrationScreen
 import com.linguaceleris.auth.impl.ui.signin.SignInScreen
+import com.linguaceleris.navigation.Navigator
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -45,3 +46,8 @@ fun EntryProviderScope<NavKey>.authEntry() {
         EmailVerificationScreen(viewModel)
     }
 }
+
+internal fun Navigator.navigateToEmailSignIn() = navigateTo(EmailSignInNavKey)
+internal fun Navigator.navigateToRegistration() = navigateTo(RegistrationNavKey)
+internal fun Navigator.navigateToForgotPassword(email: String) =
+    navigateTo(ForgotPasswordNavKey(email))

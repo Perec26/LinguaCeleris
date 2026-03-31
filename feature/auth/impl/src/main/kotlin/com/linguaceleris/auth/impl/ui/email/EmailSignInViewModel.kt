@@ -2,14 +2,14 @@ package com.linguaceleris.auth.impl.ui.email
 
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.linguaceleris.auth.api.EmailVerificationNavKey
+import com.linguaceleris.auth.api.navigateToEmailVerification
 import com.linguaceleris.auth.impl.domain.GetEmailVerificationUseCase
 import com.linguaceleris.auth.impl.domain.SignInWithEmailUseCase
 import com.linguaceleris.auth.impl.domain.ValidateEmailUseCase
 import com.linguaceleris.auth.impl.domain.ValidatePasswordUseCase
-import com.linguaceleris.auth.impl.navigation.ForgotPasswordNavKey
+import com.linguaceleris.auth.impl.navigation.navigateToForgotPassword
+import com.linguaceleris.home.api.startWithHome
 import com.linguaceleris.navigation.Navigator
-import com.linguaceleris.quizselection.api.QuizSelectionNavKey
 import com.linguaceleris.ui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -38,7 +38,7 @@ internal class EmailSignInViewModel @Inject constructor(
             }
 
             EmailSignInEvent.OnForgotPasswordClicked -> {
-                navigator.navigateTo(ForgotPasswordNavKey(currentState.email))
+                navigator.navigateToForgotPassword(currentState.email)
             }
 
             EmailSignInEvent.OnEnterClick -> onEnterClick()
@@ -67,9 +67,9 @@ internal class EmailSignInViewModel @Inject constructor(
                 password = currentState.password,
             )
             if (getEmailVerificationUseCase()) {
-                navigator.startWith(QuizSelectionNavKey)
+                navigator.startWithHome()
             } else {
-                navigator.navigateTo(EmailVerificationNavKey(false))
+                navigator.navigateToEmailVerification()
             }
         }
     }

@@ -9,7 +9,7 @@ android {
 
 dependencies {
     implementation(projects.feature.auth.api)
-    implementation(projects.feature.quizSelection.api)
+    implementation(projects.feature.home.api)
     implementation(projects.core.network)
     implementation(projects.data.auth)
     implementation(libs.androidx.credentials.play.services)

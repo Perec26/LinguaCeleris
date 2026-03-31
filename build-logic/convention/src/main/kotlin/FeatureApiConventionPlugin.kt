@@ -15,7 +15,7 @@ class FeatureApiConventionPlugin : Plugin<Project> {
 
             dependencies {
                 "implementation"(libs.findLibraryString("kotlinx.serialization.json"))
-                "implementation"(libs.findLibraryString("androidx.navigation3.runtime"))
+                "api"(project(":core:navigation"))
             }
         }
     }
