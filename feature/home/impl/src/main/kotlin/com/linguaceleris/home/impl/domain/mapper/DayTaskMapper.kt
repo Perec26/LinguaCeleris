@@ -1,7 +1,7 @@
-package com.linguaceleris.quizselection.impl.domain.mapper
+package com.linguaceleris.home.impl.domain.mapper
 
+import com.linguaceleris.home.impl.ui.model.DayQuizzesUI
 import com.linguaceleris.quiz.model.DayDTO
-import com.linguaceleris.quizselection.impl.ui.model.DayQuizzesUI
 
 fun DayDTO.toUi(): DayQuizzesUI = DayQuizzesUI(
     advanced = advanced,

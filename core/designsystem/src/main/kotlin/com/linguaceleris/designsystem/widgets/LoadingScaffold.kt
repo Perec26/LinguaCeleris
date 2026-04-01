@@ -13,6 +13,7 @@ fun LoadingScaffold(
     isLoading: Boolean = false,
     loadingText: String? = null,
     onNavigationButtonClick: (() -> Unit)? = null,
+    topBar: (@Composable () -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     LoadingWrapper(
@@ -21,7 +22,7 @@ fun LoadingScaffold(
         text = loadingText,
     ) {
         Scaffold(
-            topBar = { TopBar(title, onNavigationButtonClick) },
+            topBar = topBar ?: { TopBar(title, onNavigationButtonClick) },
             containerColor = Color.Transparent,
         ) { paddingValues ->
             content(paddingValues)

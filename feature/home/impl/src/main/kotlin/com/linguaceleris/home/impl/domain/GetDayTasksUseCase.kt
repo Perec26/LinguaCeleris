@@ -1,11 +1,11 @@
-package com.linguaceleris.quizselection.impl.domain
+package com.linguaceleris.home.impl.domain
 
+import com.linguaceleris.home.impl.domain.mapper.toUi
+import com.linguaceleris.home.impl.ui.model.DayQuizzesUI
 import com.linguaceleris.quiz.QuizRepository
-import com.linguaceleris.quizselection.impl.domain.mapper.toUi
-import com.linguaceleris.quizselection.impl.ui.model.DayQuizzesUI
 import com.linguaceleris.services.TrustedTimeManager
-import javax.inject.Inject
 import kotlinx.datetime.LocalDate
+import javax.inject.Inject
 
 class GetDayTasksUseCase @Inject constructor(
     private val repository: QuizRepository,

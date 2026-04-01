@@ -1,3 +1,6 @@
 package com.linguaceleris.home.impl.ui
 
-internal sealed class HomeEvent
+internal sealed class HomeEvent {
+    data class OnQuizClick(val quizId: String) : HomeEvent()
+    data object OnOpenMenuClick : HomeEvent()
+}

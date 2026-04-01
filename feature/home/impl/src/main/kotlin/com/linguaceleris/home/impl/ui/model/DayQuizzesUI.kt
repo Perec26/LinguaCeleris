@@ -1,4 +1,4 @@
-package com.linguaceleris.quizselection.impl.ui.model
+package com.linguaceleris.home.impl.ui.model
 
 data class DayQuizzesUI(
     val advanced: String? = null,

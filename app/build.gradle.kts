@@ -44,8 +44,6 @@ dependencies {
     implementation(projects.feature.start.api)
     implementation(projects.feature.start.impl)
     implementation(projects.feature.quiz.impl)
-    implementation(projects.feature.quizSelection.impl)
-    implementation(projects.feature.quizSelection.api)
     implementation(projects.feature.quizSummary.impl)
 }
 

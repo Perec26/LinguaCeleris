@@ -1,5 +1,6 @@
 package com.linguaceleris.designsystem.theme
 
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Immutable
@@ -7,8 +8,9 @@ import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class ExtendedColorScheme(
-    val green: ColorFamily = unspecified_scheme,
-    val yellow: ColorFamily = unspecified_scheme,
+    val green: ColorFamily = UnspecifiedScheme,
+    val yellow: ColorFamily = UnspecifiedScheme,
+    val red: ColorFamily = UnspecifiedScheme,
 )
 
 @Immutable
@@ -19,9 +21,16 @@ data class ColorFamily(
     val onColorContainer: Color,
 )
 
+fun ColorFamily.buttonColors() = ButtonColors(
+    contentColor = onColorContainer,
+    containerColor = colorContainer,
+    disabledContentColor = onColorContainer.disabled(),
+    disabledContainerColor = colorContainer.disabled(),
+)
+
 fun Color.disabled() = copy(alpha = 0.38f)
 
-val unspecified_scheme = ColorFamily(
+val UnspecifiedScheme = ColorFamily(
     Color.Unspecified,
     Color.Unspecified,
     Color.Unspecified,
@@ -258,90 +267,126 @@ internal val highContrastDarkColorScheme = darkColorScheme(
 
 internal val extendedLight = ExtendedColorScheme(
     green = ColorFamily(
-        customColor1Light,
-        onCustomColor1Light,
-        customColor1ContainerLight,
-        onCustomColor1ContainerLight,
+        customGreenLight,
+        onCustomGreenLight,
+        customGreenContainerLight,
+        onCustomGreenContainerLight,
     ),
     yellow = ColorFamily(
-        customColor2Light,
-        onCustomColor2Light,
-        customColor2ContainerLight,
-        onCustomColor2ContainerLight,
+        customYellowLight,
+        onCustomYellowLight,
+        customYellowContainerLight,
+        onCustomYellowContainerLight,
+    ),
+    red = ColorFamily(
+        customRedLight,
+        onCustomRedLight,
+        customRedContainerLight,
+        onCustomRedContainerLight,
     ),
 )
 
 internal val extendedDark = ExtendedColorScheme(
     green = ColorFamily(
-        customColor1Dark,
-        onCustomColor1Dark,
-        customColor1ContainerDark,
-        onCustomColor1ContainerDark,
+        customGreenDark,
+        onCustomGreenDark,
+        customGreenContainerDark,
+        onCustomGreenContainerDark,
     ),
     yellow = ColorFamily(
-        customColor2Dark,
-        onCustomColor2Dark,
-        customColor2ContainerDark,
-        onCustomColor2ContainerDark,
+        customYellowDark,
+        onCustomYellowDark,
+        customYellowContainerDark,
+        onCustomYellowContainerDark,
+    ),
+    red = ColorFamily(
+        customRedDark,
+        onCustomRedDark,
+        customRedContainerDark,
+        onCustomRedContainerDark,
     ),
 )
 
 internal val extendedLightMediumContrast = ExtendedColorScheme(
     green = ColorFamily(
-        customColor1LightMediumContrast,
-        onCustomColor1LightMediumContrast,
-        customColor1ContainerLightMediumContrast,
-        onCustomColor1ContainerLightMediumContrast,
+        customGreenLightMediumContrast,
+        onCustomGreenLightMediumContrast,
+        customGreenContainerLightMediumContrast,
+        onCustomGreenContainerLightMediumContrast,
     ),
     yellow = ColorFamily(
-        customColor2LightMediumContrast,
-        onCustomColor2LightMediumContrast,
-        customColor2ContainerLightMediumContrast,
-        onCustomColor2ContainerLightMediumContrast,
+        customYellowLightMediumContrast,
+        onCustomYellowLightMediumContrast,
+        customYellowContainerLightMediumContrast,
+        onCustomYellowContainerLightMediumContrast,
+    ),
+    red = ColorFamily(
+        customRedLightMediumContrast,
+        onCustomRedLightMediumContrast,
+        customRedContainerLightMediumContrast,
+        onCustomRedContainerLightMediumContrast,
     ),
 )
 
 internal val extendedLightHighContrast = ExtendedColorScheme(
     green = ColorFamily(
-        customColor1LightHighContrast,
-        onCustomColor1LightHighContrast,
-        customColor1ContainerLightHighContrast,
-        onCustomColor1ContainerLightHighContrast,
+        customGreenLightHighContrast,
+        onCustomGreenLightHighContrast,
+        customGreenContainerLightHighContrast,
+        onCustomGreenContainerLightHighContrast,
     ),
     yellow = ColorFamily(
-        customColor2LightHighContrast,
-        onCustomColor2LightHighContrast,
-        customColor2ContainerLightHighContrast,
-        onCustomColor2ContainerLightHighContrast,
+        customYellowLightHighContrast,
+        onCustomYellowLightHighContrast,
+        customYellowContainerLightHighContrast,
+        onCustomYellowContainerLightHighContrast,
+    ),
+    red = ColorFamily(
+        customRedLightHighContrast,
+        onCustomRedLightHighContrast,
+        customRedContainerLightHighContrast,
+        onCustomRedContainerLightHighContrast,
     ),
 )
 
 internal val extendedDarkMediumContrast = ExtendedColorScheme(
     green = ColorFamily(
-        customColor1DarkMediumContrast,
-        onCustomColor1DarkMediumContrast,
-        customColor1ContainerDarkMediumContrast,
-        onCustomColor1ContainerDarkMediumContrast,
+        customGreenDarkMediumContrast,
+        onCustomGreenDarkMediumContrast,
+        customGreenContainerDarkMediumContrast,
+        onCustomGreenContainerDarkMediumContrast,
     ),
     yellow = ColorFamily(
-        customColor2DarkMediumContrast,
-        onCustomColor2DarkMediumContrast,
-        customColor2ContainerDarkMediumContrast,
-        onCustomColor2ContainerDarkMediumContrast,
+        customYellowDarkMediumContrast,
+        onCustomYellowDarkMediumContrast,
+        customYellowContainerDarkMediumContrast,
+        onCustomYellowContainerDarkMediumContrast,
+    ),
+    red = ColorFamily(
+        customRedDarkMediumContrast,
+        onCustomRedDarkMediumContrast,
+        customRedContainerDarkMediumContrast,
+        onCustomRedContainerDarkMediumContrast,
     ),
 )
 
 internal val extendedDarkHighContrast = ExtendedColorScheme(
     green = ColorFamily(
-        customColor1DarkHighContrast,
-        onCustomColor1DarkHighContrast,
-        customColor1ContainerDarkHighContrast,
-        onCustomColor1ContainerDarkHighContrast,
+        customGreenDarkHighContrast,
+        onCustomGreenDarkHighContrast,
+        customGreenContainerDarkHighContrast,
+        onCustomGreenContainerDarkHighContrast,
     ),
     yellow = ColorFamily(
-        customColor2DarkHighContrast,
-        onCustomColor2DarkHighContrast,
-        customColor2ContainerDarkHighContrast,
-        onCustomColor2ContainerDarkHighContrast,
+        customYellowDarkHighContrast,
+        onCustomYellowDarkHighContrast,
+        customYellowContainerDarkHighContrast,
+        onCustomYellowContainerDarkHighContrast,
+    ),
+    red = ColorFamily(
+        customRedDarkHighContrast,
+        onCustomRedDarkHighContrast,
+        customRedContainerDarkHighContrast,
+        onCustomRedContainerDarkHighContrast,
     ),
 )
