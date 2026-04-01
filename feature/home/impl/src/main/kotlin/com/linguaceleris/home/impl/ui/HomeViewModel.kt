@@ -1,6 +1,8 @@
 package com.linguaceleris.home.impl.ui
 
+import com.linguaceleris.auth.api.startWithSignIn
 import com.linguaceleris.home.impl.domain.GetDayTasksUseCase
+import com.linguaceleris.home.impl.domain.SignOutUseCase
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quiz.api.navigateToQuiz
 import com.linguaceleris.ui.BaseViewModel
@@ -11,6 +13,7 @@ import javax.inject.Inject
 internal class HomeViewModel @Inject constructor(
     private val navigator: Navigator,
     private val getDayTasksUseCase: GetDayTasksUseCase,
+    private val signOutUseCase: SignOutUseCase,
 ) : BaseViewModel<HomeUiState, HomeEvent>(initialState = HomeUiState()) {
 
     init {
@@ -19,9 +22,18 @@ internal class HomeViewModel @Inject constructor(
 
     override fun onEvent(event: HomeEvent) {
         when (event) {
-            HomeEvent.OnOpenMenuClick -> {}
             is HomeEvent.OnQuizClick -> navigator.navigateToQuiz(event.quizId)
+            HomeEvent.OnOpenMenuClick -> updateState { onOpenMenuClick() }
+            HomeEvent.OnCloseMenuClick -> updateState { onCloseMenuClick() }
+            HomeEvent.OnSettingsClick -> {}
+            HomeEvent.OnSignOutClick -> onSignOutClick()
         }
+    }
+
+    private fun onSignOutClick() {
+        updateState { onCloseMenuClick() }
+        signOutUseCase()
+        navigator.startWithSignIn()
     }
 
     private fun loadQuizzes() {
