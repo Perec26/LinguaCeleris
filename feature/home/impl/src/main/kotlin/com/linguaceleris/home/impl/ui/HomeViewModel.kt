@@ -5,6 +5,7 @@ import com.linguaceleris.home.impl.domain.GetDayTasksUseCase
 import com.linguaceleris.home.impl.domain.SignOutUseCase
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quiz.api.navigateToQuiz
+import com.linguaceleris.settins.api.navigateToSettings
 import com.linguaceleris.ui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -25,9 +26,14 @@ internal class HomeViewModel @Inject constructor(
             is HomeEvent.OnQuizClick -> navigator.navigateToQuiz(event.quizId)
             HomeEvent.OnOpenMenuClick -> updateState { onOpenMenuClick() }
             HomeEvent.OnCloseMenuClick -> updateState { onCloseMenuClick() }
-            HomeEvent.OnSettingsClick -> {}
+            HomeEvent.OnSettingsClick -> onSettingsClick()
             HomeEvent.OnSignOutClick -> onSignOutClick()
         }
+    }
+
+    private fun onSettingsClick() {
+        updateState { onCloseMenuClick() }
+        navigator.navigateToSettings()
     }
 
     private fun onSignOutClick() {

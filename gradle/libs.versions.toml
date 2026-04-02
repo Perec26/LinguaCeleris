@@ -37,6 +37,7 @@ datetime = "0.7.1"
 material3Alpha = "1.5.0-alpha15"
 androidxCredentials = "1.5.0"
 googleid = "1.2.0"
+datastore = "1.2.1"
 
 ktlint = "14.2.0"
 kspPlugin = "2.3.6"
@@ -103,6 +104,9 @@ androidx-savedstate-compose = { group = "androidx.savedstate", name = "savedstat
 playservices-time = { group = "com.google.android.gms", name = "play-services-time", version.ref = "playServicesTime" }
 coroutines-playservices = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutinesPlayServicesTime" }
 datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
+
+# DataStore
+androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 
 # Tests
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }

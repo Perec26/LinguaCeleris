@@ -6,7 +6,6 @@ import android.graphics.Canvas
 import android.graphics.Matrix
 import android.graphics.Shader
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -96,24 +95,20 @@ fun PatternSurface(
     val matrix = remember { Matrix() }
 
     Surface(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxSize()
+            .animatedPattern(
+                shader = shader,
+                brush = brush,
+                matrix = matrix,
+                tileSize = tileSizePx.toDouble(),
+                backgroundColor = MaterialTheme.colorScheme.surface,
+                patternColor = MaterialTheme.colorScheme.surfaceContainer,
+                timeState = timeState,
+            ),
         color = Color.Transparent,
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .animatedPattern(
-                    shader = shader,
-                    brush = brush,
-                    matrix = matrix,
-                    tileSize = tileSizePx.toDouble(),
-                    backgroundColor = MaterialTheme.colorScheme.surface,
-                    patternColor = MaterialTheme.colorScheme.surfaceContainer,
-                    timeState = timeState,
-                ),
-            content = { content() },
-        )
-    }
+        content = { content() },
+    )
 }
 
 @PreviewLightDark

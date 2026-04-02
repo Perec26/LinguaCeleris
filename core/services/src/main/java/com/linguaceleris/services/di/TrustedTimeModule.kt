@@ -2,7 +2,7 @@ package com.linguaceleris.services.di
 
 import android.content.Context
 import com.google.android.gms.time.TrustedTime
-import com.linguaceleris.services.TrustedTimeClientAccessor
+import com.linguaceleris.services.time.TrustedTimeClientAccessor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

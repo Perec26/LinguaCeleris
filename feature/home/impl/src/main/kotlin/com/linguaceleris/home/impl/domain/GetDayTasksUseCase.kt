@@ -3,7 +3,7 @@ package com.linguaceleris.home.impl.domain
 import com.linguaceleris.home.impl.domain.mapper.toUi
 import com.linguaceleris.home.impl.ui.model.DayQuizzesUI
 import com.linguaceleris.quiz.QuizRepository
-import com.linguaceleris.services.TrustedTimeManager
+import com.linguaceleris.services.time.TrustedTimeManager
 import javax.inject.Inject
 import kotlinx.datetime.LocalDate
 

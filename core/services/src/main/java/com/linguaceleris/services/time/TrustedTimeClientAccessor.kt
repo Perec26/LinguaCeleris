@@ -1,4 +1,4 @@
-package com.linguaceleris.services
+package com.linguaceleris.services.time
 
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.time.TrustedTimeClient

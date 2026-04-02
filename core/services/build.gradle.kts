@@ -10,5 +10,6 @@ android {
 dependencies {
     implementation(libs.playservices.time)
     implementation(libs.coroutines.playservices)
+    implementation(libs.androidx.datastore)
     api(libs.datetime)
 }

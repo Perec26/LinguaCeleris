@@ -1,17 +1,13 @@
 package com.linguaceleris.designsystem.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 val LocalExtendedColors = staticCompositionLocalOf { ExtendedColorScheme() }
@@ -23,22 +19,22 @@ val MaterialTheme.extendedColors: ExtendedColorScheme
 
 @Composable
 fun LinguaCelerisTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false,
+    useSystemTheme: Boolean = true,
+    useDarkTheme: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val isSystemInDarkTheme: Boolean = isSystemInDarkTheme()
 
-        darkTheme -> darkScheme
-
-        else -> lightScheme
+    val isDark = when {
+        useSystemTheme && isSystemInDarkTheme -> true
+        !useSystemTheme && useDarkTheme -> true
+        else -> false
     }
 
-    val extendedColors = if (darkTheme) extendedDark else extendedLight
+    val colorScheme = if (isDark) darkScheme else lightScheme
+    val extendedColors = if (isDark) extendedDark else extendedLight
+
+    SystemBarsTheme(isDark)
 
     CompositionLocalProvider(LocalExtendedColors provides extendedColors) {
         MaterialTheme(

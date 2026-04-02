@@ -1,4 +1,4 @@
-package com.linguaceleris.services
+package com.linguaceleris.services.time
 
 import javax.inject.Inject
 import kotlin.time.Instant
