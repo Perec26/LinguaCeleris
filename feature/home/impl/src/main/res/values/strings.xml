@@ -31,6 +31,9 @@
     <string name="home_streak_never_started_subtitle_">Первый день новой серии</string>
     <string name="home_streak_today_not_completed_title">Не пропусти сегодняшний день</string>
     <string name="home_choose_level">Выбери уровень</string>
+    <string name="home_seconds">%d сек.</string>
+    <string name="home_timer">Новые задания через: %s</string>
+    <string name="home_timer_alarm">Успей продлить серию, осталось: %s</string>
 
     <plurals name="home_streak_completed_title">
         <item quantity="one">%d день подряд</item>

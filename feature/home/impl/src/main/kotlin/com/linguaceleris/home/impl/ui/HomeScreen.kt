@@ -1,15 +1,18 @@
 package com.linguaceleris.home.impl.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -28,8 +31,10 @@ import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.home.impl.R
+import com.linguaceleris.home.impl.ui.model.StreakUI
 import com.linguaceleris.home.impl.ui.widget.QuizSelectionWidget
 import com.linguaceleris.home.impl.ui.widget.StreakWidget
+import com.linguaceleris.ui.utils.UiText
 
 @Composable
 internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
@@ -55,12 +60,14 @@ private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) 
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp),
-                    verticalArrangement = Arrangement.SpaceBetween,
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     StreakWidget(streak = state.streak)
 
+                    Timer(state.needToAlarm, state.nextQuizzesTimer)
+
                     Column(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.weight(1f),
                         verticalArrangement = Arrangement.spacedBy(
                             space = 16.dp,
                             alignment = Alignment.CenterVertically,
@@ -76,6 +83,37 @@ private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) 
                 }
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun Timer(isAlarm: Boolean, timerText: UiText) {
+    if (isAlarm) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+                .background(
+                    MaterialTheme.colorScheme.errorContainer,
+                    shape = MaterialTheme.shapes.medium,
+                ),
+
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = stringResource(R.string.home_timer_alarm, timerText.asString()),
+                color = MaterialTheme.colorScheme.onErrorContainer,
+                style = MaterialTheme.typography.titleMedium,
+            )
+        }
+    } else {
+        Text(
+            modifier = Modifier.padding(8.dp),
+            text = stringResource(R.string.home_timer, timerText.asString()),
+            color = MaterialTheme.colorScheme.onSurface,
+        )
     }
 }
 
@@ -135,7 +173,27 @@ private fun Menu(expanded: Boolean, onEvent: (HomeEvent) -> Unit) {
 @Composable
 private fun HomeScreenPreview() {
     LCPreview {
-        HomeScreenContent(HomeUiState(isLoading = false)) {}
+        HomeScreenContent(
+            HomeUiState(
+                nextQuizzesTimer = UiText.DynamicString("12:34:56"),
+                isLoading = false,
+            ),
+        ) {}
+    }
+}
+
+@ScreenPreviews
+@Composable
+private fun HomeScreenAlarmPreview() {
+    LCPreview {
+        HomeScreenContent(
+            HomeUiState(
+                streak = StreakUI.TodayNotCompleted(123),
+                nextQuizzesTimer = UiText.DynamicString("34:56"),
+                lastHour = true,
+                isLoading = false,
+            ),
+        ) {}
     }
 }
 
