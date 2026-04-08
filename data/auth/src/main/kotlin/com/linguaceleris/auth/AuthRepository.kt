@@ -39,4 +39,6 @@ class AuthRepository @Inject constructor(private val credentialService: Credenti
     fun getWebClientId() = credentialService.getWebClientId()
 
     suspend fun signInAnonymously() = credentialService.signInAnonymously()
+
+    fun getCurrentUserId() = credentialService.getCurrentUserId()
 }

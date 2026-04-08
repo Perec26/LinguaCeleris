@@ -46,7 +46,6 @@ dependencies {
     implementation(projects.feature.start.api)
     implementation(projects.feature.start.impl)
     implementation(projects.feature.quiz.impl)
-    implementation(projects.feature.quizSummary.impl)
 }
 
 fun getBuildNumber(): Int {

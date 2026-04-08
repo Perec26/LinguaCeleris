@@ -1,5 +1,7 @@
 package com.linguaceleris.ui
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +17,7 @@ import com.linguaceleris.designsystem.widgets.PatternSurface
 import com.linguaceleris.navigation.LCApp
 import com.linguaceleris.navigation.Navigator
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,5 +47,13 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        val locale = Locale.forLanguageTag("ru")
+        val config = Configuration(newBase.resources.configuration).apply {
+            setLocale(locale)
+        }
+        super.attachBaseContext(newBase.createConfigurationContext(config))
     }
 }

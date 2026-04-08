@@ -1,5 +1,7 @@
 package com.linguaceleris.quiz.model
 
+import com.linguaceleris.network.serializer.LocalDateSerializer
+import kotlinx.datetime.LocalDate
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 
@@ -8,6 +10,7 @@ import kotlinx.serialization.Serializable
 data class DayDTO(
     val advanced: String?,
     val basic: String?,
-    val date: String,
+    @Serializable(with = LocalDateSerializer::class)
+    val date: LocalDate?,
     val intermediate: String?,
 )

@@ -1,6 +1,7 @@
 package com.linguaceleris.network.di
 
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.linguaceleris.network.FirestoreService
 import dagger.Module
@@ -16,4 +17,8 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideFirestoreService(): FirestoreService = FirestoreService(Firebase.firestore)
+
+    @Provides
+    @Singleton
+    fun provideFirestore(): FirebaseFirestore = Firebase.firestore
 }

@@ -17,4 +17,5 @@ dependencies {
     implementation(libs.androidx.credentials)
     implementation(libs.android.googleid)
     implementation(libs.firebase.auth)
+    implementation(libs.datetime)
 }

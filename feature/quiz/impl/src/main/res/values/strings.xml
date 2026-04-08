@@ -26,4 +26,9 @@
     <string name="quiz_long_image_select_word">Посмотри на изображение и выбери слово, которое точнее всего описывает то, что показано на картинке.</string>
     <string name="quiz_short_unknown">Что-то пошло не так</string>
     <string name="quiz_long_unknown">Что-то пошло не так</string>
+    <string name="quiz_summary_success_text">Вы выполнили все задания!</string>
+    <string name="quiz_summary_failure_text">В этот не получилось, попробуйте еще раз!</string>
+    <string name="quiz_summary_try_another_level">Попробовать другой уровень</string>
+    <string name="quiz_summary_try_again">Попробовать ещё раз</string>
+    <string name="quiz_summary_share">Поделится результатами</string>
 </resources>

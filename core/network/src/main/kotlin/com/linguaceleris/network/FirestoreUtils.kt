@@ -7,6 +7,9 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.boolean
+import kotlinx.serialization.json.doubleOrNull
+import kotlinx.serialization.json.longOrNull
 import kotlinx.serialization.serializer
 
 inline fun <reified T> DocumentSnapshot.toDataClass(
@@ -38,4 +41,27 @@ fun Any?.toJsonElement(): JsonElement = when (this) {
     }
 
     else -> JsonPrimitive(this.toString())
+}
+
+inline fun <reified T> T.toFirebaseMap(
+    json: Json = Json { ignoreUnknownKeys = true },
+): Map<String, Any?> {
+    val jsonElement = json.encodeToJsonElement(serializer<T>(), this)
+    @Suppress("UNCHECKED_CAST")
+    return (jsonElement as JsonObject).toFirebaseMap() as Map<String, Any?>
+}
+
+fun JsonElement.toFirebaseMap(): Any? = when (this) {
+    is JsonNull -> null
+
+    is JsonPrimitive -> when {
+        this.isString -> this.content
+        this.content == "true" || this.content == "false" -> this.boolean
+        this.content.contains('.') -> this.doubleOrNull
+        else -> this.longOrNull
+    }
+
+    is JsonArray -> this.map { it.toFirebaseMap() }
+
+    is JsonObject -> this.mapValues { it.value.toFirebaseMap() }
 }

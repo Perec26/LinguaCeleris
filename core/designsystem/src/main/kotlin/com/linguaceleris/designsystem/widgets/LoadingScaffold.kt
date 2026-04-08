@@ -28,6 +28,7 @@ fun LoadingScaffold(
             containerColor = Color.Transparent,
         ) { paddingValues ->
             Surface(
+                modifier = Modifier,
                 color = Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.onSurface
             ) {

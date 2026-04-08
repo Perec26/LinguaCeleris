@@ -1,11 +1,11 @@
 package com.linguaceleris.quiz.impl.domain.mapper
 
-import com.linguaceleris.quiz.impl.ui.model.MatchingPairUI
-import com.linguaceleris.quiz.impl.ui.model.TaskTypeUI
-import com.linguaceleris.quiz.impl.ui.model.TaskUI
-import com.linguaceleris.quiz.impl.ui.model.TaskUI.Matching
-import com.linguaceleris.quiz.impl.ui.model.TaskUI.SelectCorrectAnswer
-import com.linguaceleris.quiz.impl.ui.model.WordCardUI
+import com.linguaceleris.quiz.impl.ui.quiz.model.MatchingPairUI
+import com.linguaceleris.quiz.impl.ui.quiz.model.TaskTypeUI
+import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI
+import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI.Matching
+import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI.SelectCorrectAnswer
+import com.linguaceleris.quiz.impl.ui.quiz.model.WordCardUI
 import com.linguaceleris.quiz.model.MatchingPairDTO
 import com.linguaceleris.quiz.model.TaskDTO
 import com.linguaceleris.quiz.model.TaskDataDTO

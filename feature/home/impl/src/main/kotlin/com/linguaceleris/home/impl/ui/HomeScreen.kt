@@ -1,26 +1,35 @@
 package com.linguaceleris.home.impl.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.home.impl.R
 import com.linguaceleris.home.impl.ui.widget.QuizSelectionWidget
+import com.linguaceleris.home.impl.ui.widget.StreakWidget
 
 @Composable
 internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
@@ -33,12 +42,39 @@ private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) 
     LoadingScaffold(
         topBar = { TopBar(menuExpanded = state.menuExpanded, onEvent = onEvent) },
     ) {
-        Column {
-            QuizSelectionWidget(
-                quizzesUI = state.dayQuizzes,
-                isLoading = false,
-                onEvent = onEvent,
-            )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (state.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    StreakWidget(streak = state.streak)
+
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(
+                            space = 16.dp,
+                            alignment = Alignment.CenterVertically,
+                        ),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.home_choose_level),
+                            style = MaterialTheme.typography.headlineMedium,
+                        )
+                        QuizSelectionWidget(onEvent)
+                    }
+                }
+            }
         }
     }
 }
@@ -99,6 +135,14 @@ private fun Menu(expanded: Boolean, onEvent: (HomeEvent) -> Unit) {
 @Composable
 private fun HomeScreenPreview() {
     LCPreview {
-        HomeScreenContent(HomeUiState(dayQuizzes = quizzesUIMock)) {}
+        HomeScreenContent(HomeUiState(isLoading = false)) {}
+    }
+}
+
+@ScreenPreviews
+@Composable
+private fun HomeScreenLoadingPreview() {
+    LCPreview {
+        HomeScreenContent(HomeUiState()) {}
     }
 }

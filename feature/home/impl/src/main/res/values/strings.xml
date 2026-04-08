@@ -6,4 +6,43 @@
     <string name="home_exit">Выйти</string>
     <string name="home_setting">Настройки</string>
     <string name="home_app_name">Lingua Celeris</string>
+    <string name="home_streak_completed_1">Отличное начало</string>
+    <string name="home_streak_completed_3">Первые дни уже позади</string>
+    <string name="home_streak_completed_7">Целая неделя — это сильно</string>
+    <string name="home_streak_completed_14">Две недели отличного темпа</string>
+    <string name="home_streak_completed_30">Месяц позади, продолжай дальше</string>
+    <string name="home_streak_completed_50">Половина пути до сотни</string>
+    <string name="home_streak_completed_100">Трёхзначный результат — вау</string>
+    <string name="home_streak_completed_365">Целый год — невероятный результат</string>
+    <string name="home_streak_completed_any1">Отличный результат, продолжай в том же темпе</string>
+    <string name="home_streak_completed_any2">Это уже серьёзный прогресс</string>
+    <string name="home_streak_completed_any3">Так держать, у тебя отлично получается</string>
+    <string name="home_streak_completed_any4">Ты набрал отличный темп</string>
+    <string name="home_streak_completed_any5">Впечатляющий результат</string>
+    <string name="home_streak_completed_any6">Продолжай, впереди новые рекорды</string>
+    <string name="home_streak_completed_any7">Ещё один важный рубеж позади</string>
+    <string name="home_streak_dead_title">Серия прервалась</string>
+    <string name="home_streak_dead_subtitle">Лучший результат: %d</string>
+    <string name="home_streak_one_freeze_title">Осталась одна заморозка</string>
+    <string name="home_streak_one_freeze_subtitle">Она поможет сохранить текущий прогресс</string>
+    <string name="home_streak_none_freeze_title">Заморозок не осталось</string>
+    <string name="home_streak_none_freeze_subtitle">Если пропустишь день, текущий результат прервётся</string>
+    <string name="home_streak_never_started_title">Начни сегодня</string>
+    <string name="home_streak_never_started_subtitle_">Первый день новой серии</string>
+    <string name="home_streak_today_not_completed_title">Не пропусти сегодняшний день</string>
+    <string name="home_choose_level">Выбери уровень</string>
+
+    <plurals name="home_streak_completed_title">
+        <item quantity="one">%d день подряд</item>
+        <item quantity="two">%d дня подряд</item>
+        <item quantity="few">%d дня подряд</item>
+        <item quantity="other">%d дней подряд</item>
+    </plurals>
+
+    <plurals name="home_streak_today_not_completed_subtitle">
+        <item quantity="one">Уже %d день без перерыва</item>
+        <item quantity="two">Уже %d дня без перерыва</item>
+        <item quantity="few">Уже %d дня без перерыва</item>
+        <item quantity="other">Уже %d дней без перерыва</item>
+    </plurals>
 </resources>

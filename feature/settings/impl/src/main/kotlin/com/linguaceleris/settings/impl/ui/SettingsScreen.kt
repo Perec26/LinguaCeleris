@@ -64,8 +64,16 @@ private fun SettingsScreenContent(state: SettingsUiState, onEvent: (SettingsEven
 
 @ScreenPreviews
 @Composable
-private fun SettingsScreenPreview() {
+private fun SettingsScreenLoadingPreview() {
     LCPreview {
         SettingsScreenContent(SettingsUiState()) {}
+    }
+}
+
+@ScreenPreviews
+@Composable
+private fun SettingsScreenPreview() {
+    LCPreview {
+        SettingsScreenContent(SettingsUiState(isLoading = false)) {}
     }
 }

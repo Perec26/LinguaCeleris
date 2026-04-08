@@ -73,4 +73,6 @@ class CredentialService @Inject constructor(
         auth.signInAnonymously().await()
         reloadUser()
     }
+
+    fun getCurrentUserId() = currentUser?.uid
 }

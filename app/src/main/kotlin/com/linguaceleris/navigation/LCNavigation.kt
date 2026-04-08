@@ -20,7 +20,6 @@ import androidx.navigation3.ui.NavDisplay
 import com.linguaceleris.auth.impl.navigation.authEntry
 import com.linguaceleris.home.impl.navigation.homeEntry
 import com.linguaceleris.quiz.impl.navigation.quizEntry
-import com.linguaceleris.quizsummary.impl.navigation.quizSummaryEntry
 import com.linguaceleris.settings.impl.navigation.settingsEntry
 import com.linguaceleris.start.impl.navigation.startEntry
 import com.linguaceleris.ui.LocalSnackbarHostState
@@ -35,7 +34,6 @@ internal fun LCApp(navigator: Navigator) {
         settingsEntry()
         startEntry()
         quizEntry()
-        quizSummaryEntry()
     }
 
     val duration = 300
