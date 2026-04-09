@@ -28,8 +28,8 @@ internal fun QuizSelectionWidget(onEvent: (HomeEvent) -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             colors = MaterialTheme.extendedColors.green.buttonColors(),
             text = stringResource(R.string.home_quiz_level_easy),
-            buttonSize = ButtonSize.EXTRA_LARGE,
-            onClick = { onEvent(HomeEvent.OnEastQuizClick) },
+            buttonSize = ButtonSize.LARGE,
+            onClick = { onEvent(HomeEvent.OnBasicQuizClick) },
         )
 
         LCFilledButton(
@@ -37,16 +37,16 @@ internal fun QuizSelectionWidget(onEvent: (HomeEvent) -> Unit) {
             colors = MaterialTheme.extendedColors.yellow.buttonColors(),
 
             text = stringResource(R.string.home_quiz_level_normal),
-            buttonSize = ButtonSize.EXTRA_LARGE,
-            onClick = { onEvent(HomeEvent.OnMediumQuizClick) },
+            buttonSize = ButtonSize.LARGE,
+            onClick = { onEvent(HomeEvent.OnIntermediateQuizClick) },
         )
 
         LCFilledButton(
             modifier = Modifier.fillMaxWidth(),
             colors = MaterialTheme.extendedColors.red.buttonColors(),
             text = stringResource(R.string.home_quiz_level_hard),
-            buttonSize = ButtonSize.EXTRA_LARGE,
-            onClick = { onEvent(HomeEvent.OnHardQuizClick) },
+            buttonSize = ButtonSize.LARGE,
+            onClick = { onEvent(HomeEvent.OnAdvanceQuizClick) },
         )
     }
 }

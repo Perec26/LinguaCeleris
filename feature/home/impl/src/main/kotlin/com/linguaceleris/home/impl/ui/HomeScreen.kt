@@ -1,5 +1,7 @@
 package com.linguaceleris.home.impl.ui
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,13 +21,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
@@ -33,12 +38,22 @@ import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.home.impl.R
 import com.linguaceleris.home.impl.ui.model.StreakUI
 import com.linguaceleris.home.impl.ui.widget.QuizSelectionWidget
+import com.linguaceleris.home.impl.ui.widget.SocialButtonsWidget
 import com.linguaceleris.home.impl.ui.widget.StreakWidget
 import com.linguaceleris.ui.utils.UiText
 
 @Composable
 internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val state = viewModel.state.collectAsState().value
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect {
+            when (it) {
+                is HomeEffect.OpenTelegram -> context.openLink(it.link)
+                is HomeEffect.OpenYoutube -> context.openLink(it.link)
+            }
+        }
+    }
     HomeScreenContent(state = state, onEvent = viewModel::onEvent)
 }
 
@@ -80,6 +95,8 @@ private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) 
                         )
                         QuizSelectionWidget(onEvent)
                     }
+
+                    SocialButtonsWidget(onEvent)
                 }
             }
         }
@@ -167,6 +184,11 @@ private fun Menu(expanded: Boolean, onEvent: (HomeEvent) -> Unit) {
             onClick = { onEvent(HomeEvent.OnSignOutClick) },
         )
     }
+}
+
+fun Context.openLink(link: UiText) {
+    val intent = Intent(Intent.ACTION_VIEW, link.asString(this).toUri())
+    startActivity(intent)
 }
 
 @ScreenPreviews

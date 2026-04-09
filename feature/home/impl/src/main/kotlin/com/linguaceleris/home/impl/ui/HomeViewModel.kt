@@ -8,11 +8,11 @@ import com.linguaceleris.home.impl.domain.GetStreakUseCase
 import com.linguaceleris.home.impl.domain.LoadScheduleUseCase
 import com.linguaceleris.home.impl.domain.SignOutUseCase
 import com.linguaceleris.navigation.Navigator
-import com.linguaceleris.quiz.api.navigateToEasyQuiz
-import com.linguaceleris.quiz.api.navigateToHardQuiz
-import com.linguaceleris.quiz.api.navigateToMediumQuiz
+import com.linguaceleris.quiz.api.navigateToAdvanceQuiz
+import com.linguaceleris.quiz.api.navigateToBasicQuiz
+import com.linguaceleris.quiz.api.navigateToIntermediateQuiz
 import com.linguaceleris.settins.api.navigateToSettings
-import com.linguaceleris.ui.BaseViewModel
+import com.linguaceleris.ui.EffectViewModel
 import com.linguaceleris.ui.utils.UiText
 import com.linguaceleris.ui.utils.UiTextArg
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +26,7 @@ internal class HomeViewModel @Inject constructor(
     private val signOutUseCase: SignOutUseCase,
     private val getStreakUseCase: GetStreakUseCase,
     private val getNextDayUseCase: GetNextDayUseCase,
-) : BaseViewModel<HomeUiState, HomeEvent>(initialState = HomeUiState()) {
+) : EffectViewModel<HomeUiState, HomeEvent, HomeEffect>(initialState = HomeUiState()) {
 
     init {
         subscribeToNavigationResult()
@@ -40,9 +40,11 @@ internal class HomeViewModel @Inject constructor(
             HomeEvent.OnCloseMenuClick -> updateState { onCloseMenuClick() }
             HomeEvent.OnSettingsClick -> onSettingsClick()
             HomeEvent.OnSignOutClick -> onSignOutClick()
-            HomeEvent.OnEastQuizClick -> navigator.navigateToEasyQuiz()
-            HomeEvent.OnHardQuizClick -> navigator.navigateToHardQuiz()
-            HomeEvent.OnMediumQuizClick -> navigator.navigateToMediumQuiz()
+            HomeEvent.OnBasicQuizClick -> navigator.navigateToBasicQuiz()
+            HomeEvent.OnIntermediateQuizClick -> navigator.navigateToIntermediateQuiz()
+            HomeEvent.OnAdvanceQuizClick -> navigator.navigateToAdvanceQuiz()
+            HomeEvent.OnTelegramClick -> sendEffect(HomeEffect.OpenTelegram())
+            HomeEvent.OnYoutubeClick -> sendEffect(HomeEffect.OpenYoutube())
         }
     }
 

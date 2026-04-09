@@ -13,6 +13,6 @@ enum class QuizDifficulty {
 @Serializable
 data class QuizNavKey(val quizDifficulty: QuizDifficulty) : NavKey
 
-fun Navigator.navigateToEasyQuiz() = navigateTo(QuizNavKey(QuizDifficulty.BASIC))
-fun Navigator.navigateToMediumQuiz() = navigateTo(QuizNavKey(QuizDifficulty.INTERMEDIATE))
-fun Navigator.navigateToHardQuiz() = navigateTo(QuizNavKey(QuizDifficulty.ADVANCED))
+fun Navigator.navigateToBasicQuiz() = navigateTo(QuizNavKey(QuizDifficulty.BASIC))
+fun Navigator.navigateToIntermediateQuiz() = navigateTo(QuizNavKey(QuizDifficulty.INTERMEDIATE))
+fun Navigator.navigateToAdvanceQuiz() = navigateTo(QuizNavKey(QuizDifficulty.ADVANCED))
