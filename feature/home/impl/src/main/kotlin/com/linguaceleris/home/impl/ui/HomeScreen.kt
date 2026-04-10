@@ -93,7 +93,7 @@ private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) 
                             text = stringResource(R.string.home_choose_level),
                             style = MaterialTheme.typography.headlineMedium,
                         )
-                        QuizSelectionWidget(onEvent)
+                        QuizSelectionWidget(state.streak.completion, onEvent)
                     }
 
                     SocialButtonsWidget(onEvent)

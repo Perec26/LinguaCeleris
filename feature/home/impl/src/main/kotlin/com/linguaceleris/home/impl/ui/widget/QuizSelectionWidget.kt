@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -17,9 +18,10 @@ import com.linguaceleris.designsystem.widgets.LCFilledButton
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.home.impl.R
 import com.linguaceleris.home.impl.ui.HomeEvent
+import com.linguaceleris.home.impl.ui.model.QuizCompletionUI
 
 @Composable
-internal fun QuizSelectionWidget(onEvent: (HomeEvent) -> Unit) {
+internal fun QuizSelectionWidget(completion: QuizCompletionUI, onEvent: (HomeEvent) -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
@@ -27,7 +29,10 @@ internal fun QuizSelectionWidget(onEvent: (HomeEvent) -> Unit) {
         LCFilledButton(
             modifier = Modifier.fillMaxWidth(),
             colors = MaterialTheme.extendedColors.green.buttonColors(),
-            text = stringResource(R.string.home_quiz_level_easy),
+            text = stringResource(R.string.home_quiz_level_basic),
+            icon = painterResource(R.drawable.home_check_circle).takeIf {
+                completion.basicIsCompleted
+            },
             buttonSize = ButtonSize.LARGE,
             onClick = { onEvent(HomeEvent.OnBasicQuizClick) },
         )
@@ -35,8 +40,10 @@ internal fun QuizSelectionWidget(onEvent: (HomeEvent) -> Unit) {
         LCFilledButton(
             modifier = Modifier.fillMaxWidth(),
             colors = MaterialTheme.extendedColors.yellow.buttonColors(),
-
-            text = stringResource(R.string.home_quiz_level_normal),
+            icon = painterResource(R.drawable.home_check_circle).takeIf {
+                completion.intermediateIsCompleted
+            },
+            text = stringResource(R.string.home_quiz_level_intermediate),
             buttonSize = ButtonSize.LARGE,
             onClick = { onEvent(HomeEvent.OnIntermediateQuizClick) },
         )
@@ -44,7 +51,10 @@ internal fun QuizSelectionWidget(onEvent: (HomeEvent) -> Unit) {
         LCFilledButton(
             modifier = Modifier.fillMaxWidth(),
             colors = MaterialTheme.extendedColors.red.buttonColors(),
-            text = stringResource(R.string.home_quiz_level_hard),
+            icon = painterResource(R.drawable.home_check_circle).takeIf {
+                completion.advancedIsCompleted
+            },
+            text = stringResource(R.string.home_quiz_level_advanced),
             buttonSize = ButtonSize.LARGE,
             onClick = { onEvent(HomeEvent.OnAdvanceQuizClick) },
         )
@@ -55,6 +65,20 @@ internal fun QuizSelectionWidget(onEvent: (HomeEvent) -> Unit) {
 @Composable
 private fun QuizSelectionWidgetPreview() {
     LCPreview {
-        QuizSelectionWidget {}
+        QuizSelectionWidget(completion = QuizCompletionUI()) {}
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun QuizSelectionWidgetAllDonePreview() {
+    LCPreview {
+        QuizSelectionWidget(
+            completion = QuizCompletionUI(
+                basicIsCompleted = true,
+                intermediateIsCompleted = true,
+                advancedIsCompleted = true,
+            ),
+        ) {}
     }
 }

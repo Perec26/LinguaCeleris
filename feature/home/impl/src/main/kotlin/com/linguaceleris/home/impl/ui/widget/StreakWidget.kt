@@ -169,11 +169,11 @@ private fun StreakWidgetPreview() {
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            StreakWidget(StreakUI.Dead(150, 180))
+            StreakWidget(StreakUI.Dead(150))
             StreakWidget(StreakUI.Freeze.OneFreeze)
             StreakWidget(StreakUI.Freeze.NoneFreeze)
             StreakWidget(StreakUI.NeverStarted)
-            StreakWidget(StreakUI.TodayCompleted(1, R.string.home_streak_completed_any3))
+            StreakWidget(StreakUI.TodayCompleted(1, subtitle = R.string.home_streak_completed_any3))
             StreakWidget(StreakUI.TodayNotCompleted(2))
         }
     }

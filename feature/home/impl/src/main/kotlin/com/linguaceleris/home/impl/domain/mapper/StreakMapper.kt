@@ -1,5 +1,6 @@
 package com.linguaceleris.home.impl.domain.mapper
 
+import com.linguaceleris.home.impl.ui.model.QuizCompletionUI
 import com.linguaceleris.home.impl.ui.model.StreakUI
 import com.linguaceleris.home.impl.ui.model.createFreeze
 import com.linguaceleris.home.impl.ui.model.createTodayCompleted
@@ -17,6 +18,12 @@ internal fun StreakDTO.toUi(currentDate: LocalDate): StreakUI {
         advancedLastCompletedDate,
     ) ?: currentDate
 
+    val completion = QuizCompletionUI(
+        basicIsCompleted = basicLastCompletedDate == currentDate,
+        intermediateIsCompleted = intermediateLastCompletedDate == currentDate,
+        advancedIsCompleted = advancedLastCompletedDate == currentDate,
+    )
+
     val daysWithoutCompleted = lastCompletedDate.daysUntil(currentDate)
 
     return when {
@@ -24,6 +31,7 @@ internal fun StreakDTO.toUi(currentDate: LocalDate): StreakUI {
 
         daysWithoutCompleted == 0 -> createTodayCompleted(
             streak = current,
+            completion = completion,
             dateHash = lastCompletedDate.hashCode(),
         )
 
@@ -33,6 +41,6 @@ internal fun StreakDTO.toUi(currentDate: LocalDate): StreakUI {
             freezeCount = MAX_DAYS_UNTIL - daysWithoutCompleted,
         )
 
-        else -> StreakUI.Dead(lastStreak = current, longestStreak = longest)
+        else -> StreakUI.Dead(longestStreak = longest)
     }
 }

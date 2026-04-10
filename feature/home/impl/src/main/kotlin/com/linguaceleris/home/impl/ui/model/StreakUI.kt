@@ -4,12 +4,17 @@ import androidx.annotation.StringRes
 import com.linguaceleris.home.impl.R
 import com.linguaceleris.home.impl.ui.model.StreakUI.TodayCompleted
 
-internal sealed class StreakUI {
-    data class Dead(val lastStreak: Int, val longestStreak: Int) : StreakUI()
-    data class TodayCompleted(val streak: Int, @param:StringRes val subtitle: Int) : StreakUI()
+internal sealed class StreakUI(open val completion: QuizCompletionUI = QuizCompletionUI()) {
+    data class Dead(val longestStreak: Int) : StreakUI()
+    data class TodayCompleted(
+        val streak: Int,
+        override val completion: QuizCompletionUI = QuizCompletionUI(),
+        @param:StringRes val subtitle: Int,
+    ) : StreakUI(completion)
+
     data class TodayNotCompleted(val streak: Int) : StreakUI()
     data object NeverStarted : StreakUI()
-    sealed class Freeze(@param:StringRes val title: Int, @param:StringRes val subtitle: Int,) :
+    sealed class Freeze(@param:StringRes val title: Int, @param:StringRes val subtitle: Int) :
         StreakUI() {
         data object OneFreeze : Freeze(
             title = R.string.home_streak_one_freeze_title,
@@ -29,7 +34,11 @@ internal fun createFreeze(freezeCount: Int): StreakUI.Freeze = if (freezeCount =
     StreakUI.Freeze.NoneFreeze
 }
 
-internal fun createTodayCompleted(streak: Int, dateHash: Int): TodayCompleted {
+internal fun createTodayCompleted(
+    completion: QuizCompletionUI,
+    streak: Int,
+    dateHash: Int,
+): TodayCompleted {
     val subtitle = when (streak) {
         1 -> R.string.home_streak_completed_1
         2, 3 -> R.string.home_streak_completed_3
@@ -41,7 +50,7 @@ internal fun createTodayCompleted(streak: Int, dateHash: Int): TodayCompleted {
         365 -> R.string.home_streak_completed_365
         else -> getRandomSubtitle(dateHash)
     }
-    return TodayCompleted(streak, subtitle)
+    return TodayCompleted(streak, completion, subtitle)
 }
 
 private fun getRandomSubtitle(dateHash: Int) = when (dateHash % 7) {
