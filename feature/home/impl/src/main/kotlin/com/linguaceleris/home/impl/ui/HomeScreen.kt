@@ -32,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.linguaceleris.designsystem.widgets.LCFilledButton
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
@@ -68,38 +69,65 @@ private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) 
                 .padding(it),
             contentAlignment = Alignment.Center,
         ) {
-            if (state.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    StreakWidget(streak = state.streak)
+            when {
+                state.isLoading -> CircularProgressIndicator()
 
-                    Timer(state.needToAlarm, state.nextQuizzesTimer)
+                state.hasError -> ErrorWidget { onEvent(HomeEvent.OnRefreshClick) }
 
+                else ->
                     Column(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(
-                            space = 16.dp,
-                            alignment = Alignment.CenterVertically,
-                        ),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Text(
-                            text = stringResource(R.string.home_choose_level),
-                            style = MaterialTheme.typography.headlineMedium,
-                        )
-                        QuizSelectionWidget(state.streak.completion, onEvent)
-                    }
+                        StreakWidget(streak = state.streak)
 
-                    SocialButtonsWidget(onEvent)
-                }
+                        Timer(state.needToAlarm, state.nextQuizzesTimer)
+
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(
+                                space = 16.dp,
+                                alignment = Alignment.CenterVertically,
+                            ),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Text(
+                                text = stringResource(R.string.home_choose_level),
+                                style = MaterialTheme.typography.headlineMedium,
+                            )
+                            QuizSelectionWidget(state.streak.completion, onEvent)
+                        }
+
+                        SocialButtonsWidget(onEvent)
+                    }
             }
         }
+    }
+}
+
+@Composable
+private fun ErrorWidget(onClick: () -> Unit) {
+    Column(
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+    ) {
+        Text(
+            text = stringResource(R.string.home_error_title),
+            style = MaterialTheme.typography.headlineMedium,
+        )
+
+        Text(
+            text = stringResource(R.string.home_error_description),
+            style = MaterialTheme.typography.bodyMedium,
+        )
+
+        LCFilledButton(
+            text = stringResource(R.string.home_error_button),
+            onClick = onClick,
+        )
     }
 }
 
@@ -224,5 +252,13 @@ private fun HomeScreenAlarmPreview() {
 private fun HomeScreenLoadingPreview() {
     LCPreview {
         HomeScreenContent(HomeUiState()) {}
+    }
+}
+
+@ScreenPreviews
+@Composable
+private fun HomeScreenErrorPreview() {
+    LCPreview {
+        HomeScreenContent(HomeUiState(isLoading = false, hasError = true)) {}
     }
 }

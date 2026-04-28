@@ -19,6 +19,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.time.Duration
 
+private const val HOUR_FORMAT = "%02d:%02d:%02d"
+private const val MINUTES_FORMAT = "%02d:%02d"
+
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     private val navigator: Navigator,
@@ -45,6 +48,7 @@ internal class HomeViewModel @Inject constructor(
             HomeEvent.OnAdvanceQuizClick -> navigator.navigateToAdvanceQuiz()
             HomeEvent.OnTelegramClick -> sendEffect(HomeEffect.OpenTelegram())
             HomeEvent.OnYoutubeClick -> sendEffect(HomeEffect.OpenYoutube())
+            HomeEvent.OnRefreshClick -> loadData()
         }
     }
 
@@ -62,7 +66,10 @@ internal class HomeViewModel @Inject constructor(
     private fun subscribeNextDay() {
         launch {
             getNextDayUseCase().collect {
-                if (it.inWholeSeconds == 0L) loadData()
+                if (it.inWholeSeconds == 0L) {
+                    loadData()
+                    return@collect
+                }
 
                 val isLastHour = it.inWholeHours == 0L
                 val durationString = getDurationString(it)
@@ -76,9 +83,9 @@ internal class HomeViewModel @Inject constructor(
         val minutes = duration.inWholeMinutes % 60
         val seconds = duration.inWholeSeconds % 60
         return when {
-            hours > 0 -> UiText.DynamicString("%02d:%02d:%02d".format(hours, minutes, seconds))
+            hours > 0 -> UiText.DynamicString(HOUR_FORMAT.format(hours, minutes, seconds))
 
-            minutes > 0 -> UiText.DynamicString("%02d:%02d".format(minutes, seconds))
+            minutes > 0 -> UiText.DynamicString(MINUTES_FORMAT.format(minutes, seconds))
 
             else -> UiText.StringResource(
                 resId = R.string.home_seconds,
@@ -89,20 +96,22 @@ internal class HomeViewModel @Inject constructor(
 
     private fun subscribeToNavigationResult() {
         launch {
-            navigator.getResultFlow<QuizResult>().collect {
-                updateState { startLoading() }
-                val streak = getStreakUseCase()
-                updateState { dataLoaded(streak = streak) }
-            }
+            navigator.getResultFlow<QuizResult>().collect { loadData() }
         }
     }
 
     private fun loadData() {
-        launch {
-            updateState { startLoading() }
+        updateState { startLoading() }
+        launch(
+            onError = { handleLoadDataError(it) },
+        ) {
             loadScheduleUseCase()
             val streak = getStreakUseCase()
             updateState { dataLoaded(streak = streak) }
         }
+    }
+
+    private fun handleLoadDataError(it: Exception) {
+        updateState { showError() }
     }
 }
