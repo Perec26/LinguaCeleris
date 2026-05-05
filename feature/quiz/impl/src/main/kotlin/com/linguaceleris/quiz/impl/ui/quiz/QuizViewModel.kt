@@ -5,6 +5,7 @@ import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quiz.api.QuizDifficulty
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.domain.GetTasksUseCase
+import com.linguaceleris.quiz.impl.domain.SelectVariantUseCase
 import com.linguaceleris.quiz.impl.navigation.navigateToSummary
 import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.quiz.model.WordCardUI
@@ -19,6 +20,7 @@ internal class QuizViewModel @AssistedInject constructor(
     private val navigator: Navigator,
     private val getTasksUseCase: GetTasksUseCase,
     private val playerManager: PlayerManager,
+    private val selectVariantUseCase: SelectVariantUseCase,
     @Assisted val quizDifficulty: QuizDifficulty,
 ) : BaseViewModel<QuizUiState, QuizEvent>(initialState = QuizUiState()) {
 
@@ -28,8 +30,8 @@ internal class QuizViewModel @AssistedInject constructor(
 
     override fun onEvent(event: QuizEvent) {
         when (event) {
-            is QuizEvent.OnAudioClick -> event.audio?.let(::onAudioClick)
-            is QuizEvent.SelectAnswer -> onSelectAnswer(event.variant)
+            is QuizEvent.OnAudioClick -> event.audio?.let(::playAudio)
+            is QuizEvent.SelectAnswer -> onSelectVariant(event.variant)
             QuizEvent.OnBackClick -> updateState { showExitDialog() }
             QuizEvent.OnCheckButtonClick -> onCheckClicked()
             QuizEvent.OnContinueButtonClick -> onContinueButtonClick()
@@ -39,12 +41,26 @@ internal class QuizViewModel @AssistedInject constructor(
         }
     }
 
-    private fun onSelectAnswer(event: WordCardUI) {
-        updateState { onCardClicked(event) }
-        val currentTask = currentState.currentTask
-        if (currentTask is TaskUI.Matching) {
-            if (currentTask.hasError) playError()
-            if (currentTask.isDone) playCorrect()
+    private fun loadTasks() {
+        updateState { onLoading() }
+
+        launch(
+            onError = { updateState { onError() } },
+        ) {
+            val tasks = getTasksUseCase(quizDifficulty)
+            updateState { onTaskLoaded(tasks) }
+        }
+    }
+
+    private fun onSelectVariant(variant: WordCardUI) {
+        val updatedTask = currentState.currentTask?.let {
+            selectVariantUseCase(it, variant)
+        } ?: return
+
+        updateState { onVariantSelected(updatedTask) }
+        if (updatedTask is TaskUI.Matching) {
+            if (updatedTask.hasError) playError()
+            if (updatedTask.isDone) playCorrect()
         }
     }
 
@@ -64,34 +80,17 @@ internal class QuizViewModel @AssistedInject constructor(
     }
 
     private fun onCheckClicked() {
-        val currentTask = currentState.currentTask
-        if (currentTask is TaskUI.SelectCorrectAnswer) {
-            playerManager.stop()
-            checkSelectCorrectAnswer(currentTask)
-        }
-        updateState { onCheckClicked() }
+        playerManager.stop()
+        val currentTask = currentState.currentTask as? TaskUI.SelectCorrectAnswer ?: return
+        if (currentTask.isCorrect) playCorrect() else playError()
+        updateState { onTaskChecked(currentTask.copy(isChecked = true)) }
     }
 
     private fun playCorrect() = playerManager.playRaw(R.raw.quiz_correct)
 
     private fun playError() = playerManager.playRaw(R.raw.quiz_error)
 
-    private fun checkSelectCorrectAnswer(currentTask: TaskUI.SelectCorrectAnswer) {
-        if (currentTask.isCorrect) playCorrect() else playError()
-    }
-
-    private fun onAudioClick(audio: String) {
-        playerManager.playUrl(audio)
-    }
-
-    private fun loadTasks() {
-        updateState { onLoading() }
-
-        launch(onError = { updateState { onError() } }) {
-            val tasks = getTasksUseCase(quizDifficulty)
-            updateState { onTaskLoaded(tasks) }
-        }
-    }
+    private fun playAudio(audio: String) = playerManager.playUrl(audio)
 
     private fun exit() {
         updateState { hideExitDialog() }

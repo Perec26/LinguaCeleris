@@ -1,6 +1,8 @@
 package com.linguaceleris.quiz.impl.ui.quiz.model
 
-internal sealed class TaskUI(open val id: String, open val type: TaskTypeUI,) {
+internal typealias MatchingPairUI = Pair<WordCardUI, WordCardUI>
+
+internal sealed class TaskUI(open val id: String, open val type: TaskTypeUI) {
 
     data class SelectCorrectAnswer(
         override val id: String,
@@ -24,11 +26,11 @@ internal sealed class TaskUI(open val id: String, open val type: TaskTypeUI,) {
         val selectedVariant: WordCardUI? = null,
         val errorVariant: WordCardUI? = null,
     ) : TaskUI(id, type) {
+        val pairsMap = MatchingPairMap(pairs)
         val hasError = errorVariant != null
         val isDone = disabledVariants.size >= pairs.size * 2
         val selectedVariantFromOriginal = originalVariants.contains(selectedVariant)
-        val selectedPair =
-            pairs.find { it.original == selectedVariant || it.translation == selectedVariant }
+        val selectedPair = pairsMap[selectedVariant]
 
         val correctVariant = getCorrect()
 
@@ -38,15 +40,11 @@ internal sealed class TaskUI(open val id: String, open val type: TaskTypeUI,) {
             translationVariants.contains(variant)
         }
 
-        private fun getCorrect(): WordCardUI? {
-            if (selectedPair?.original == selectedVariant) return selectedPair?.translation
-            if (selectedPair?.translation == selectedVariant) return selectedPair?.original
-            return null
+        private fun getCorrect() = selectedVariant?.let {
+            pairsMap.getTranslation(selectedVariant)
         }
     }
 }
-
-internal data class MatchingPairUI(val original: WordCardUI, val translation: WordCardUI)
 
 internal data class WordCardUI(
     val text: String,

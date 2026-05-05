@@ -22,10 +22,7 @@ internal fun VariantDTO.toUi(replace: String? = null): WordCardUI {
     )
 }
 
-internal fun MatchingPairDTO.toUi() = MatchingPairUI(
-    original = left.toUi(),
-    translation = right.toUi(),
-)
+internal fun MatchingPairDTO.toUi() = left.toUi() to right.toUi()
 
 @JvmName("toMatchingPairUi")
 internal fun List<MatchingPairDTO>.toUi() = map(MatchingPairDTO::toUi)
@@ -55,8 +52,8 @@ internal fun TaskDTO.toUi(): TaskUI? = when (val data = this.data) {
             id = id,
             type = getTaskType(),
             pairs = pairsUi,
-            originalVariants = pairsUi.map { it.original }.shuffled(),
-            translationVariants = pairsUi.map { it.translation }.shuffled(),
+            originalVariants = pairsUi.map(MatchingPairUI::first).shuffled(),
+            translationVariants = pairsUi.map(MatchingPairUI::second).shuffled(),
         )
     }
 
