@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="error_title">Что-то пошло не так</string>
+    <string name="error_description">Попробуйте позже</string>
+    <string name="error_button">Обновить</string>
     <string name="loading">Загрузка…</string>
 </resources>

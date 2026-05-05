@@ -1,21 +1,17 @@
-package com.linguaceleris.designsystem.widgets
+package com.linguaceleris.designsystem.widgets.buttons
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -29,85 +25,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.R
-
-@Composable
-fun DefaultFilledButton(
-    modifier: Modifier = Modifier,
-    textModifier: Modifier = Modifier,
-    text: String,
-    isEnable: Boolean = true,
-    onClick: () -> Unit,
-) {
-    HapticElement { haptic ->
-        Button(
-            modifier = modifier,
-            enabled = isEnable,
-            onClick = {
-                haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
-                onClick.invoke()
-            },
-        ) {
-            Text(
-                modifier = textModifier,
-                text = text,
-            )
-        }
-    }
-}
-
-@Composable
-fun DefaultTextButton(
-    modifier: Modifier = Modifier,
-    text: String,
-    isEnable: Boolean = true,
-    onClick: () -> Unit,
-) {
-    HapticElement { haptic ->
-
-        TextButton(
-            modifier = modifier,
-            enabled = isEnable,
-            onClick = {
-                haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
-                onClick.invoke()
-            },
-        ) {
-            Text(
-                text = text,
-                style = MaterialTheme.typography.labelLarge,
-            )
-        }
-    }
-}
-
-@Composable
-fun DefaultImageButton(
-    modifier: Modifier = Modifier,
-    iconModifier: Modifier = Modifier,
-    @DrawableRes drawable: Int,
-    isEnable: Boolean = true,
-    onClick: () -> Unit,
-) {
-    HapticElement { haptic ->
-
-        Button(
-            modifier = modifier,
-            contentPadding = PaddingValues(12.dp),
-            shape = RoundedCornerShape(16.dp),
-            enabled = isEnable,
-            onClick = {
-                haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
-                onClick.invoke()
-            },
-        ) {
-            Icon(
-                modifier = iconModifier,
-                painter = painterResource(drawable),
-                contentDescription = null,
-            )
-        }
-    }
-}
+import com.linguaceleris.designsystem.widgets.HapticElement
+import com.linguaceleris.designsystem.widgets.LCPreview
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -230,29 +149,6 @@ private fun ButtonContent(icon: Painter? = null, size: Dp, text: String) {
         text = text,
         style = ButtonDefaults.textStyleFor(size),
     )
-}
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-enum class ButtonSize {
-    SMALL,
-    MEDIUM,
-    LARGE,
-    EXTRA_LARGE;
-
-    fun toContainerSize() = when (this) {
-        SMALL -> ButtonDefaults.MinHeight
-        MEDIUM -> ButtonDefaults.MediumContainerHeight
-        LARGE -> ButtonDefaults.LargeContainerHeight
-        EXTRA_LARGE -> ButtonDefaults.ExtraLargeContainerHeight
-    }
-
-    @Composable
-    fun getShape() = when (this) {
-        SMALL -> MaterialTheme.shapes.small
-        MEDIUM -> MaterialTheme.shapes.medium
-        LARGE -> MaterialTheme.shapes.large
-        EXTRA_LARGE -> MaterialTheme.shapes.extraLarge
-    }
 }
 
 @PreviewLightDark

@@ -23,19 +23,19 @@ internal class QuizViewModel @AssistedInject constructor(
 ) : BaseViewModel<QuizUiState, QuizEvent>(initialState = QuizUiState()) {
 
     init {
-        launch {
-            val tasks = getTasksUseCase(quizDifficulty)
-            updateState { onTaskLoaded(tasks) }
-        }
+        loadTasks()
     }
 
     override fun onEvent(event: QuizEvent) {
         when (event) {
             is QuizEvent.OnAudioClick -> event.audio?.let(::onAudioClick)
             is QuizEvent.SelectAnswer -> onSelectAnswer(event.variant)
-            QuizEvent.OnBackClick -> navigator.back()
+            QuizEvent.OnBackClick -> updateState { showExitDialog() }
             QuizEvent.OnCheckButtonClick -> onCheckClicked()
             QuizEvent.OnContinueButtonClick -> onContinueButtonClick()
+            QuizEvent.OnReloadClick -> loadTasks()
+            QuizEvent.OnExitCancelClick -> updateState { hideExitDialog() }
+            QuizEvent.OnExitConfirmClick -> exit()
         }
     }
 
@@ -82,6 +82,20 @@ internal class QuizViewModel @AssistedInject constructor(
 
     private fun onAudioClick(audio: String) {
         playerManager.playUrl(audio)
+    }
+
+    private fun loadTasks() {
+        updateState { onLoading() }
+
+        launch(onError = { updateState { onError() } }) {
+            val tasks = getTasksUseCase(quizDifficulty)
+            updateState { onTaskLoaded(tasks) }
+        }
+    }
+
+    private fun exit() {
+        updateState { hideExitDialog() }
+        navigator.back()
     }
 
     override fun onCleared() {

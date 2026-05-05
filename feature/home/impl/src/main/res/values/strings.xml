@@ -36,9 +36,7 @@
     <string name="home_timer_alarm">Успей продлить серию, осталось: %s</string>
     <string name="home_url_youtube">https://youtube.com/@LinguaCeleris?sub_confirmation=1</string>
     <string name="home_url_telegram">https://t.me/LinguaCelerisBackgrounds</string>
-    <string name="home_error_title">Что-то пошло не так</string>
-    <string name="home_error_description">Попробуйте позже</string>
-    <string name="home_error_button">Обновить</string>
+
 
     <plurals name="home_streak_completed_title">
         <item quantity="one">%d день подряд</item>

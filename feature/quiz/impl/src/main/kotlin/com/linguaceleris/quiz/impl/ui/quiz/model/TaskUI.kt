@@ -1,19 +1,21 @@
 package com.linguaceleris.quiz.impl.ui.quiz.model
 
-internal sealed class TaskUI(open val type: TaskTypeUI) {
+internal sealed class TaskUI(open val id: String, open val type: TaskTypeUI,) {
 
     data class SelectCorrectAnswer(
+        override val id: String,
         override val type: TaskTypeUI,
         val question: WordCardUI,
         val correctAnswer: WordCardUI,
         val answerVariants: List<WordCardUI>,
         val selectedVariant: WordCardUI? = null,
         val isChecked: Boolean = false,
-    ) : TaskUI(type) {
+    ) : TaskUI(id, type) {
         val isCorrect = correctAnswer == selectedVariant
     }
 
     data class Matching(
+        override val id: String,
         override val type: TaskTypeUI,
         val pairs: List<MatchingPairUI>,
         val originalVariants: List<WordCardUI> = emptyList(),
@@ -21,7 +23,7 @@ internal sealed class TaskUI(open val type: TaskTypeUI) {
         val disabledVariants: List<WordCardUI> = emptyList(),
         val selectedVariant: WordCardUI? = null,
         val errorVariant: WordCardUI? = null,
-    ) : TaskUI(type) {
+    ) : TaskUI(id, type) {
         val hasError = errorVariant != null
         val isDone = disabledVariants.size >= pairs.size * 2
         val selectedVariantFromOriginal = originalVariants.contains(selectedVariant)

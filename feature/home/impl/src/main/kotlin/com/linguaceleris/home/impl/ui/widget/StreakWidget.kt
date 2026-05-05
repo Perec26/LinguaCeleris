@@ -16,6 +16,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,7 +48,6 @@ internal fun StreakWidget(streak: StreakUI) {
 private fun DeadStreak(streak: StreakUI.Dead) {
     StreakBase(
         backgroundColor = MaterialTheme.colorScheme.surfaceContainer,
-        textColor = MaterialTheme.colorScheme.onSurface,
         icon = com.linguaceleris.designsystem.R.drawable.fire_dead,
         title = stringResource(R.string.home_streak_dead_title),
         subtitle = stringResource(
@@ -61,7 +61,6 @@ private fun DeadStreak(streak: StreakUI.Dead) {
 private fun FreezeStreak(streak: StreakUI.Freeze) {
     StreakBase(
         backgroundColor = MaterialTheme.colorScheme.primaryContainer,
-        textColor = MaterialTheme.colorScheme.onPrimaryContainer,
         icon = com.linguaceleris.designsystem.R.drawable.fire_freeze,
         title = stringResource(streak.title),
         subtitle = stringResource(streak.subtitle),
@@ -72,7 +71,6 @@ private fun FreezeStreak(streak: StreakUI.Freeze) {
 private fun NeverStartedStreak() {
     StreakBase(
         backgroundColor = MaterialTheme.extendedColors.green.colorContainer,
-        textColor = MaterialTheme.extendedColors.green.onColorContainer,
         icon = com.linguaceleris.designsystem.R.drawable.leaf,
         title = stringResource(R.string.home_streak_never_started_title),
         subtitle = stringResource(R.string.home_streak_never_started_subtitle_),
@@ -83,7 +81,6 @@ private fun NeverStartedStreak() {
 private fun TodayCompletedStreak(streak: StreakUI.TodayCompleted) {
     StreakBase(
         backgroundColor = MaterialTheme.extendedColors.yellow.colorContainer,
-        textColor = MaterialTheme.extendedColors.yellow.onColorContainer,
         icon = com.linguaceleris.designsystem.R.drawable.fire_active,
         title = pluralStringResource(
             R.plurals.home_streak_completed_title,
@@ -97,8 +94,7 @@ private fun TodayCompletedStreak(streak: StreakUI.TodayCompleted) {
 @Composable
 private fun TodayNotCompletedStreak(streak: StreakUI.TodayNotCompleted) {
     StreakBase(
-        backgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
-        textColor = MaterialTheme.colorScheme.onTertiaryContainer,
+        backgroundColor = MaterialTheme.colorScheme.secondaryContainer,
         icon = com.linguaceleris.designsystem.R.drawable.fire_not_active,
         title = stringResource(R.string.home_streak_today_not_completed_title),
         subtitle = pluralStringResource(
@@ -112,7 +108,6 @@ private fun TodayNotCompletedStreak(streak: StreakUI.TodayNotCompleted) {
 @Composable
 private fun StreakBase(
     backgroundColor: Color,
-    textColor: Color,
     @DrawableRes icon: Int,
     title: String,
     subtitle: String,
@@ -146,12 +141,12 @@ private fun StreakBase(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Text(
-                        color = textColor,
+                        color = contentColorFor(backgroundColor),
                         text = title,
                         style = MaterialTheme.typography.headlineMedium,
                     )
                     Text(
-                        color = textColor,
+                        color = contentColorFor(backgroundColor),
                         text = subtitle,
                         style = MaterialTheme.typography.labelLarge,
                     )

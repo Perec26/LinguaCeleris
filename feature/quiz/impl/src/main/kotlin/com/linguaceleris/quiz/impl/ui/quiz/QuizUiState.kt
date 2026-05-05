@@ -9,6 +9,7 @@ internal data class QuizUiState(
     val currentTask: TaskUI? = null,
     val screenState: ScreenState = ScreenState.LOADING,
     val lives: Int = 3,
+    val showExitDialog: Boolean = false,
 ) {
     val progressFloat = currentTaskIndex.toFloat() / tasks.size
     val lastTask = tasks.lastIndex == currentTaskIndex
@@ -19,11 +20,16 @@ internal data class QuizUiState(
         currentTask = tasks.first(),
     )
 
+    fun onError() = copy(screenState = ScreenState.ERROR)
+
+    fun onLoading() = copy(screenState = ScreenState.LOADING)
+
     fun onCardClicked(variant: WordCardUI): QuizUiState {
         val currentTask = currentTask ?: return this
         var liveLost = 0
         val updatedCurrentTask = when (currentTask) {
             is TaskUI.SelectCorrectAnswer -> currentTask.onCardClicked(variant)
+
             is TaskUI.Matching -> {
                 val newTaskState = currentTask.onCardClicked(variant)
                 if (newTaskState.hasError) liveLost = 1
@@ -55,6 +61,9 @@ internal data class QuizUiState(
         currentTaskIndex = currentTaskIndex + 1,
         currentTask = tasks[currentTaskIndex + 1],
     )
+
+    fun showExitDialog() = copy(showExitDialog = true)
+    fun hideExitDialog() = copy(showExitDialog = false)
 }
 
 internal enum class ScreenState { LOADING, CONTENT, ERROR }

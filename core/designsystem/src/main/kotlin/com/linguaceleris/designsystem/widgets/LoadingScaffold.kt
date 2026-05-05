@@ -1,9 +1,7 @@
 package com.linguaceleris.designsystem.widgets
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,11 +25,7 @@ fun LoadingScaffold(
             topBar = topBar ?: { TopBar(title, onNavigationButtonClick) },
             containerColor = Color.Transparent,
         ) { paddingValues ->
-            Surface(
-                modifier = Modifier,
-                color = Color.Transparent,
-                contentColor = MaterialTheme.colorScheme.onSurface
-            ) {
+            TransparentSurface {
                 content(paddingValues)
             }
         }

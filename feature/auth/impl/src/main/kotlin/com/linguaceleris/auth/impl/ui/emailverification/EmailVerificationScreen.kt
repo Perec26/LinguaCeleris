@@ -22,14 +22,14 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.linguaceleris.auth.impl.R
 import com.linguaceleris.auth.impl.ui.registration.openEmailApp
 import com.linguaceleris.designsystem.widgets.ButtonDescription
-import com.linguaceleris.designsystem.widgets.ButtonSize
-import com.linguaceleris.designsystem.widgets.LCFilledButton
-import com.linguaceleris.designsystem.widgets.LCOutlineButton
 import com.linguaceleris.designsystem.widgets.LCPreview
-import com.linguaceleris.designsystem.widgets.LCTextButton
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.designsystem.widgets.ThreeButtonsDialog
+import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
+import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
+import com.linguaceleris.designsystem.widgets.buttons.LCOutlineButton
+import com.linguaceleris.designsystem.widgets.buttons.LCTextButton
 import com.linguaceleris.ui.LocalSnackbarHostState
 
 @Composable

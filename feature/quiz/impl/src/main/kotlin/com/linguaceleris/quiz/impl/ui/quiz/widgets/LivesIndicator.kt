@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.linguaceleris.designsystem.theme.disabled
+import com.linguaceleris.designsystem.theme.extendedColors
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.quiz.impl.R
 
@@ -16,9 +18,9 @@ internal fun LivesIndicator(totalLives: Int = 3, remainingLives: Int = 3) {
     Row {
         repeat(totalLives) { count ->
             val color = if (count < remainingLives) {
-                ColorFilter.tint(MaterialTheme.colorScheme.error)
+                ColorFilter.tint(MaterialTheme.extendedColors.red.color)
             } else {
-                ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+                ColorFilter.tint(MaterialTheme.extendedColors.red.color.disabled())
             }
             Image(
                 painter = painterResource(id = R.drawable.quiz_favorite),

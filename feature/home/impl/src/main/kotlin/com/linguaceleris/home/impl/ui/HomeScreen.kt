@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.linguaceleris.designsystem.widgets.LCFilledButton
+import com.linguaceleris.designsystem.widgets.CommonErrorWidget
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
@@ -72,7 +72,7 @@ private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) 
             when {
                 state.isLoading -> CircularProgressIndicator()
 
-                state.hasError -> ErrorWidget { onEvent(HomeEvent.OnRefreshClick) }
+                state.hasError -> CommonErrorWidget { onEvent(HomeEvent.OnRefreshClick) }
 
                 else ->
                     Column(
@@ -104,30 +104,6 @@ private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) 
                     }
             }
         }
-    }
-}
-
-@Composable
-private fun ErrorWidget(onClick: () -> Unit) {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-    ) {
-        Text(
-            text = stringResource(R.string.home_error_title),
-            style = MaterialTheme.typography.headlineMedium,
-        )
-
-        Text(
-            text = stringResource(R.string.home_error_description),
-            style = MaterialTheme.typography.bodyMedium,
-        )
-
-        LCFilledButton(
-            text = stringResource(R.string.home_error_button),
-            onClick = onClick,
-        )
     }
 }
 

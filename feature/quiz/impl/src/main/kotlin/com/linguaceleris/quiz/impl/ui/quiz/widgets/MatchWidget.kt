@@ -7,17 +7,21 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.linguaceleris.designsystem.widgets.DefaultFilledButton
 import com.linguaceleris.designsystem.widgets.LCPreview
+import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
+import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.ui.quiz.matchingMock
+import com.linguaceleris.quiz.impl.ui.quiz.model.AnswerType
 import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.quiz.model.WordCardUI
 
@@ -36,6 +40,8 @@ internal fun MatchWidget(
         Text(
             modifier = Modifier.padding(16.dp),
             text = stringResource(task.type.text),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineSmall,
         )
 
         Row(
@@ -53,6 +59,7 @@ internal fun MatchWidget(
                 selectedVariant = task.selectedVariant,
                 correctVariant = task.correctVariant,
                 disabledVariants = task.disabledVariants,
+                isAudio = task.type.answerType == AnswerType.AUDIO,
                 onAudioClick = onAudioClick,
                 onVariantSelected = onVariantSelected,
             )
@@ -69,12 +76,12 @@ internal fun MatchWidget(
             )
         }
 
-        DefaultFilledButton(
+        LCFilledButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            textModifier = Modifier.padding(8.dp),
             text = stringResource(R.string.quiz_continue),
+            buttonSize = ButtonSize.MEDIUM,
             isEnable = task.hasError || task.isDone,
             onClick = onContinueButtonClick,
         )

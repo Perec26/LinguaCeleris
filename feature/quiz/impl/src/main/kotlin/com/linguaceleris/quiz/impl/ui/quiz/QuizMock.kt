@@ -21,10 +21,11 @@ internal val fiveRuVariantsMock = listOf(
 )
 
 internal val matchingMock = TaskUI.Matching(
-    pairs = fourEnVariantsMock.zip(fiveRuVariantsMock.dropLast(1)) { first, second ->
+    pairs = fourEnVariantsMock.zip(fourEnVariantsMock) { first, second ->
         MatchingPairUI(first, second)
     },
     selectedVariant = WordCardUI(audio = "audio", text = "bat"),
+    id = "",
     type = TaskTypeUI.Matching,
 )
 
@@ -33,7 +34,8 @@ internal val selectCorrectAnswerMock = TaskUI.SelectCorrectAnswer(
     correctAnswer = WordCardUI(audio = "audio", text = "cat"),
     selectedVariant = WordCardUI(audio = "audio", text = "bat"),
     answerVariants = fourEnVariantsMock,
-    type = TaskTypeUI.SelectTranslationEn,
+    id = "",
+    type = TaskTypeUI.SelectTranslation,
 )
 
 internal val fillInBlankMock = selectCorrectAnswerMock.copy(

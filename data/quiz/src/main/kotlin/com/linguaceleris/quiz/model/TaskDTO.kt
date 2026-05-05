@@ -16,6 +16,7 @@ private const val HOMOPHONES_TYPE_NAME = "homophones"
 private const val IMAGE_SELECT_WORD_TRANSLATION_TYPE_NAME = "image_select_word"
 private const val LISTEN_SELECT_TRANSLATION_TYPE_NAME = "listen_select_translation"
 private const val MATCHING_TYPE_NAME = "matching"
+private const val SELECT_AUDIO_TYPE_NAME = "select_audio"
 private const val SELECT_TRANSLATION_EN_TYPE_NAME = "select_translation"
 private const val SYNONYM_CHOICE_TYPE_NAME = "synonym_choice"
 
@@ -75,6 +76,12 @@ sealed class TaskDTO {
     ) : TaskDTO()
 
     @Serializable
+    data class SelectAudioDTO(
+        override val id: String,
+        override val data: TaskDataDTO.ChooseCorrectDTO,
+    ) : TaskDTO()
+
+    @Serializable
     data class SelectTranslationDTO(
         override val id: String,
         override val data: TaskDataDTO.ChooseCorrectDTO,
@@ -115,6 +122,8 @@ internal object TaskSerializer :
             LISTEN_SELECT_TRANSLATION_TYPE_NAME -> TaskDTO.ListenSelectTranslationDTO.serializer()
 
             MATCHING_TYPE_NAME -> TaskDTO.MatchingDTO.serializer()
+
+            SELECT_AUDIO_TYPE_NAME -> TaskDTO.SelectAudioDTO.serializer()
 
             SELECT_TRANSLATION_EN_TYPE_NAME -> TaskDTO.SelectTranslationDTO.serializer()
 

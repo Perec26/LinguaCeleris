@@ -4,12 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,11 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.linguaceleris.designsystem.widgets.DefaultImageButton
 import com.linguaceleris.designsystem.widgets.LCPreview
+import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
+import com.linguaceleris.designsystem.widgets.buttons.LCFilledImageButton
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.ui.quiz.fillInBlankMock
 import com.linguaceleris.quiz.impl.ui.quiz.imageSelectWordTranslation
@@ -38,10 +39,7 @@ internal fun TaskContentWidget(
     onAudioClick: (String?) -> Unit,
 ) {
     Box(
-        modifier = modifier
-            .padding(horizontal = 48.dp)
-            .fillMaxWidth()
-            .aspectRatio(1f),
+        modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
         when (task.type.contentType) {
@@ -56,19 +54,19 @@ internal fun TaskContentWidget(
 @Composable
 private fun TextTaskContent(task: WordCardUI) {
     Text(
+        modifier = Modifier.padding(vertical = 32.dp, horizontal = 16.dp),
         text = task.text,
+        textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.primary,
-        style = MaterialTheme.typography.headlineLarge,
+        style = MaterialTheme.typography.displaySmall,
     )
 }
 
 @Composable
 private fun AudioTaskContent(task: WordCardUI, onAudioClick: (String?) -> Unit) {
-    DefaultImageButton(
-        modifier = Modifier,
-        iconModifier = Modifier
-            .size(64.dp)
-            .aspectRatio(1f),
+    LCFilledImageButton(
+        modifier = Modifier.padding(vertical = 16.dp),
+        buttonSize = ButtonSize.LARGE,
         drawable = R.drawable.quiz_volume_up,
         onClick = { onAudioClick(task.audio) },
     )
@@ -77,20 +75,20 @@ private fun AudioTaskContent(task: WordCardUI, onAudioClick: (String?) -> Unit) 
 @Composable
 private fun TextAudioTaskContent(task: WordCardUI, onAudioClick: (String?) -> Unit) {
     Row(
+        modifier = Modifier.padding(vertical = 32.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        DefaultImageButton(
-            iconModifier = Modifier
-                .size(24.dp)
-                .aspectRatio(1f),
+        LCFilledImageButton(
+            modifier = Modifier,
+            iconWith = IconButtonDefaults.IconButtonWidthOption.Wide,
             drawable = R.drawable.quiz_volume_up,
             onClick = { onAudioClick(task.audio) },
         )
         Text(
             text = task.text,
             color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.headlineLarge,
+            style = MaterialTheme.typography.displaySmall,
         )
     }
 }
@@ -104,7 +102,8 @@ private fun ImageTaskContent(task: WordCardUI) {
     }
     AsyncImage(
         modifier = Modifier
-            .fillMaxSize()
+            .padding(vertical = 16.dp)
+            .size(200.dp)
             .clip(RoundedCornerShape(48.dp)),
         model = model,
         contentDescription = null,

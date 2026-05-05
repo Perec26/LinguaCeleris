@@ -11,11 +11,16 @@ import com.linguaceleris.quiz.model.TaskDTO
 import com.linguaceleris.quiz.model.TaskDataDTO
 import com.linguaceleris.quiz.model.VariantDTO
 
-internal fun VariantDTO.toUi() = WordCardUI(
-    audio = audio,
-    text = text,
-    image = image
-)
+private const val FIND_CORRECT_REPLACEMENT = "_____"
+
+internal fun VariantDTO.toUi(replace: String? = null): WordCardUI {
+    val newText = replace?.let { text.replace(it, FIND_CORRECT_REPLACEMENT) } ?: text
+    return WordCardUI(
+        audio = audio,
+        text = newText,
+        image = image,
+    )
+}
 
 internal fun MatchingPairDTO.toUi() = MatchingPairUI(
     original = left.toUi(),
@@ -31,21 +36,23 @@ internal fun List<VariantDTO>.toUi() = map(VariantDTO::toUi)
 @JvmName("toTaskUi")
 internal fun List<TaskDTO>.toUi() = mapNotNull(TaskDTO::toUi)
 
-internal fun TaskDTO.toUi(): TaskUI? = when (this.data) {
+internal fun TaskDTO.toUi(): TaskUI? = when (val data = this.data) {
     is TaskDataDTO.ChooseCorrectDTO -> {
-        val data = this.data as TaskDataDTO.ChooseCorrectDTO
+        val type = getTaskType()
+        val replacement = if (type is TaskTypeUI.FillInBlank) data.answer.text else null
         SelectCorrectAnswer(
-            type = getTaskType(),
-            question = data.question.toUi(),
+            id = id,
+            type = type,
+            question = data.question.toUi(replacement),
             correctAnswer = data.answer.toUi(),
             answerVariants = data.options.toUi().shuffled(),
         )
     }
 
     is TaskDataDTO.MatchingDataDTO -> {
-        val data = this.data as TaskDataDTO.MatchingDataDTO
         val pairsUi = data.pairs.toUi()
         Matching(
+            id = id,
             type = getTaskType(),
             pairs = pairsUi,
             originalVariants = pairsUi.map { it.original }.shuffled(),
@@ -65,7 +72,8 @@ private fun TaskDTO.getTaskType() = when (this) {
     is TaskDTO.ImageSelectWordTranslationDTO -> TaskTypeUI.ImageSelectWordTranslation
     is TaskDTO.ListenSelectTranslationDTO -> TaskTypeUI.ListenSelectTranslation
     is TaskDTO.MatchingDTO -> TaskTypeUI.Matching
-    is TaskDTO.SelectTranslationDTO -> TaskTypeUI.SelectTranslationEn
+    is TaskDTO.SelectAudioDTO -> TaskTypeUI.SelectAudio
+    is TaskDTO.SelectTranslationDTO -> TaskTypeUI.SelectTranslation
     is TaskDTO.SynonymChoiceDTO -> TaskTypeUI.SynonymChoice
     is TaskDTO.UnknowQuestionDTO -> TaskTypeUI.Unknown
 }

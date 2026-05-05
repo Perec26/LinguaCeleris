@@ -13,10 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.linguaceleris.designsystem.widgets.DefaultFilledButton
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
+import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
 import com.linguaceleris.quiz.impl.R
 
 @Composable
@@ -48,7 +48,7 @@ private fun QuizSummaryScreenContent(
                 text = stringResource(textRes),
             )
 
-            DefaultFilledButton(
+            LCFilledButton(
                 text = stringResource(R.string.quiz_summary_try_again),
                 onClick = { onEvent(QuizSummaryEvent.OnTryAgainClicked) },
             )

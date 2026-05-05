@@ -10,8 +10,6 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.linguaceleris.designsystem.widgets.CardState
-import com.linguaceleris.designsystem.widgets.LCCardWithText
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.quiz.impl.ui.quiz.fourEnVariantsMock
 import com.linguaceleris.quiz.impl.ui.quiz.model.WordCardUI
@@ -25,6 +23,7 @@ internal fun MatchColumnWidget(
     errorVariant: WordCardUI? = null,
     variants: List<WordCardUI>,
     disabledVariants: List<WordCardUI> = emptyList(),
+    isAudio: Boolean = false,
     onAudioClick: (String?) -> Unit = {},
     onVariantSelected: (WordCardUI) -> Unit,
 ) {
@@ -43,10 +42,11 @@ internal fun MatchColumnWidget(
                 hasError && variant == correctVariant -> CardState.RIGHT
                 else -> CardState.DEFAULT
             }
-            LCCardWithText(
+            AnswerCard(
                 state = state,
                 enabled = !disabledVariants.contains(variant) && !hasError,
                 text = variant.text,
+                isAudio = isAudio,
                 onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.KeyboardTap)
                     onAudioClick(variant.audio)

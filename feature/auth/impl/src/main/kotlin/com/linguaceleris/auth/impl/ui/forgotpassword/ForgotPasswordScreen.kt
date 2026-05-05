@@ -21,11 +21,11 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.linguaceleris.auth.impl.R
 import com.linguaceleris.auth.impl.ui.widget.EmailTextField
 import com.linguaceleris.designsystem.theme.extendedColors
-import com.linguaceleris.designsystem.widgets.ButtonSize
-import com.linguaceleris.designsystem.widgets.LCFilledButton
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
+import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
+import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
 
 @Composable
 internal fun ForgotPasswordScreen(viewModel: ForgotPasswordViewModel = hiltViewModel()) {

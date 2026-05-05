@@ -32,13 +32,13 @@ import com.linguaceleris.auth.impl.ui.widget.NicknameTextField
 import com.linguaceleris.auth.impl.ui.widget.PasswordTextField
 import com.linguaceleris.designsystem.theme.extendedColors
 import com.linguaceleris.designsystem.widgets.ButtonDescription
-import com.linguaceleris.designsystem.widgets.ButtonSize
-import com.linguaceleris.designsystem.widgets.LCFilledButton
-import com.linguaceleris.designsystem.widgets.LCOutlineButton
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.designsystem.widgets.ThreeButtonsDialog
+import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
+import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
+import com.linguaceleris.designsystem.widgets.buttons.LCOutlineButton
 import com.linguaceleris.ui.LocalSnackbarHostState
 
 @Composable
