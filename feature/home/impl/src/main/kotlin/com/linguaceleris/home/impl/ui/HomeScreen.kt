@@ -41,6 +41,7 @@ import com.linguaceleris.home.impl.ui.model.StreakUI
 import com.linguaceleris.home.impl.ui.widget.QuizSelectionWidget
 import com.linguaceleris.home.impl.ui.widget.SocialButtonsWidget
 import com.linguaceleris.home.impl.ui.widget.StreakWidget
+import com.linguaceleris.ui.ScreenState
 import com.linguaceleris.ui.utils.UiText
 
 @Composable
@@ -69,12 +70,12 @@ private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) 
                 .padding(it),
             contentAlignment = Alignment.Center,
         ) {
-            when {
-                state.isLoading -> CircularProgressIndicator()
+            when (state.screenState) {
+                ScreenState.LOADING -> CircularProgressIndicator()
 
-                state.hasError -> CommonErrorWidget { onEvent(HomeEvent.OnRefreshClick) }
+                ScreenState.ERROR -> CommonErrorWidget { onEvent(HomeEvent.OnRefreshClick) }
 
-                else ->
+                ScreenState.CONTENT ->
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -202,7 +203,7 @@ private fun HomeScreenPreview() {
         HomeScreenContent(
             HomeUiState(
                 nextQuizzesTimer = UiText.DynamicString("12:34:56"),
-                isLoading = false,
+                screenState = ScreenState.CONTENT,
             ),
         ) {}
     }
@@ -217,7 +218,7 @@ private fun HomeScreenAlarmPreview() {
                 streak = StreakUI.TodayNotCompleted(123),
                 nextQuizzesTimer = UiText.DynamicString("34:56"),
                 lastHour = true,
-                isLoading = false,
+                screenState = ScreenState.CONTENT,
             ),
         ) {}
     }
@@ -235,6 +236,6 @@ private fun HomeScreenLoadingPreview() {
 @Composable
 private fun HomeScreenErrorPreview() {
     LCPreview {
-        HomeScreenContent(HomeUiState(isLoading = false, hasError = true)) {}
+        HomeScreenContent(HomeUiState(screenState = ScreenState.ERROR)) {}
     }
 }

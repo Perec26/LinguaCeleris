@@ -1,8 +1,10 @@
 package com.linguaceleris.designsystem.theme
 
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 
@@ -26,6 +28,14 @@ fun ColorFamily.buttonColors() = ButtonColors(
     containerColor = colorContainer,
     disabledContentColor = onColorContainer.disabled(),
     disabledContainerColor = colorContainer.disabled(),
+)
+
+@Composable
+fun Color.buttonColors() = ButtonColors(
+    contentColor = contentColorFor(this),
+    containerColor = this,
+    disabledContentColor = contentColorFor(this).disabled(),
+    disabledContainerColor = this.disabled(),
 )
 
 fun Color.disabled() = copy(alpha = 0.38f)

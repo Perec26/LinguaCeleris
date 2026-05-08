@@ -101,17 +101,13 @@ internal class HomeViewModel @Inject constructor(
     }
 
     private fun loadData() {
-        updateState { startLoading() }
+        updateState { onLoading() }
         launch(
-            onError = { handleLoadDataError(it) },
+            onError = { updateState { onError() } },
         ) {
             loadScheduleUseCase()
             val streak = getStreakUseCase()
             updateState { dataLoaded(streak = streak) }
         }
-    }
-
-    private fun handleLoadDataError(it: Exception) {
-        updateState { showError() }
     }
 }

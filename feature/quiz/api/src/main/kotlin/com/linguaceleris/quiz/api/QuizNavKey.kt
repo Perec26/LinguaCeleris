@@ -4,15 +4,17 @@ import androidx.navigation3.runtime.NavKey
 import com.linguaceleris.navigation.Navigator
 import kotlinx.serialization.Serializable
 
-enum class QuizDifficulty {
+enum class QuizLevel {
     BASIC,
     INTERMEDIATE,
     ADVANCED
 }
 
 @Serializable
-data class QuizNavKey(val quizDifficulty: QuizDifficulty) : NavKey
+data class QuizNavKey(val quizLevel: QuizLevel) : NavKey
 
-fun Navigator.navigateToBasicQuiz() = navigateTo(QuizNavKey(QuizDifficulty.BASIC))
-fun Navigator.navigateToIntermediateQuiz() = navigateTo(QuizNavKey(QuizDifficulty.INTERMEDIATE))
-fun Navigator.navigateToAdvanceQuiz() = navigateTo(QuizNavKey(QuizDifficulty.ADVANCED))
+fun Navigator.navigateToBasicQuiz() = navigateTo(QuizNavKey(QuizLevel.BASIC))
+fun Navigator.navigateToIntermediateQuiz() = navigateTo(QuizNavKey(QuizLevel.INTERMEDIATE))
+fun Navigator.navigateToAdvanceQuiz() = navigateTo(QuizNavKey(QuizLevel.ADVANCED))
+
+fun Navigator.replaceWithQuiz(quizLevel: QuizLevel) = replace(QuizNavKey(quizLevel))

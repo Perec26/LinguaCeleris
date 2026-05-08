@@ -1,6 +1,7 @@
 package com.linguaceleris.quiz.impl.ui.quiz
 
 import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI
+import com.linguaceleris.ui.ScreenState
 
 internal data class QuizUiState(
     val tasks: List<TaskUI> = emptyList(),
@@ -41,5 +42,3 @@ internal data class QuizUiState(
     fun showExitDialog() = copy(showExitDialog = true)
     fun hideExitDialog() = copy(showExitDialog = false)
 }
-
-internal enum class ScreenState { LOADING, CONTENT, ERROR }

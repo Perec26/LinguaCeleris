@@ -10,12 +10,11 @@ const val QUIZ_RESULT_KEY = "quizResult"
 @Serializable
 data object HomeNavKey : NavKey
 
-data class QuizResult(val isSuccess: Boolean, override val requestKey: String = QUIZ_RESULT_KEY) :
-    NavResult
+data class QuizResult(override val requestKey: String = QUIZ_RESULT_KEY) : NavResult
 
 fun Navigator.startWithHome() = startWith(HomeNavKey)
 
-suspend fun Navigator.backToHomeWithResult(isSuccess: Boolean) = backToWithResult(
+suspend fun Navigator.backToHomeWithResult() = backToWithResult(
     destination = HomeNavKey,
-    result = QuizResult(isSuccess),
+    result = QuizResult(),
 )

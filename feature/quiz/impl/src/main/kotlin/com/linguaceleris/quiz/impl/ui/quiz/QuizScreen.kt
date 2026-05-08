@@ -47,6 +47,7 @@ import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.quiz.widgets.LivesIndicator
 import com.linguaceleris.quiz.impl.ui.quiz.widgets.MatchWidget
 import com.linguaceleris.quiz.impl.ui.quiz.widgets.SelectCorrectWidget
+import com.linguaceleris.ui.ScreenState
 
 private const val ANIMATION_DURATION = 300
 

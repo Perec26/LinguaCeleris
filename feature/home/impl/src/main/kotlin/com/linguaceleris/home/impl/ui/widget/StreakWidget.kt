@@ -47,7 +47,7 @@ internal fun StreakWidget(streak: StreakUI) {
 @Composable
 private fun DeadStreak(streak: StreakUI.Dead) {
     StreakBase(
-        backgroundColor = MaterialTheme.colorScheme.surfaceContainer,
+        backgroundColor = MaterialTheme.colorScheme.surfaceContainerHighest,
         icon = com.linguaceleris.designsystem.R.drawable.fire_dead,
         title = stringResource(R.string.home_streak_dead_title),
         subtitle = stringResource(
@@ -95,7 +95,7 @@ private fun TodayCompletedStreak(streak: StreakUI.TodayCompleted) {
 private fun TodayNotCompletedStreak(streak: StreakUI.TodayNotCompleted) {
     StreakBase(
         backgroundColor = MaterialTheme.colorScheme.secondaryContainer,
-        icon = com.linguaceleris.designsystem.R.drawable.fire_not_active,
+        icon = com.linguaceleris.designsystem.R.drawable.fire_inactive,
         title = stringResource(R.string.home_streak_today_not_completed_title),
         subtitle = pluralStringResource(
             R.plurals.home_streak_today_not_completed_subtitle,

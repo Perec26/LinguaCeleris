@@ -89,6 +89,7 @@ fun LCFilledTonalButton(
     isEnable: Boolean = true,
     text: String,
     icon: Painter? = null,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
     buttonSize: ButtonSize = ButtonSize.SMALL,
     onClick: () -> Unit,
 ) {
@@ -99,6 +100,7 @@ fun LCFilledTonalButton(
             modifier = modifier,
             enabled = isEnable,
             contentPadding = ButtonDefaults.contentPaddingFor(size, hasStartIcon = icon != null),
+            colors = colors,
             onClick = {
                 haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
                 onClick.invoke()

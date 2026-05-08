@@ -2,7 +2,9 @@ package com.linguaceleris.quiz.impl.ui.summary
 
 import com.linguaceleris.home.api.backToHomeWithResult
 import com.linguaceleris.navigation.Navigator
-import com.linguaceleris.quiz.api.QuizDifficulty
+import com.linguaceleris.quiz.api.QuizLevel
+import com.linguaceleris.quiz.api.replaceWithQuiz
+import com.linguaceleris.quiz.impl.domain.GetUnfinishedQuizzesUseCase
 import com.linguaceleris.quiz.impl.domain.UpdateStreakUseCase
 import com.linguaceleris.ui.BaseViewModel
 import dagger.assisted.Assisted
@@ -17,30 +19,39 @@ private const val ASSISTED_IS_SUCCESSFUL = "isSuccessful"
 internal class QuizSummaryViewModel @AssistedInject constructor(
     private val navigator: Navigator,
     private val updateStreakUseCase: UpdateStreakUseCase,
-    @Assisted(ASSISTED_DIFFICULTY) private val difficulty: QuizDifficulty,
+    private val getUnfinishedQuizzesUseCase: GetUnfinishedQuizzesUseCase,
+    @Assisted(ASSISTED_DIFFICULTY) private val quizLevel: QuizLevel,
     @Assisted(ASSISTED_IS_SUCCESSFUL) private val isSuccessful: Boolean,
 ) : BaseViewModel<QuizSummaryUiState, QuizSummaryEvent>(
-    initialState = QuizSummaryUiState(
-        isSuccessful = isSuccessful,
-    ),
+    initialState = QuizSummaryUiState(result = isSuccessful.toQuizResult()),
 ) {
 
     init {
-        if (isSuccessful) launch { updateStreakUseCase(difficulty) }
+        loadData()
     }
 
     override fun onEvent(event: QuizSummaryEvent) {
         when (event) {
-            QuizSummaryEvent.OnTryAgainClicked -> launch {
-                navigator.backToHomeWithResult(isSuccessful)
-            }
+            QuizSummaryEvent.OnTryAgainClicked -> navigator.replaceWithQuiz(quizLevel)
+            QuizSummaryEvent.OnBackClick -> launch { navigator.backToHomeWithResult() }
+            is QuizSummaryEvent.OnNextQuizClick -> navigator.replaceWithQuiz(event.level)
+            QuizSummaryEvent.OnReloadData -> loadData()
+        }
+    }
+
+    private fun loadData() {
+        updateState { onLoading() }
+        launch(onError = { updateState { onError() } }) {
+            if (isSuccessful) updateStreakUseCase(quizLevel)
+            val unfinishedQuizzes = getUnfinishedQuizzesUseCase()
+            updateState { onDataLoaded(unfinishedQuizzes) }
         }
     }
 
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted(ASSISTED_DIFFICULTY) difficulty: QuizDifficulty,
+            @Assisted(ASSISTED_DIFFICULTY) difficulty: QuizLevel,
             @Assisted(ASSISTED_IS_SUCCESSFUL) isSuccessful: Boolean,
         ): QuizSummaryViewModel
     }

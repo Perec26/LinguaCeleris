@@ -10,7 +10,7 @@ android {
 dependencies {
     implementation(libs.androidx.media3)
     implementation(projects.core.media)
-    implementation(projects.core.media)
+    implementation(projects.core.services)
     implementation(projects.data.auth)
     implementation(projects.data.quiz)
     implementation(projects.data.streak)

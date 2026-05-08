@@ -37,4 +37,14 @@
     <string name="quiz_exit_dialog_description">Твой прогресс за сегодня будет потерян.</string>
     <string name="quiz_exit">Выйти</string>
     <string name="quiz_cancel">Отмена</string>
+    <string name="quiz_summary_successful_title">Готово!</string>
+    <string name="quiz_summary_successful_description">Ещё один раунд позади — ты справился на отлично.</string>">
+    <string name="quiz_summary_failure_title">Не вышло</string>
+    <string name="quiz_summary_failure_description">Ничего страшного — попробуй ещё раз, в этот раз точно получится.</string>
+    <string name="quiz_summary_all_complete">На сегодня всё — возвращайся завтра!</string>
+    <string name="quiz_summary_not_finished_task">Осталось на сегодня</string>
+    <string name="quiz_summary_level_basic">Элементарный</string>
+    <string name="quiz_summary_level_intermediate">Средний</string>
+    <string name="quiz_summary_level_advanced">Продвинутый</string>
+    <string name="quiz_summary_return">Вернутся</string>
 </resources>

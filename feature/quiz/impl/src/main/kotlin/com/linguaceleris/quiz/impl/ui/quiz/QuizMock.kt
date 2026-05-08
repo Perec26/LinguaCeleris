@@ -4,6 +4,7 @@ import com.linguaceleris.quiz.impl.ui.quiz.model.MatchingPairUI
 import com.linguaceleris.quiz.impl.ui.quiz.model.TaskTypeUI
 import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.quiz.model.WordCardUI
+import com.linguaceleris.ui.ScreenState
 
 internal val fourEnVariantsMock = listOf(
     WordCardUI(audio = "audio", text = "cat"),

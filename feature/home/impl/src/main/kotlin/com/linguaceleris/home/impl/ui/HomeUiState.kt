@@ -1,22 +1,21 @@
 package com.linguaceleris.home.impl.ui
 
 import com.linguaceleris.home.impl.ui.model.StreakUI
+import com.linguaceleris.ui.ScreenState
 import com.linguaceleris.ui.utils.UiText
 
 internal data class HomeUiState(
-    val isLoading: Boolean = true,
+    val screenState: ScreenState = ScreenState.LOADING,
     val menuExpanded: Boolean = false,
     val streak: StreakUI = StreakUI.NeverStarted,
     val nextQuizzesTimer: UiText = UiText.DynamicString(""),
     val lastHour: Boolean = false,
-    val hasError: Boolean = false,
 ) {
 
     val needToAlarm =
         lastHour && (streak is StreakUI.TodayNotCompleted || streak is StreakUI.Freeze)
 
-    fun startLoading() = copy(isLoading = true, hasError = false)
-    fun dataLoaded(streak: StreakUI) = copy(isLoading = false, streak = streak)
+    fun dataLoaded(streak: StreakUI) = copy(screenState = ScreenState.CONTENT, streak = streak)
 
     fun onOpenMenuClick() = copy(menuExpanded = true)
     fun onCloseMenuClick() = copy(menuExpanded = false)
@@ -26,5 +25,7 @@ internal data class HomeUiState(
         lastHour = lastHour,
     )
 
-    fun showError() = copy(isLoading = false, hasError = true)
+    fun onLoading() = copy(screenState = ScreenState.LOADING)
+
+    fun onError() = copy(screenState = ScreenState.ERROR)
 }

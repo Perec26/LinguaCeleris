@@ -2,7 +2,7 @@ package com.linguaceleris.quiz.impl.ui.quiz
 
 import com.linguaceleris.media.PlayerManager
 import com.linguaceleris.navigation.Navigator
-import com.linguaceleris.quiz.api.QuizDifficulty
+import com.linguaceleris.quiz.api.QuizLevel
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.domain.GetTasksUseCase
 import com.linguaceleris.quiz.impl.domain.SelectVariantUseCase
@@ -10,6 +10,7 @@ import com.linguaceleris.quiz.impl.navigation.navigateToSummary
 import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.quiz.model.WordCardUI
 import com.linguaceleris.ui.BaseViewModel
+import com.linguaceleris.ui.ScreenState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -21,7 +22,7 @@ internal class QuizViewModel @AssistedInject constructor(
     private val getTasksUseCase: GetTasksUseCase,
     private val playerManager: PlayerManager,
     private val selectVariantUseCase: SelectVariantUseCase,
-    @Assisted val quizDifficulty: QuizDifficulty,
+    @Assisted val quizLevel: QuizLevel,
 ) : BaseViewModel<QuizUiState, QuizEvent>(initialState = QuizUiState()) {
 
     init {
@@ -32,7 +33,7 @@ internal class QuizViewModel @AssistedInject constructor(
         when (event) {
             is QuizEvent.OnAudioClick -> event.audio?.let(::playAudio)
             is QuizEvent.SelectAnswer -> onSelectVariant(event.variant)
-            QuizEvent.OnBackClick -> updateState { showExitDialog() }
+            QuizEvent.OnBackClick -> onBackCLick()
             QuizEvent.OnCheckButtonClick -> onCheckClicked()
             QuizEvent.OnContinueButtonClick -> onContinueButtonClick()
             QuizEvent.OnReloadClick -> loadTasks()
@@ -47,7 +48,7 @@ internal class QuizViewModel @AssistedInject constructor(
         launch(
             onError = { updateState { onError() } },
         ) {
-            val tasks = getTasksUseCase(quizDifficulty)
+            val tasks = getTasksUseCase(quizLevel)
             updateState { onTaskLoaded(tasks) }
         }
     }
@@ -68,11 +69,11 @@ internal class QuizViewModel @AssistedInject constructor(
         playerManager.stop()
 
         if (currentState.lives <= 0) {
-            navigator.navigateToSummary(quizDifficulty, false)
+            navigator.navigateToSummary(quizLevel, false)
             return
         }
         if (currentState.lastTask) {
-            navigator.navigateToSummary(quizDifficulty, true)
+            navigator.navigateToSummary(quizLevel, true)
             return
         }
 
@@ -92,6 +93,14 @@ internal class QuizViewModel @AssistedInject constructor(
 
     private fun playAudio(audio: String) = playerManager.playUrl(audio)
 
+    private fun onBackCLick() {
+        if (currentState.screenState == ScreenState.CONTENT) {
+            updateState { showExitDialog() }
+        } else {
+            navigator.back()
+        }
+    }
+
     private fun exit() {
         updateState { hideExitDialog() }
         navigator.back()
@@ -104,6 +113,6 @@ internal class QuizViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(quizDifficulty: QuizDifficulty): QuizViewModel
+        fun create(quizLevel: QuizLevel): QuizViewModel
     }
 }
