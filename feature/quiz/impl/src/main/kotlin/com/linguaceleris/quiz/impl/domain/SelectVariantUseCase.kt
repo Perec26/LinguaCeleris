@@ -21,5 +21,5 @@ private fun TaskUI.Matching.selectVariant(variant: WordCardUI): TaskUI.Matching 
             selectedVariant = null,
         )
     }
-    return copy(errorVariant = variant,)
+    return copy(errorVariant = variant)
 }

@@ -1,9 +1,11 @@
 package com.linguaceleris.quiz.impl.ui.summary
 
 import com.linguaceleris.home.api.backToHomeWithResult
+import com.linguaceleris.media.PlayerManager
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quiz.api.QuizLevel
 import com.linguaceleris.quiz.api.replaceWithQuiz
+import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.domain.GetUnfinishedQuizzesUseCase
 import com.linguaceleris.quiz.impl.domain.UpdateStreakUseCase
 import com.linguaceleris.ui.BaseViewModel
@@ -20,6 +22,7 @@ internal class QuizSummaryViewModel @AssistedInject constructor(
     private val navigator: Navigator,
     private val updateStreakUseCase: UpdateStreakUseCase,
     private val getUnfinishedQuizzesUseCase: GetUnfinishedQuizzesUseCase,
+    private val playerManager: PlayerManager,
     @Assisted(ASSISTED_DIFFICULTY) private val quizLevel: QuizLevel,
     @Assisted(ASSISTED_IS_SUCCESSFUL) private val isSuccessful: Boolean,
 ) : BaseViewModel<QuizSummaryUiState, QuizSummaryEvent>(
@@ -40,12 +43,23 @@ internal class QuizSummaryViewModel @AssistedInject constructor(
     }
 
     private fun loadData() {
-        updateState { onLoading() }
-        launch(onError = { updateState { onError() } }) {
-            if (isSuccessful) updateStreakUseCase(quizLevel)
-            val unfinishedQuizzes = getUnfinishedQuizzesUseCase()
-            updateState { onDataLoaded(unfinishedQuizzes) }
+        if (isSuccessful) {
+            updateState { onLoading() }
+            launch(onError = { updateState { onError() } }) {
+                updateStreakUseCase(quizLevel)
+                val unfinishedQuizzes = getUnfinishedQuizzesUseCase()
+                playerManager.playRaw(R.raw.quiz_success)
+                updateState { onDataLoaded(unfinishedQuizzes) }
+            }
+        } else {
+            playerManager.playRaw(R.raw.quiz_failure)
+            updateState { onDataLoaded(emptyList()) }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        playerManager.release()
     }
 
     @AssistedFactory

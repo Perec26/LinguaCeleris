@@ -33,12 +33,12 @@ internal class QuizViewModel @AssistedInject constructor(
         when (event) {
             is QuizEvent.OnAudioClick -> event.audio?.let(::playAudio)
             is QuizEvent.SelectAnswer -> onSelectVariant(event.variant)
-            QuizEvent.OnBackClick -> onBackCLick()
             QuizEvent.OnCheckButtonClick -> onCheckClicked()
             QuizEvent.OnContinueButtonClick -> onContinueButtonClick()
-            QuizEvent.OnReloadClick -> loadTasks()
-            QuizEvent.OnExitCancelClick -> updateState { hideExitDialog() }
+            QuizEvent.OnBackClick -> onBackCLick()
             QuizEvent.OnExitConfirmClick -> exit()
+            QuizEvent.OnExitCancelClick -> updateState { hideExitDialog() }
+            QuizEvent.OnReloadClick -> loadTasks()
         }
     }
 
