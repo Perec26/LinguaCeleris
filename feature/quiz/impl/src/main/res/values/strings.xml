@@ -46,5 +46,5 @@
     <string name="quiz_summary_level_basic">Элементарный</string>
     <string name="quiz_summary_level_intermediate">Средний</string>
     <string name="quiz_summary_level_advanced">Продвинутый</string>
-    <string name="quiz_summary_return">Вернутся</string>
+    <string name="quiz_summary_return">Вернуться</string>
 </resources>

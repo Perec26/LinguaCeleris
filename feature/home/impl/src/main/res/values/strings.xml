@@ -5,6 +5,8 @@
     <string name="home_quiz_level_advanced">Продвинутый</string>
     <string name="home_exit">Выйти</string>
     <string name="home_setting">Настройки</string>
+    <string name="home_enter">Войти</string>
+    <string name="home_enter_description">Вы зашли как гость</string>
     <string name="home_app_name">Lingua Celeris</string>
     <string name="home_streak_completed_1">Отличное начало</string>
     <string name="home_streak_completed_3">Первые дни уже позади</string>

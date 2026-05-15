@@ -1,12 +1,15 @@
 package com.linguaceleris.home.impl.ui
 
+import com.linguaceleris.auth.api.navigateToLinkAccount
 import com.linguaceleris.auth.api.startWithSignIn
 import com.linguaceleris.home.api.QuizResult
 import com.linguaceleris.home.impl.R
 import com.linguaceleris.home.impl.domain.GetNextDayUseCase
 import com.linguaceleris.home.impl.domain.GetStreakUseCase
+import com.linguaceleris.home.impl.domain.IsGuestUseCase
 import com.linguaceleris.home.impl.domain.LoadScheduleUseCase
 import com.linguaceleris.home.impl.domain.SignOutUseCase
+import com.linguaceleris.home.impl.domain.model.UserNotFoundException
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quiz.api.navigateToAdvanceQuiz
 import com.linguaceleris.quiz.api.navigateToBasicQuiz
@@ -25,6 +28,7 @@ private const val MINUTES_FORMAT = "%02d:%02d"
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     private val navigator: Navigator,
+    private val isGuestUseCase: IsGuestUseCase,
     private val loadScheduleUseCase: LoadScheduleUseCase,
     private val signOutUseCase: SignOutUseCase,
     private val getStreakUseCase: GetStreakUseCase,
@@ -41,24 +45,19 @@ internal class HomeViewModel @Inject constructor(
         when (event) {
             HomeEvent.OnOpenMenuClick -> updateState { onOpenMenuClick() }
             HomeEvent.OnCloseMenuClick -> updateState { onCloseMenuClick() }
-            HomeEvent.OnSettingsClick -> onSettingsClick()
-            HomeEvent.OnSignOutClick -> onSignOutClick()
+            HomeEvent.OnSettingsClick -> doOnMenuClick(navigator::navigateToSettings)
+            HomeEvent.OnSignOutClick -> doOnMenuClick(::onSignOutClick)
             HomeEvent.OnBasicQuizClick -> navigator.navigateToBasicQuiz()
             HomeEvent.OnIntermediateQuizClick -> navigator.navigateToIntermediateQuiz()
             HomeEvent.OnAdvanceQuizClick -> navigator.navigateToAdvanceQuiz()
             HomeEvent.OnTelegramClick -> sendEffect(HomeEffect.OpenTelegram())
             HomeEvent.OnYoutubeClick -> sendEffect(HomeEffect.OpenYoutube())
             HomeEvent.OnRefreshClick -> loadData()
+            HomeEvent.OnEnterToAccountClick -> doOnMenuClick(navigator::navigateToLinkAccount)
         }
     }
 
-    private fun onSettingsClick() {
-        updateState { onCloseMenuClick() }
-        navigator.navigateToSettings()
-    }
-
     private fun onSignOutClick() {
-        updateState { onCloseMenuClick() }
         signOutUseCase()
         navigator.startWithSignIn()
     }
@@ -103,11 +102,24 @@ internal class HomeViewModel @Inject constructor(
     private fun loadData() {
         updateState { onLoading() }
         launch(
-            onError = { updateState { onError() } },
+            onError = ::handleLoadData,
         ) {
             loadScheduleUseCase()
             val streak = getStreakUseCase()
-            updateState { dataLoaded(streak = streak) }
+            val isGuest = isGuestUseCase()
+            updateState { dataLoaded(streak = streak, isGuest) }
         }
+    }
+
+    private fun handleLoadData(exception: Exception) {
+        when (exception) {
+            is UserNotFoundException -> navigator.startWithSignIn()
+            else -> updateState { onError() }
+        }
+    }
+
+    private inline fun doOnMenuClick(block: () -> Unit) {
+        updateState { onCloseMenuClick() }
+        block()
     }
 }

@@ -57,10 +57,14 @@
     <string name="auth_exit">Выйти</string>
     <string name="auth_sign_in_anonymous_error">Не удалось войти как гость</string>
     <string name="auth_sign_in_with_google_error">Не удалось войти с Google</string>
+    <string name="auth_sign_in_with_google_user_collision_error">Этот аккаунт Google уже используется. Попробуйте другой способ</string>
     <string name="auth_anonymous_dialog_title">Гостевой вход</string>
     <string name="auth_anonymous_dialog_message">Вы можете начать прямо сейчас, но в гостевом режиме ваши результаты могут быть потеряны. Не волнуйтесь: вы сможете надежно сохранить весь свой прогресс в любой момент, просто войдя через Google или почту.</string>
     <string name="auth_cancel">Отмена</string>
     <string name="auth_sign_in_loading">Осуществляется вход</string>
+    <string name="auth_link_account">Привязать аккаунт</string>"
+    <string name="auth_link_account_title">Сохраните прогресс</string>
+    <string name="auth_link_account_subtitle">Войдите или создайте аккаунт, чтобы ваши данные не потерялись</string>
 
 
 </resources>

@@ -1,6 +1,5 @@
 package com.linguaceleris.auth.impl.ui.signin
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,13 +20,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.credentials.CredentialManager
-import androidx.credentials.GetCredentialRequest
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.linguaceleris.auth.impl.R
-import com.linguaceleris.auth.impl.ui.signin.widget.GoogleSignInButton
+import com.linguaceleris.auth.impl.ui.widget.GoogleSignInButton
+import com.linguaceleris.auth.impl.ui.widget.triggerGoogleSignIn
 import com.linguaceleris.designsystem.widgets.ButtonDescription
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
@@ -38,8 +34,6 @@ import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
 import com.linguaceleris.designsystem.widgets.buttons.LCFilledTonalButton
 import com.linguaceleris.designsystem.widgets.buttons.LCTextButton
 import com.linguaceleris.ui.LocalSnackbarHostState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun SignInScreen(viewModel: SignInViewModel = hiltViewModel()) {
@@ -54,11 +48,16 @@ internal fun SignInScreen(viewModel: SignInViewModel = hiltViewModel()) {
                     triggerGoogleSignIn(
                         context = context,
                         webClientId = effect.webClientId,
-                        onEvent = viewModel::onEvent,
+                        onTokenReceived = {
+                            viewModel.onEvent(SignInEvent.OnGoogleTokenReceived(it))
+                        },
+                        onError = {
+                            viewModel.onEvent(SignInEvent.OnGoogleGetCredentialException(it))
+                        },
                     )
                 }
 
-                is SignInEffect.SnackBarError -> {
+                is SignInEffect.ShowSnackBarError -> {
                     snackbarHostState.showSnackbar(
                         message = effect.error.message.asString(context),
                         withDismissAction = true,
@@ -164,38 +163,6 @@ private fun SignInScreenContent(state: SignInUiState, onEvent: (SignInEvent) -> 
                 ),
                 onDismissRequest = { onEvent(SignInEvent.OnAnonymousSignInCancelClick) },
             )
-        }
-    }
-}
-
-private fun CoroutineScope.triggerGoogleSignIn(
-    context: Context,
-    webClientId: String,
-    onEvent: (SignInEvent) -> Unit,
-) {
-    launch {
-        try {
-            val googleIdOption = GetGoogleIdOption.Builder()
-                .setServerClientId(webClientId)
-                .setFilterByAuthorizedAccounts(false)
-                .build()
-
-            val request = GetCredentialRequest.Builder()
-                .addCredentialOption(googleIdOption)
-                .build()
-
-            val response = CredentialManager.create(context).getCredential(
-                context = context,
-                request = request,
-            )
-
-            val googleIdTokenCredential = response.credential
-            val idToken = GoogleIdTokenCredential.createFrom(
-                googleIdTokenCredential.data,
-            ).idToken
-            onEvent(SignInEvent.OnGoogleTokenReceived(idToken))
-        } catch (exception: Exception) {
-            onEvent(SignInEvent.OnGoogleGetCredentialException(exception))
         }
     }
 }

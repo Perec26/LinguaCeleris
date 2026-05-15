@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
@@ -62,7 +64,13 @@ internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 @Composable
 private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) {
     LoadingScaffold(
-        topBar = { TopBar(menuExpanded = state.menuExpanded, onEvent = onEvent) },
+        topBar = {
+            TopBar(
+                menuExpanded = state.menuExpanded,
+                isGuest = state.isGuest,
+                onEvent = onEvent,
+            )
+        },
     ) {
         Box(
             modifier = Modifier
@@ -141,7 +149,7 @@ private fun Timer(isAlarm: Boolean, timerText: UiText) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TopBar(menuExpanded: Boolean, onEvent: (HomeEvent) -> Unit) {
+private fun TopBar(menuExpanded: Boolean, isGuest: Boolean, onEvent: (HomeEvent) -> Unit) {
     CenterAlignedTopAppBar(
         title = { Text(stringResource(R.string.home_app_name)) },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
@@ -150,19 +158,25 @@ private fun TopBar(menuExpanded: Boolean, onEvent: (HomeEvent) -> Unit) {
                 IconButton(
                     onClick = { onEvent(HomeEvent.OnOpenMenuClick) },
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.home_menu),
-                        contentDescription = null,
-                    )
+                    BadgedBox(
+                        badge = { if (isGuest) Badge() },
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.home_menu),
+                            contentDescription = null,
+                        )
+                    }
                 }
-                Menu(expanded = menuExpanded, onEvent = onEvent)
+
+                Menu(expanded = menuExpanded, isGuest = isGuest, onEvent = onEvent)
             }
         },
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun Menu(expanded: Boolean, onEvent: (HomeEvent) -> Unit) {
+private fun Menu(expanded: Boolean, isGuest: Boolean, onEvent: (HomeEvent) -> Unit) {
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = { onEvent(HomeEvent.OnCloseMenuClick) },
@@ -177,6 +191,21 @@ private fun Menu(expanded: Boolean, onEvent: (HomeEvent) -> Unit) {
             },
             onClick = { onEvent(HomeEvent.OnSettingsClick) },
         )
+        if (isGuest) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.home_enter)) },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.home_account_circle),
+                        contentDescription = null,
+                    )
+                },
+                shape = MaterialTheme.shapes.small,
+                trailingIcon = { Badge() },
+                supportingText = { Text(stringResource(R.string.home_enter_description)) },
+                onClick = { onEvent(HomeEvent.OnEnterToAccountClick) },
+            )
+        }
 
         DropdownMenuItem(
             text = { Text(stringResource(R.string.home_exit)) },
@@ -204,6 +233,21 @@ private fun HomeScreenPreview() {
             HomeUiState(
                 nextQuizzesTimer = UiText.DynamicString("12:34:56"),
                 screenState = ScreenState.CONTENT,
+            ),
+        ) {}
+    }
+}
+
+@ScreenPreviews
+@Composable
+private fun HomeScreenMenuPreview() {
+    LCPreview {
+        HomeScreenContent(
+            HomeUiState(
+                nextQuizzesTimer = UiText.DynamicString("12:34:56"),
+                screenState = ScreenState.CONTENT,
+                menuExpanded = true,
+                isGuest = true,
             ),
         ) {}
     }

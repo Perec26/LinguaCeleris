@@ -10,6 +10,10 @@ data object SignInNavKey : NavKey
 @Serializable
 data class EmailVerificationNavKey(val fromStart: Boolean) : NavKey
 
+@Serializable
+data object LinkAccountNavKey : NavKey
+
 fun Navigator.startWithSignIn() = startWith(SignInNavKey)
 fun Navigator.startWithEmailVerification() = startWith(EmailVerificationNavKey(true))
 fun Navigator.navigateToEmailVerification() = navigateTo(EmailVerificationNavKey(false))
+fun Navigator.navigateToLinkAccount() = navigateTo(LinkAccountNavKey)

@@ -8,6 +8,8 @@ class AuthRepository @Inject constructor(private val credentialService: Credenti
     suspend fun signInWithGoogle(idToken: String): Boolean =
         credentialService.signInWithGoogle(idToken)
 
+    suspend fun linkWithGoogle(idToken: String): Boolean = credentialService.linkWithGoogle(idToken)
+
     fun signOut() = credentialService.signOut()
 
     suspend fun register(nickname: String, email: String, password: String) {
@@ -31,10 +33,12 @@ class AuthRepository @Inject constructor(private val credentialService: Credenti
 
     fun getAuthState(): AuthState {
         if (!credentialService.isLoggedIn()) return AuthState.NOT_LOGGED_IN
-        if (!credentialService.isAnonymous()) return AuthState.ANONYMOUS
+        if (credentialService.isAnonymous()) return AuthState.ANONYMOUS
         if (!credentialService.getEmailVerification()) return AuthState.EMAIL_NOT_VERIFIED
         return AuthState.LOGGED_IN
     }
+
+    fun isGuest() = credentialService.isAnonymous()
 
     fun getWebClientId() = credentialService.getWebClientId()
 

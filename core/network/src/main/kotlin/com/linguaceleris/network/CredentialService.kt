@@ -19,19 +19,26 @@ class CredentialService @Inject constructor(
         get() = auth.currentUser
 
     suspend fun signInWithGoogle(idToken: String): Boolean {
-        val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
 
         val authResult = Firebase.auth
-            .signInWithCredential(firebaseCredential)
+            .signInWithCredential(credential)
             .await()
 
         reloadUser()
         return authResult.user != null
     }
 
+    suspend fun linkWithGoogle(idToken: String): Boolean {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        val authResult = currentUser?.linkWithCredential(credential)?.await()
+        reloadUser()
+        return authResult?.user != null
+    }
+
     fun isLoggedIn(): Boolean = currentUser != null
 
-    fun isAnonymous(): Boolean = currentUser?.isAnonymous == false
+    fun isAnonymous(): Boolean = currentUser?.isAnonymous ?: false
 
     fun getWebClientId(): String = webClientId
 

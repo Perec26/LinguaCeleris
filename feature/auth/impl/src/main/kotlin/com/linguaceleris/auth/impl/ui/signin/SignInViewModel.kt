@@ -6,6 +6,8 @@ import com.linguaceleris.auth.impl.domain.SignInAnonymouslyUseCase
 import com.linguaceleris.auth.impl.domain.SignInWithGoogleUseCase
 import com.linguaceleris.auth.impl.navigation.navigateToEmailSignIn
 import com.linguaceleris.auth.impl.navigation.navigateToRegistration
+import com.linguaceleris.auth.impl.ui.model.SignInWithAnonymouslyError
+import com.linguaceleris.auth.impl.ui.model.SignInWithGoogleError
 import com.linguaceleris.auth.impl.ui.signin.SignInEffect.SignInWithGoogle
 import com.linguaceleris.home.api.startWithHome
 import com.linguaceleris.navigation.Navigator
@@ -46,7 +48,7 @@ internal class SignInViewModel @Inject constructor(
     private fun onGoogleGetCredentialException(exception: Exception) {
         updateState { hideLoading() }
         if (exception !is GetCredentialCancellationException) {
-            sendEffect(SignInEffect.SnackBarError(SignInError.SIGN_IN_WITH_GOOGLE_ERROR))
+            sendEffect(SignInEffect.ShowSnackBarError(SignInWithGoogleError))
         }
     }
 
@@ -62,7 +64,7 @@ internal class SignInViewModel @Inject constructor(
         launch(
             onError = {
                 updateState { hideLoading() }
-                sendEffect(SignInEffect.SnackBarError(SignInError.SIGN_IN_WITH_ANONYMOUSLY_ERROR))
+                sendEffect(SignInEffect.ShowSnackBarError(SignInWithAnonymouslyError))
             },
         ) {
             signInAnonymouslyUseCase()
@@ -75,7 +77,7 @@ internal class SignInViewModel @Inject constructor(
         launch(
             onError = {
                 updateState { hideLoading() }
-                sendEffect(SignInEffect.SnackBarError(SignInError.SIGN_IN_WITH_GOOGLE_ERROR))
+                sendEffect(SignInEffect.ShowSnackBarError(SignInWithGoogleError))
             },
         ) {
             signInWithGoogleUseCase(idToken)

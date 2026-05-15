@@ -4,6 +4,8 @@ import androidx.credentials.exceptions.GetCredentialCancellationException
 import app.cash.turbine.test
 import com.linguaceleris.auth.impl.navigation.navigateToEmailSignIn
 import com.linguaceleris.auth.impl.navigation.navigateToRegistration
+import com.linguaceleris.auth.impl.ui.model.SignInWithAnonymouslyError
+import com.linguaceleris.auth.impl.ui.model.SignInWithGoogleError
 import com.linguaceleris.auth.impl.ui.signin.SignInMocks.getWebClientIdUseCase
 import com.linguaceleris.auth.impl.ui.signin.SignInMocks.navigator
 import com.linguaceleris.auth.impl.ui.signin.SignInMocks.signInAnonymouslyUseCase
@@ -117,7 +119,7 @@ internal class SignInViewModelTest : BehaviorSpec(
                         testDispatcher.scheduler.advanceUntilIdle()
                         coVerify { signInAnonymouslyUseCase() }
                         viewModel.state.value.isLoading shouldBe false
-                        awaitItem() shouldBe SignInEffect.SnackBarError(SignInError.SIGN_IN_WITH_ANONYMOUSLY_ERROR)
+                        awaitItem() shouldBe SignInEffect.ShowSnackBarError(SignInWithAnonymouslyError)
                     }
                 }
             }
@@ -145,7 +147,7 @@ internal class SignInViewModelTest : BehaviorSpec(
                         viewModel.onEvent(SignInEvent.OnGoogleTokenReceived(token))
                         testDispatcher.scheduler.advanceUntilIdle()
                         viewModel.state.value.isLoading shouldBe false
-                        awaitItem() shouldBe SignInEffect.SnackBarError(SignInError.SIGN_IN_WITH_GOOGLE_ERROR)
+                        awaitItem() shouldBe SignInEffect.ShowSnackBarError(SignInWithGoogleError)
                     }
                 }
             }
@@ -167,7 +169,7 @@ internal class SignInViewModelTest : BehaviorSpec(
                         viewModel.onEvent(SignInEvent.OnGoogleGetCredentialException(exception))
                         viewModel.state.value.isLoading shouldBe false
                         testDispatcher.scheduler.advanceUntilIdle()
-                        awaitItem() shouldBe SignInEffect.SnackBarError(SignInError.SIGN_IN_WITH_GOOGLE_ERROR)
+                        awaitItem() shouldBe SignInEffect.ShowSnackBarError(SignInWithGoogleError)
                     }
                 }
             }

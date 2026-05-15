@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.theme.disabled
 import com.linguaceleris.designsystem.theme.extendedColors
+import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.quiz.impl.R
 
 internal enum class CardState { DEFAULT, SELECTED, RIGHT, WRONG }
@@ -89,7 +90,7 @@ private fun getCardColor(containerColor: Color) = CardDefaults.cardColors().copy
 @PreviewLightDark
 @Composable
 private fun AnswerCardPreview() {
-    _root_ide_package_.com.linguaceleris.designsystem.widgets.LCPreview {
+    LCPreview {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),

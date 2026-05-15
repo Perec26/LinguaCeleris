@@ -10,12 +10,17 @@ internal data class HomeUiState(
     val streak: StreakUI = StreakUI.NeverStarted,
     val nextQuizzesTimer: UiText = UiText.DynamicString(""),
     val lastHour: Boolean = false,
+    val isGuest: Boolean = false,
 ) {
 
     val needToAlarm =
         lastHour && (streak is StreakUI.TodayNotCompleted || streak is StreakUI.Freeze)
 
-    fun dataLoaded(streak: StreakUI) = copy(screenState = ScreenState.CONTENT, streak = streak)
+    fun dataLoaded(streak: StreakUI, isGuest: Boolean) = copy(
+        screenState = ScreenState.CONTENT,
+        streak = streak,
+        isGuest = isGuest,
+    )
 
     fun onOpenMenuClick() = copy(menuExpanded = true)
     fun onCloseMenuClick() = copy(menuExpanded = false)
