@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.quiz.impl.ui.quiz.widgets
 
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +26,7 @@ import com.linguaceleris.quiz.impl.ui.quiz.matchingMock
 import com.linguaceleris.quiz.impl.ui.quiz.model.AnswerType
 import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.quiz.model.WordCardUI
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun MatchWidget(

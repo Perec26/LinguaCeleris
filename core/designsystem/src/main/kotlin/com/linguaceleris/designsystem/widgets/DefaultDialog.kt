@@ -18,7 +18,7 @@ fun DefaultDialog(onDismissRequest: () -> Unit, content: @Composable () -> Unit)
         Card(
             modifier = Modifier.padding(24.dp),
             shape = RoundedCornerShape(28.dp),
-            // несоответствие цветов Card в адроиде и Dialog в материале 3
+            // несоответствие цветов Card в андроиде и Dialog в материале 3
             colors = CardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                 contentColor = MaterialTheme.colorScheme.onSurfaceVariant,

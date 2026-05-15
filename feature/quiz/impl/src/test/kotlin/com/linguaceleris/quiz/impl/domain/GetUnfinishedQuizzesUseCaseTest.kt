@@ -32,8 +32,8 @@ internal class GetUnfinishedQuizzesUseCaseTest : BehaviorSpec(
 
         Given("GetUnfinishedQuizzesUseCase") {
             When("user id is null") {
-                every { authRepository.getCurrentUserId() } returns null
                 Then("it should throw an IllegalStateException") {
+                    every { authRepository.getCurrentUserId() } returns null
                     val exception = shouldThrow<IllegalStateException> {
                         useCase()
                     }
@@ -42,45 +42,45 @@ internal class GetUnfinishedQuizzesUseCaseTest : BehaviorSpec(
             }
 
             When("all quizzes are unfinished (dates are null)") {
-                coEvery { streakRepository.getStreak(userId) } returns StreakDTO()
-                val result = useCase()
                 Then("it should return all quiz levels") {
+                    coEvery { streakRepository.getStreak(userId) } returns StreakDTO()
+                    val result = useCase()
                     result shouldContainExactly listOf(QuizLevel.BASIC, QuizLevel.INTERMEDIATE, QuizLevel.ADVANCED)
                 }
             }
 
             When("all quizzes are unfinished (dates are in the past)") {
-                coEvery { streakRepository.getStreak(userId) } returns StreakDTO(
-                    basicLastCompletedDate = yesterday,
-                    intermediateLastCompletedDate = yesterday,
-                    advancedLastCompletedDate = yesterday,
-                )
-                val result = useCase()
                 Then("it should return all quiz levels") {
+                    coEvery { streakRepository.getStreak(userId) } returns StreakDTO(
+                        basicLastCompletedDate = yesterday,
+                        intermediateLastCompletedDate = yesterday,
+                        advancedLastCompletedDate = yesterday,
+                    )
+                    val result = useCase()
                     result shouldContainExactly listOf(QuizLevel.BASIC, QuizLevel.INTERMEDIATE, QuizLevel.ADVANCED)
                 }
             }
 
             When("some quizzes are finished and some are not") {
-                coEvery { streakRepository.getStreak(userId) } returns StreakDTO(
-                    basicLastCompletedDate = today,
-                    intermediateLastCompletedDate = yesterday,
-                    advancedLastCompletedDate = null,
-                )
-                val result = useCase()
                 Then("it should return only unfinished levels") {
+                    coEvery { streakRepository.getStreak(userId) } returns StreakDTO(
+                        basicLastCompletedDate = today,
+                        intermediateLastCompletedDate = yesterday,
+                        advancedLastCompletedDate = null,
+                    )
+                    val result = useCase()
                     result shouldContainExactly listOf(QuizLevel.INTERMEDIATE, QuizLevel.ADVANCED)
                 }
             }
 
             When("all quizzes are finished") {
-                coEvery { streakRepository.getStreak(userId) } returns StreakDTO(
-                    basicLastCompletedDate = today,
-                    intermediateLastCompletedDate = today,
-                    advancedLastCompletedDate = today,
-                )
-                val result = useCase()
                 Then("it should return an empty list") {
+                    coEvery { streakRepository.getStreak(userId) } returns StreakDTO(
+                        basicLastCompletedDate = today,
+                        intermediateLastCompletedDate = today,
+                        advancedLastCompletedDate = today,
+                    )
+                    val result = useCase()
                     result shouldBe emptyList()
                 }
             }

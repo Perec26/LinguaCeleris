@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.home.impl.ui.widget
 
 import androidx.compose.foundation.Image
@@ -22,6 +24,7 @@ import com.linguaceleris.designsystem.widgets.HapticElement
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.home.impl.R
 import com.linguaceleris.home.impl.ui.HomeEvent
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun SocialButtonsWidget(onEvent: (HomeEvent) -> Unit) {

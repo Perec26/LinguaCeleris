@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.quiz.impl.ui.quiz.widgets
 
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.quiz.impl.ui.quiz.fourEnVariantsMock
 import com.linguaceleris.quiz.impl.ui.quiz.model.WordCardUI
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun MatchColumnWidget(

@@ -1,6 +1,6 @@
 package com.linguaceleris.quiz.model
 
-enum class QuizDifficultyDTO {
+enum class QuizLevelDTO {
     BASIC,
     INTERMEDIATE,
     ADVANCED

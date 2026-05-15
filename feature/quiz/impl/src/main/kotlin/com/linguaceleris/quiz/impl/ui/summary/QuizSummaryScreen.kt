@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.quiz.impl.ui.summary
 
 import androidx.compose.foundation.Image
@@ -34,6 +36,7 @@ import com.linguaceleris.quiz.api.QuizLevel
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.ui.summary.model.buttonColors
 import com.linguaceleris.quiz.impl.ui.summary.model.title
+import com.linguaceleris.testing.PendingUiTests
 import com.linguaceleris.ui.ScreenState
 
 @Composable

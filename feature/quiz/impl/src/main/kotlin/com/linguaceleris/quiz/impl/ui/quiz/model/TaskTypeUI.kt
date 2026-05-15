@@ -2,28 +2,31 @@ package com.linguaceleris.quiz.impl.ui.quiz.model
 
 import androidx.annotation.StringRes
 import com.linguaceleris.quiz.impl.R
+import com.linguaceleris.testing.ExcludeFromKover
 
 internal sealed class TaskTypeUI(
     @param:StringRes val text: Int,
     @param:StringRes val info: Int,
     val contentType: TaskContentType,
-    val answerType: AnswerType
+    val answerType: AnswerType,
 ) {
 
+    @ExcludeFromKover
     object AntonymChoice :
         TaskTypeUI(
             text = R.string.quiz_short_antonym_choice,
             info = R.string.quiz_long_antonym_choice,
             contentType = TaskContentType.TEXT_AUDIO,
-            answerType = AnswerType.TEXT
+            answerType = AnswerType.TEXT,
         )
 
+    @ExcludeFromKover
     object AudioMatching :
         TaskTypeUI(
             text = R.string.quiz_short_audio_matching,
             info = R.string.quiz_long_audio_matching,
             contentType = TaskContentType.AUDIO,
-            answerType = AnswerType.AUDIO
+            answerType = AnswerType.AUDIO,
         )
 
     object FillInBlank :
@@ -31,23 +34,25 @@ internal sealed class TaskTypeUI(
             text = R.string.quiz_short_fill_in_blank,
             info = R.string.quiz_long_fill_in_blank,
             contentType = TaskContentType.TEXT,
-            answerType = AnswerType.TEXT
+            answerType = AnswerType.TEXT,
         )
 
+    @ExcludeFromKover
     object FindCorrect :
         TaskTypeUI(
             text = R.string.quiz_short_find_correct,
             info = R.string.quiz_long_find_correct,
             contentType = TaskContentType.TEXT_AUDIO,
-            answerType = AnswerType.TEXT
+            answerType = AnswerType.TEXT,
         )
 
+    @ExcludeFromKover
     object Homophones :
         TaskTypeUI(
             text = R.string.quiz_short_homophones,
             info = R.string.quiz_long_homophones,
             contentType = TaskContentType.TEXT,
-            answerType = AnswerType.TEXT
+            answerType = AnswerType.TEXT,
         )
 
     object ImageSelectWordTranslation :
@@ -55,7 +60,7 @@ internal sealed class TaskTypeUI(
             text = R.string.quiz_short_image_select_word,
             info = R.string.quiz_long_image_select_word,
             contentType = TaskContentType.IMAGE,
-            answerType = AnswerType.TEXT
+            answerType = AnswerType.TEXT,
         )
 
     object ListenSelectTranslation :
@@ -63,7 +68,7 @@ internal sealed class TaskTypeUI(
             text = R.string.quiz_short_listen_select_translation,
             info = R.string.quiz_long_listen_select_translation,
             contentType = TaskContentType.AUDIO,
-            answerType = AnswerType.TEXT
+            answerType = AnswerType.TEXT,
         )
 
     object Matching :
@@ -71,15 +76,16 @@ internal sealed class TaskTypeUI(
             text = R.string.quiz_short_matching,
             info = R.string.quiz_long_matching,
             contentType = TaskContentType.TEXT,
-            answerType = AnswerType.TEXT
+            answerType = AnswerType.TEXT,
         )
 
+    @ExcludeFromKover
     object SelectAudio :
         TaskTypeUI(
             text = R.string.quiz_short_select_audio,
             info = R.string.quiz_long_select_audio,
             contentType = TaskContentType.TEXT,
-            answerType = AnswerType.AUDIO
+            answerType = AnswerType.AUDIO,
         )
 
     object SelectTranslation :
@@ -87,22 +93,24 @@ internal sealed class TaskTypeUI(
             text = R.string.quiz_short_select_translation,
             info = R.string.quiz_long_select_translation,
             contentType = TaskContentType.TEXT_AUDIO,
-            answerType = AnswerType.TEXT
+            answerType = AnswerType.TEXT,
         )
 
+    @ExcludeFromKover
     object SynonymChoice :
         TaskTypeUI(
             text = R.string.quiz_short_synonym_choice,
             info = R.string.quiz_long_synonym_choice,
             contentType = TaskContentType.TEXT_AUDIO,
-            answerType = AnswerType.TEXT
+            answerType = AnswerType.TEXT,
         )
 
+    @ExcludeFromKover
     object Unknown : TaskTypeUI(
         text = R.string.quiz_short_unknown,
         info = R.string.quiz_long_unknown,
         contentType = TaskContentType.TEXT,
-        answerType = AnswerType.TEXT
+        answerType = AnswerType.TEXT,
     )
 }
 

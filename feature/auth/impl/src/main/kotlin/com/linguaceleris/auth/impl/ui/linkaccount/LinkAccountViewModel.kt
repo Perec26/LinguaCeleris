@@ -6,7 +6,7 @@ import com.linguaceleris.auth.impl.domain.GetWebClientIdUseCase
 import com.linguaceleris.auth.impl.domain.LinkWithGoogleUseCase
 import com.linguaceleris.auth.impl.ui.model.SignInWithGoogleError
 import com.linguaceleris.auth.impl.ui.model.SignInWithGoogleUserCollisionError
-import com.linguaceleris.home.api.startWithHome
+import com.linguaceleris.home.api.backToHomeWithResult
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.ui.EffectViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,11 +25,11 @@ internal class LinkAccountViewModel @Inject constructor(
         when (event) {
             LinkAccountEvent.OnBackClicked -> navigator.back()
 
+            LinkAccountEvent.OnGoogleSignInClick -> onGoogleSignInClick()
+
             is LinkAccountEvent.OnGoogleGetCredentialException -> {
                 onGoogleGetCredentialException(event.exception)
             }
-
-            LinkAccountEvent.OnGoogleSignInClick -> onGoogleSignInClick()
 
             is LinkAccountEvent.OnGoogleTokenReceived -> onGoogleTokenReceived(event.idToken)
         }
@@ -53,7 +53,7 @@ internal class LinkAccountViewModel @Inject constructor(
             onError = ::handleGoogleSignInError,
         ) {
             linkWithGoogleUseCase(idToken)
-            navigator.startWithHome()
+            navigator.backToHomeWithResult()
         }
     }
 

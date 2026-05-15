@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.quiz.impl.ui.quiz.widgets
 
 import androidx.compose.foundation.Image
@@ -12,6 +14,7 @@ import com.linguaceleris.designsystem.theme.disabled
 import com.linguaceleris.designsystem.theme.extendedColors
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.quiz.impl.R
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun LivesIndicator(totalLives: Int = 3, remainingLives: Int = 3) {

@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.auth.impl.ui.registration
 
 import android.content.Context
@@ -39,6 +41,7 @@ import com.linguaceleris.designsystem.widgets.ThreeButtonsDialog
 import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
 import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
 import com.linguaceleris.designsystem.widgets.buttons.LCOutlineButton
+import com.linguaceleris.testing.PendingUiTests
 import com.linguaceleris.ui.LocalSnackbarHostState
 
 @Composable

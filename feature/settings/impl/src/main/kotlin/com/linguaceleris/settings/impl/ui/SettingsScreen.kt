@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.settings.impl.ui
 
 import androidx.compose.foundation.layout.Box
@@ -18,6 +20,7 @@ import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.settings.impl.R
 import com.linguaceleris.settings.impl.ui.widget.SettingElement
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {

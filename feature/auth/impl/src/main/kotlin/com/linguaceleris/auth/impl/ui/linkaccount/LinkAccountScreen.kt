@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.auth.impl.ui.linkaccount
 
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +25,7 @@ import com.linguaceleris.auth.impl.ui.widget.triggerGoogleSignIn
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
+import com.linguaceleris.testing.PendingUiTests
 import com.linguaceleris.ui.LocalSnackbarHostState
 
 @Composable

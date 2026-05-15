@@ -6,6 +6,7 @@ import com.linguaceleris.auth.api.startWithSignIn
 import com.linguaceleris.home.api.startWithHome
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.start.impl.domain.GetAuthStateUseCase
+import com.linguaceleris.testing.ExcludeFromKover
 import com.linguaceleris.ui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -24,5 +25,6 @@ internal class StartViewModel @Inject constructor(
         }
     }
 
+    @ExcludeFromKover
     override fun onEvent(event: StartEvent) {}
 }

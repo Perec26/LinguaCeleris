@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.settings.impl.ui.widget
 
 import androidx.compose.foundation.clickable
@@ -15,6 +17,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.widgets.LCPreview
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun SettingElement(

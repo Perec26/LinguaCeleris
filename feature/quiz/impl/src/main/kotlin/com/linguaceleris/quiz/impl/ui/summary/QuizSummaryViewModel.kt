@@ -14,7 +14,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-private const val ASSISTED_DIFFICULTY = "difficulty"
+private const val ASSISTED_LEVEL = "level"
 private const val ASSISTED_IS_SUCCESSFUL = "isSuccessful"
 
 @HiltViewModel(assistedFactory = QuizSummaryViewModel.Factory::class)
@@ -23,7 +23,7 @@ internal class QuizSummaryViewModel @AssistedInject constructor(
     private val updateStreakUseCase: UpdateStreakUseCase,
     private val getUnfinishedQuizzesUseCase: GetUnfinishedQuizzesUseCase,
     private val playerManager: PlayerManager,
-    @Assisted(ASSISTED_DIFFICULTY) private val quizLevel: QuizLevel,
+    @Assisted(ASSISTED_LEVEL) private val quizLevel: QuizLevel,
     @Assisted(ASSISTED_IS_SUCCESSFUL) private val isSuccessful: Boolean,
 ) : BaseViewModel<QuizSummaryUiState, QuizSummaryEvent>(
     initialState = QuizSummaryUiState(result = isSuccessful.toQuizResult()),
@@ -65,7 +65,7 @@ internal class QuizSummaryViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted(ASSISTED_DIFFICULTY) difficulty: QuizLevel,
+            @Assisted(ASSISTED_LEVEL) level: QuizLevel,
             @Assisted(ASSISTED_IS_SUCCESSFUL) isSuccessful: Boolean,
         ): QuizSummaryViewModel
     }

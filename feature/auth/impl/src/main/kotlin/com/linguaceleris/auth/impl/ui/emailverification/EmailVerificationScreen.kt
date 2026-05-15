@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.auth.impl.ui.emailverification
 
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +32,7 @@ import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
 import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
 import com.linguaceleris.designsystem.widgets.buttons.LCOutlineButton
 import com.linguaceleris.designsystem.widgets.buttons.LCTextButton
+import com.linguaceleris.testing.PendingUiTests
 import com.linguaceleris.ui.LocalSnackbarHostState
 
 @Composable

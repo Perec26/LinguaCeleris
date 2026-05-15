@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.start.impl
 
 import androidx.compose.foundation.layout.Box
@@ -10,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun StartScreen(viewModel: StartViewModel = hiltViewModel()) {

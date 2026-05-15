@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.quiz.impl.ui.summary.model
 
 import androidx.annotation.StringRes
@@ -7,6 +9,7 @@ import com.linguaceleris.designsystem.theme.buttonColors
 import com.linguaceleris.designsystem.theme.extendedColors
 import com.linguaceleris.quiz.api.QuizLevel
 import com.linguaceleris.quiz.impl.R
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun QuizLevel.buttonColors() = when (this) {

@@ -4,6 +4,7 @@ import com.linguaceleris.home.impl.domain.HomeDomainMocks.authRepository
 import com.linguaceleris.home.impl.domain.HomeDomainMocks.streakRepository
 import com.linguaceleris.home.impl.domain.HomeDomainMocks.timeManager
 import com.linguaceleris.home.impl.domain.mapper.toUi
+import com.linguaceleris.home.impl.domain.model.UserNotFoundException
 import com.linguaceleris.streak.model.StreakDTO
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -40,9 +41,7 @@ internal class GetStreakUseCaseTest : BehaviorSpec({
             Then("it should throw error") {
                 every { authRepository.getCurrentUserId() } returns null
 
-                shouldThrow<IllegalStateException> {
-                    useCase()
-                }.message shouldBe "User not logged in"
+                shouldThrow<UserNotFoundException> { useCase() }
             }
         }
     }

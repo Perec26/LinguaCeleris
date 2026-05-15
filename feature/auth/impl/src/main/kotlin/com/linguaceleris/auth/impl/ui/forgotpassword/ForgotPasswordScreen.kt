@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.auth.impl.ui.forgotpassword
 
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +28,7 @@ import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
 import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun ForgotPasswordScreen(viewModel: ForgotPasswordViewModel = hiltViewModel()) {

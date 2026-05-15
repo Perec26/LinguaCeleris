@@ -4,7 +4,7 @@ import com.linguaceleris.network.AudioLoadService
 import com.linguaceleris.network.ImageLoadService
 import com.linguaceleris.quiz.dataSource.QuizDataSource
 import com.linguaceleris.quiz.model.QuizDTO
-import com.linguaceleris.quiz.model.QuizDifficultyDTO
+import com.linguaceleris.quiz.model.QuizLevelDTO
 import com.linguaceleris.quiz.model.TaskDTO
 import com.linguaceleris.quiz.model.TaskDataDTO
 import com.linguaceleris.services.time.TrustedTimeManager
@@ -47,9 +47,9 @@ class QuizRepository @Inject constructor(
         storage.saveSchedule(schedule)
     }
 
-    suspend fun getTasks(difficulty: QuizDifficultyDTO): QuizDTO? {
+    suspend fun getTasks(level: QuizLevelDTO): QuizDTO? {
         val date = timeManager.getCurrentDate()
-        val quizId = storage.getQuizId(date, difficulty) ?: return null
+        val quizId = storage.getQuizId(date, level) ?: return null
         return getQuiz(quizId)
     }
 }

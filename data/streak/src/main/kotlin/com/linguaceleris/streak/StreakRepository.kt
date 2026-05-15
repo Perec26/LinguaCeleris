@@ -2,7 +2,6 @@ package com.linguaceleris.streak
 
 import com.linguaceleris.services.time.TrustedTimeManager
 import com.linguaceleris.streak.model.StreakDTO
-import com.linguaceleris.streak.model.StreakDifficultyDTO
 import javax.inject.Inject
 import kotlin.math.absoluteValue
 import kotlinx.datetime.daysUntil
@@ -15,24 +14,6 @@ class StreakRepository @Inject constructor(
 ) {
 
     suspend fun getStreak(userId: String) = dataSource.getStreak(userId) ?: StreakDTO()
-
-    suspend fun updateStreak(id: String, difficulty: StreakDifficultyDTO) {
-        val currentDate = trustedTimeManager.getCurrentDate()
-        val currentStreak = getUpdatedStreak(id)
-
-        val newStreak = when (difficulty) {
-            StreakDifficultyDTO.BASIC -> currentStreak.copy(basicLastCompletedDate = currentDate)
-
-            StreakDifficultyDTO.INTERMEDIATE -> currentStreak.copy(
-                intermediateLastCompletedDate = currentDate,
-            )
-
-            StreakDifficultyDTO.ADVANCED -> currentStreak.copy(
-                advancedLastCompletedDate = currentDate,
-            )
-        }
-        dataSource.updateStreak(id, newStreak)
-    }
 
     private suspend fun getUpdatedStreak(userId: String): StreakDTO {
         val streak = dataSource.getStreak(userId) ?: StreakDTO()
@@ -52,5 +33,23 @@ class StreakRepository @Inject constructor(
                 longest = maxOf(streak.current + 1, streak.longest),
             )
         }
+    }
+
+    suspend fun updateBasicStreak(id: String) {
+        getUpdatedStreak(id)
+            .copy(basicLastCompletedDate = trustedTimeManager.getCurrentDate())
+            .apply { dataSource.updateStreak(id, this) }
+    }
+
+    suspend fun updateIntermediateStreak(id: String) {
+        getUpdatedStreak(id)
+            .copy(intermediateLastCompletedDate = trustedTimeManager.getCurrentDate())
+            .apply { dataSource.updateStreak(id, this) }
+    }
+
+    suspend fun updateAdvancedStreak(id: String) {
+        getUpdatedStreak(id)
+            .copy(advancedLastCompletedDate = trustedTimeManager.getCurrentDate())
+            .apply { dataSource.updateStreak(id, this) }
     }
 }

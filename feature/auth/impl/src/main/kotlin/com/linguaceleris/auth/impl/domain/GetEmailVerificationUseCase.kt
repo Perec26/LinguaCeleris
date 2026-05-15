@@ -1,8 +1,10 @@
 package com.linguaceleris.auth.impl.domain
 
 import com.linguaceleris.auth.AuthRepository
+import com.linguaceleris.testing.ExcludeFromKover
 import javax.inject.Inject
 
+@ExcludeFromKover
 internal class GetEmailVerificationUseCase @Inject constructor(
     private val repository: AuthRepository,
 ) {

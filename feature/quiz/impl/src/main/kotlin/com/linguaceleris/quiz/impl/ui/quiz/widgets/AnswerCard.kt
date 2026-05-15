@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.quiz.impl.ui.quiz.widgets
 
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +27,10 @@ import com.linguaceleris.designsystem.theme.disabled
 import com.linguaceleris.designsystem.theme.extendedColors
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.quiz.impl.R
+import com.linguaceleris.testing.ExcludeFromKover
+import com.linguaceleris.testing.PendingUiTests
 
+@ExcludeFromKover
 internal enum class CardState { DEFAULT, SELECTED, RIGHT, WRONG }
 
 @Composable

@@ -13,7 +13,7 @@ import com.linguaceleris.quiz.impl.ui.summary.QuizSummaryViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class QuizSummaryNavKey(val difficulty: QuizLevel, val isSuccessful: Boolean) : NavKey
+data class QuizSummaryNavKey(val level: QuizLevel, val isSuccessful: Boolean) : NavKey
 
 fun EntryProviderScope<NavKey>.quizEntry() {
     entry<QuizNavKey> { key ->
@@ -29,11 +29,11 @@ fun EntryProviderScope<NavKey>.quizEntry() {
         val viewModel = hiltViewModel<QuizSummaryViewModel, QuizSummaryViewModel.Factory>(
             key = key.isSuccessful.toString(),
         ) {
-            it.create(key.difficulty, key.isSuccessful)
+            it.create(key.level, key.isSuccessful)
         }
         QuizSummaryScreen(viewModel)
     }
 }
 
-internal fun Navigator.navigateToSummary(difficulty: QuizLevel, isSuccessful: Boolean) =
-    replace(QuizSummaryNavKey(difficulty, isSuccessful))
+internal fun Navigator.navigateToSummary(level: QuizLevel, isSuccessful: Boolean) =
+    replace(QuizSummaryNavKey(level, isSuccessful))

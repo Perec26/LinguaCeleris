@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.auth.impl.ui.widget
 
 import androidx.compose.foundation.layout.Column
@@ -20,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.linguaceleris.auth.impl.R
 import com.linguaceleris.auth.impl.ui.registration.model.AuthValidationResult
 import com.linguaceleris.designsystem.widgets.LCPreview
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun NicknameTextField(

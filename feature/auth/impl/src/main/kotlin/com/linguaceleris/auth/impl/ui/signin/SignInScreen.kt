@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.auth.impl.ui.signin
 
 import androidx.compose.foundation.Image
@@ -33,6 +35,7 @@ import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
 import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
 import com.linguaceleris.designsystem.widgets.buttons.LCFilledTonalButton
 import com.linguaceleris.designsystem.widgets.buttons.LCTextButton
+import com.linguaceleris.testing.PendingUiTests
 import com.linguaceleris.ui.LocalSnackbarHostState
 
 @Composable

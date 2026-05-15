@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.auth.impl.ui.widget
 
 import android.content.Context
@@ -25,6 +27,7 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.linguaceleris.auth.impl.R
 import com.linguaceleris.designsystem.widgets.HapticElement
 import com.linguaceleris.designsystem.widgets.LCPreview
+import com.linguaceleris.testing.PendingUiTests
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

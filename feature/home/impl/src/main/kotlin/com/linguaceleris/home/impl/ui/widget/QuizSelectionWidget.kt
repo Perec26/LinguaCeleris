@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.home.impl.ui.widget
 
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +21,7 @@ import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
 import com.linguaceleris.home.impl.R
 import com.linguaceleris.home.impl.ui.HomeEvent
 import com.linguaceleris.home.impl.ui.model.QuizCompletionUI
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun QuizSelectionWidget(completion: QuizCompletionUI, onEvent: (HomeEvent) -> Unit) {

@@ -1,6 +1,6 @@
 package com.linguaceleris.quiz
 
-import com.linguaceleris.quiz.model.QuizDifficultyDTO
+import com.linguaceleris.quiz.model.QuizLevelDTO
 import com.linguaceleris.quiz.model.ScheduleDTO
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,12 +15,12 @@ class QuizInMemoryStorage @Inject constructor() {
         this.schedule = schedule
     }
 
-    fun getQuizId(date: LocalDate, difficulty: QuizDifficultyDTO): String? {
+    fun getQuizId(date: LocalDate, level: QuizLevelDTO): String? {
         val dayQuizzes = schedule?.days?.firstOrNull { it.date == date } ?: return null
-        return when (difficulty) {
-            QuizDifficultyDTO.BASIC -> dayQuizzes.basic
-            QuizDifficultyDTO.INTERMEDIATE -> dayQuizzes.intermediate
-            QuizDifficultyDTO.ADVANCED -> dayQuizzes.advanced
+        return when (level) {
+            QuizLevelDTO.BASIC -> dayQuizzes.basic
+            QuizLevelDTO.INTERMEDIATE -> dayQuizzes.intermediate
+            QuizLevelDTO.ADVANCED -> dayQuizzes.advanced
         }
     }
 }

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.linguaceleris.android.application)
     alias(libs.plugins.linguaceleris.android.application.compose)
+    alias(libs.plugins.kover)
 }
 
 android {

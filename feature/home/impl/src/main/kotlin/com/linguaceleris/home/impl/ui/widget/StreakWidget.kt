@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.home.impl.ui.widget
 
 import androidx.annotation.DrawableRes
@@ -32,6 +34,7 @@ import com.linguaceleris.designsystem.widgets.Gradients.toLightBaseGradient
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.home.impl.R
 import com.linguaceleris.home.impl.ui.model.StreakUI
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun StreakWidget(streak: StreakUI) {

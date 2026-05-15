@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.auth.impl.ui.email
 
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +30,7 @@ import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
 import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
 import com.linguaceleris.designsystem.widgets.buttons.LCTextButton
+import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun EmailSignInScreen(viewModel: EmailSignInViewModel = hiltViewModel()) {

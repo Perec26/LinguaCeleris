@@ -1,11 +1,14 @@
 package com.linguaceleris.home.impl.ui
 
 import app.cash.turbine.test
+import com.linguaceleris.auth.api.navigateToLinkAccount
 import com.linguaceleris.auth.api.startWithSignIn
 import com.linguaceleris.home.api.QuizResult
 import com.linguaceleris.home.impl.R
+import com.linguaceleris.home.impl.domain.model.UserNotFoundException
 import com.linguaceleris.home.impl.ui.HomeMocks.getNextDayUseCase
 import com.linguaceleris.home.impl.ui.HomeMocks.getStreakUseCase
+import com.linguaceleris.home.impl.ui.HomeMocks.isGuestUseCase
 import com.linguaceleris.home.impl.ui.HomeMocks.loadScheduleUseCase
 import com.linguaceleris.home.impl.ui.HomeMocks.navigator
 import com.linguaceleris.home.impl.ui.HomeMocks.setupDefaultMocks
@@ -15,6 +18,7 @@ import com.linguaceleris.quiz.api.navigateToAdvanceQuiz
 import com.linguaceleris.quiz.api.navigateToBasicQuiz
 import com.linguaceleris.quiz.api.navigateToIntermediateQuiz
 import com.linguaceleris.settins.api.navigateToSettings
+import com.linguaceleris.ui.ScreenState
 import com.linguaceleris.ui.utils.UiText
 import com.linguaceleris.ui.utils.UiTextArg
 import io.kotest.core.spec.style.BehaviorSpec
@@ -49,6 +53,7 @@ internal class HomeViewModelTest : BehaviorSpec(
             signOutUseCase = signOutUseCase,
             getStreakUseCase = getStreakUseCase,
             getNextDayUseCase = getNextDayUseCase,
+            isGuestUseCase = isGuestUseCase,
         )
 
         beforeSpec {
@@ -74,7 +79,7 @@ internal class HomeViewModelTest : BehaviorSpec(
                     coEvery { loadScheduleUseCase() } returns Unit
 
                     viewModel = createViewModel()
-                    viewModel.state.value.isLoading shouldBe true
+                    viewModel.state.value.screenState shouldBe ScreenState.LOADING
 
                     testDispatcher.scheduler.advanceUntilIdle()
 
@@ -82,7 +87,7 @@ internal class HomeViewModelTest : BehaviorSpec(
                     coVerify { getStreakUseCase() }
                     coVerify { getNextDayUseCase() }
                     coVerify { navigator.getResultFlow<QuizResult>() }
-                    viewModel.state.value.isLoading shouldBe false
+                    viewModel.state.value.screenState shouldBe ScreenState.CONTENT
                 }
             }
 
@@ -171,13 +176,13 @@ internal class HomeViewModelTest : BehaviorSpec(
                         viewModel = createViewModel()
 
                         viewModel.onEvent(HomeEvent.OnRefreshClick)
-                        viewModel.state.value.isLoading shouldBe true
+                        viewModel.state.value.screenState shouldBe ScreenState.LOADING
 
                         testDispatcher.scheduler.advanceUntilIdle()
 
                         coVerify { loadScheduleUseCase() }
                         coVerify { getStreakUseCase() }
-                        viewModel.state.value.isLoading shouldBe false
+                        viewModel.state.value.screenState shouldBe ScreenState.CONTENT
                         viewModel.state.value.streak shouldBe streak
                     }
                 }
@@ -190,39 +195,62 @@ internal class HomeViewModelTest : BehaviorSpec(
 
                         viewModel = createViewModel()
                         viewModel.onEvent(HomeEvent.OnRefreshClick)
-                        viewModel.state.value.isLoading shouldBe true
+                        viewModel.state.value.screenState shouldBe ScreenState.LOADING
 
                         testDispatcher.scheduler.advanceUntilIdle()
 
-                        viewModel.state.value.isLoading shouldBe false
-                        viewModel.state.value.hasError shouldBe true
+                        viewModel.state.value.screenState shouldBe ScreenState.ERROR
                     }
                 }
 
-                And("streak loading fails") {
+                And("streak loading fails with UserNotFoundException") {
+                    Then("user should be signed out") {
+                        coEvery { loadScheduleUseCase() } returns Unit
+                        coEvery { getStreakUseCase() } throws UserNotFoundException()
+
+                        viewModel = createViewModel()
+                        viewModel.onEvent(HomeEvent.OnRefreshClick)
+                        viewModel.state.value.screenState shouldBe ScreenState.LOADING
+
+                        testDispatcher.scheduler.advanceUntilIdle()
+
+                        verify { navigator.startWithSignIn() }
+                    }
+                }
+
+                And("streak loading fails with error") {
                     Then("it should show error state") {
                         coEvery { loadScheduleUseCase() } returns Unit
                         coEvery { getStreakUseCase() } throws Exception("Failed")
 
                         viewModel = createViewModel()
                         viewModel.onEvent(HomeEvent.OnRefreshClick)
-                        viewModel.state.value.isLoading shouldBe true
+                        viewModel.state.value.screenState shouldBe ScreenState.LOADING
 
                         testDispatcher.scheduler.advanceUntilIdle()
 
-                        viewModel.state.value.isLoading shouldBe false
-                        viewModel.state.value.hasError shouldBe true
+                        viewModel.state.value.screenState shouldBe ScreenState.ERROR
                     }
+                }
+            }
+
+            When("OnEnterToAccountClick event received") {
+                Then("it should navigate to link account") {
+                    viewModel.onEvent(HomeEvent.OnEnterToAccountClick)
+                    viewModel.state.value.menuExpanded shouldBe false
+                    verify { navigator.navigateToLinkAccount() }
                 }
             }
 
             When("navigation result is received") {
                 Then("it should reload data") {
-                    val resultFlow = MutableSharedFlow<QuizResult>()
+                    val resultFlow = MutableSharedFlow<QuizResult>(extraBufferCapacity = 1)
                     every { navigator.getResultFlow<QuizResult>() } returns resultFlow
 
                     viewModel = createViewModel()
-                    resultFlow.emit(QuizResult(isSuccess = true))
+                    testDispatcher.scheduler.advanceUntilIdle()
+
+                    resultFlow.emit(QuizResult())
                     testDispatcher.scheduler.advanceUntilIdle()
 
                     coVerify(atLeast = 2) { loadScheduleUseCase() }

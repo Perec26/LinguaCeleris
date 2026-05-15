@@ -1,3 +1,5 @@
+@file:PendingUiTests
+
 package com.linguaceleris.home.impl.ui
 
 import android.content.Context
@@ -43,6 +45,7 @@ import com.linguaceleris.home.impl.ui.model.StreakUI
 import com.linguaceleris.home.impl.ui.widget.QuizSelectionWidget
 import com.linguaceleris.home.impl.ui.widget.SocialButtonsWidget
 import com.linguaceleris.home.impl.ui.widget.StreakWidget
+import com.linguaceleris.testing.PendingUiTests
 import com.linguaceleris.ui.ScreenState
 import com.linguaceleris.ui.utils.UiText
 
