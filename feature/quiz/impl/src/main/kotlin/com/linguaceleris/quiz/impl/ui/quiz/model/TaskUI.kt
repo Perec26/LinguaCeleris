@@ -34,10 +34,14 @@ internal sealed class TaskUI(open val id: String, open val type: TaskTypeUI) {
 
         val correctVariant = getCorrect()
 
-        fun isReselect(variant: WordCardUI): Boolean = if (selectedVariantFromOriginal) {
-            originalVariants.contains(variant)
-        } else {
-            translationVariants.contains(variant)
+        fun isReselect(variant: WordCardUI): Boolean {
+            if (selectedVariant == null) return false
+
+            return if (selectedVariantFromOriginal) {
+                originalVariants.contains(variant)
+            } else {
+                translationVariants.contains(variant)
+            }
         }
 
         private fun getCorrect() = selectedVariant?.let {

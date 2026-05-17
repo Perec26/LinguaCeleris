@@ -15,6 +15,10 @@ plugins {
 }
 
 dependencies {
+    kover(project(":data:auth"))
+    kover(project(":data:quiz"))
+    kover(project(":data:streak"))
+    kover(project(":data:settings"))
     kover(project(":feature:auth:impl"))
     kover(project(":feature:home:impl"))
     kover(project(":feature:settings:impl"))

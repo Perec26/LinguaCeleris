@@ -52,6 +52,12 @@ gradlePlugin {
             id = "linguaceleris.feature.impl"
             implementationClass = "FeatureImplConventionPlugin"
         }
+
+        register("data") {
+            id = "linguaceleris.data"
+            implementationClass = "DataConventionPlugin"
+        }
+
         register("jvmLibrary") {
             id = "linguaceleris.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"

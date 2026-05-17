@@ -31,11 +31,11 @@ class AuthRepository @Inject constructor(private val credentialService: Credenti
 
     suspend fun resetPassword(email: String) = credentialService.resetPassword(email)
 
-    fun getAuthState(): AuthState {
-        if (!credentialService.isLoggedIn()) return AuthState.NOT_LOGGED_IN
-        if (credentialService.isAnonymous()) return AuthState.ANONYMOUS
-        if (!credentialService.getEmailVerification()) return AuthState.EMAIL_NOT_VERIFIED
-        return AuthState.LOGGED_IN
+    fun getAuthState() = when {
+        !credentialService.isLoggedIn() -> AuthState.NOT_LOGGED_IN
+        credentialService.isAnonymous() -> AuthState.ANONYMOUS
+        !credentialService.getEmailVerification() -> AuthState.EMAIL_NOT_VERIFIED
+        else -> AuthState.LOGGED_IN
     }
 
     fun isGuest() = credentialService.isAnonymous()

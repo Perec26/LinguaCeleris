@@ -144,6 +144,7 @@ linguaceleris-android-library = { id = "linguaceleris.android.library", version 
 linguaceleris-android-library-compose = { id = "linguaceleris.android.library.compose", version = "unspecified" }
 linguaceleris-feature-api = { id = "linguaceleris.feature.api", version = "unspecified" }
 linguaceleris-feature-impl = { id = "linguaceleris.feature.impl", version = "unspecified" }
+linguaceleris-data = { id = "linguaceleris.data", version = "unspecified" }
 linguaceleris-unittest = { id = "linguaceleris.unittest", version = "unspecified" }
 linguaceleris-hilt = { id = "linguaceleris.hilt", version = "unspecified" }
 linguaceleris-ktlint = { id = "linguaceleris.ktlint", version = "unspecified" }

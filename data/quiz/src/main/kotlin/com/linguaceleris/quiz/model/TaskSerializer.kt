@@ -1,0 +1,53 @@
+package com.linguaceleris.quiz.model
+
+import kotlinx.serialization.DeserializationStrategy
+import kotlinx.serialization.json.JsonContentPolymorphicSerializer
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+
+private const val ANTONYM_CHOICE_TYPE_NAME = "antonym_choice"
+private const val AUDIO_MATCHING_TYPE_NAME = "audio_matching"
+private const val FILL_IN_BLANK_TYPE_NAME = "fill_in_blank"
+private const val FIND_CORRECT_TYPE_NAME = "find_correct"
+private const val HOMOPHONES_TYPE_NAME = "homophones"
+private const val IMAGE_SELECT_WORD_TRANSLATION_TYPE_NAME = "image_select_word"
+private const val LISTEN_SELECT_TRANSLATION_TYPE_NAME = "listen_select_translation"
+private const val MATCHING_TYPE_NAME = "matching"
+private const val SELECT_AUDIO_TYPE_NAME = "select_audio"
+private const val SELECT_TRANSLATION_EN_TYPE_NAME = "select_translation"
+private const val SYNONYM_CHOICE_TYPE_NAME = "synonym_choice"
+
+internal object TaskSerializer :
+    JsonContentPolymorphicSerializer<TaskDTO>(TaskDTO::class) {
+    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<TaskDTO> {
+        val type = element.jsonObject.getValue("type").jsonPrimitive.content
+        return when (type) {
+            ANTONYM_CHOICE_TYPE_NAME -> TaskDTO.AntonymChoiceDTO.serializer()
+
+            AUDIO_MATCHING_TYPE_NAME -> TaskDTO.AudioMatchingDTO.serializer()
+
+            FILL_IN_BLANK_TYPE_NAME -> TaskDTO.FillInTheBlankDTO.serializer()
+
+            FIND_CORRECT_TYPE_NAME -> TaskDTO.FindCorrectDTO.serializer()
+
+            HOMOPHONES_TYPE_NAME -> TaskDTO.HomophonesDTO.serializer()
+
+            IMAGE_SELECT_WORD_TRANSLATION_TYPE_NAME -> {
+                TaskDTO.ImageSelectWordTranslationDTO.serializer()
+            }
+
+            LISTEN_SELECT_TRANSLATION_TYPE_NAME -> TaskDTO.ListenSelectTranslationDTO.serializer()
+
+            MATCHING_TYPE_NAME -> TaskDTO.MatchingDTO.serializer()
+
+            SELECT_AUDIO_TYPE_NAME -> TaskDTO.SelectAudioDTO.serializer()
+
+            SELECT_TRANSLATION_EN_TYPE_NAME -> TaskDTO.SelectTranslationDTO.serializer()
+
+            SYNONYM_CHOICE_TYPE_NAME -> TaskDTO.SynonymChoiceDTO.serializer()
+
+            else -> TaskDTO.UnknowQuestionDTO.serializer()
+        }
+    }
+}

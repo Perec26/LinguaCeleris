@@ -1,6 +1,5 @@
 plugins {
-    alias(libs.plugins.linguaceleris.android.library)
-    alias(libs.plugins.linguaceleris.hilt)
+    alias(libs.plugins.linguaceleris.data)
 }
 
 android {

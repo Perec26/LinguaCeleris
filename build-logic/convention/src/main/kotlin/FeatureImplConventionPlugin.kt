@@ -13,7 +13,6 @@ class FeatureImplConventionPlugin : Plugin<Project> {
             apply(plugin = "linguaceleris.android.library.compose")
             apply(plugin = "linguaceleris.hilt")
             apply(plugin = "linguaceleris.unittest")
-            apply(plugin = "linguaceleris.ktlint")
             apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
 
             dependencies {
