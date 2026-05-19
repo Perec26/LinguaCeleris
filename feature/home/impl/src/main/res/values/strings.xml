@@ -38,6 +38,9 @@
     <string name="home_timer_alarm">Успей продлить серию, осталось: %s</string>
     <string name="home_url_youtube">https://youtube.com/@LinguaCeleris?sub_confirmation=1</string>
     <string name="home_url_telegram">https://t.me/LinguaCelerisBackgrounds</string>
+    <string name="home_guest_exit">Выйти из аккаунта?</string>
+    <string name="home_guest_exit_description">Вы используете гостевой режим. Если вы выйдете, все ваши данные будут безвозвратно удалены и восстановить их не получится.</string>
+    <string name="home_cancel">Отмена</string>
 
 
     <plurals name="home_streak_completed_title">

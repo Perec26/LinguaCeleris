@@ -11,6 +11,7 @@ internal data class HomeUiState(
     val nextQuizzesTimer: UiText = UiText.DynamicString(""),
     val lastHour: Boolean = false,
     val isGuest: Boolean = false,
+    val showExitDialog: Boolean = false,
 ) {
 
     val needToAlarm =
@@ -33,4 +34,8 @@ internal data class HomeUiState(
     fun onLoading() = copy(screenState = ScreenState.LOADING)
 
     fun onError() = copy(screenState = ScreenState.ERROR)
+
+    fun showExitDialog() = copy(showExitDialog = true)
+
+    fun hideExitDialog() = copy(showExitDialog = false)
 }

@@ -54,12 +54,18 @@ internal class HomeViewModel @Inject constructor(
             HomeEvent.OnYoutubeClick -> sendEffect(HomeEffect.OpenYoutube())
             HomeEvent.OnRefreshClick -> loadData()
             HomeEvent.OnEnterToAccountClick -> doOnMenuClick(navigator::navigateToLinkAccount)
+            HomeEvent.OnExiConfirmClick -> exit()
+            HomeEvent.OnExitDismissClick -> updateState { hideExitDialog() }
         }
     }
 
     private fun onSignOutClick() {
-        signOutUseCase()
-        navigator.startWithSignIn()
+        if (currentState.isGuest) {
+            updateState { showExitDialog() }
+            return
+        }
+
+        signOut()
     }
 
     private fun subscribeNextDay() {
@@ -121,5 +127,15 @@ internal class HomeViewModel @Inject constructor(
     private inline fun doOnMenuClick(block: () -> Unit) {
         updateState { onCloseMenuClick() }
         block()
+    }
+
+    private fun exit() {
+        updateState { hideExitDialog() }
+        signOut()
+    }
+
+    private fun signOut() {
+        signOutUseCase()
+        navigator.startWithSignIn()
     }
 }

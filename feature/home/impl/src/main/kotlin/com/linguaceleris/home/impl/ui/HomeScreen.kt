@@ -36,10 +36,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.linguaceleris.designsystem.widgets.ButtonDescription
 import com.linguaceleris.designsystem.widgets.CommonErrorWidget
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
+import com.linguaceleris.designsystem.widgets.ThreeButtonsDialog
 import com.linguaceleris.home.impl.R
 import com.linguaceleris.home.impl.ui.model.StreakUI
 import com.linguaceleris.home.impl.ui.widget.QuizSelectionWidget
@@ -66,54 +68,75 @@ internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
 @Composable
 private fun HomeScreenContent(state: HomeUiState, onEvent: (HomeEvent) -> Unit) {
-    LoadingScaffold(
-        topBar = {
-            TopBar(
-                menuExpanded = state.menuExpanded,
-                isGuest = state.isGuest,
-                onEvent = onEvent,
-            )
-        },
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
-            contentAlignment = Alignment.Center,
+        LoadingScaffold(
+            topBar = {
+                TopBar(
+                    menuExpanded = state.menuExpanded,
+                    isGuest = state.isGuest,
+                    onEvent = onEvent,
+                )
+            },
         ) {
-            when (state.screenState) {
-                ScreenState.LOADING -> CircularProgressIndicator()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it),
+                contentAlignment = Alignment.Center,
+            ) {
+                when (state.screenState) {
+                    ScreenState.LOADING -> CircularProgressIndicator()
 
-                ScreenState.ERROR -> CommonErrorWidget { onEvent(HomeEvent.OnRefreshClick) }
+                    ScreenState.ERROR -> CommonErrorWidget { onEvent(HomeEvent.OnRefreshClick) }
 
-                ScreenState.CONTENT ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        StreakWidget(streak = state.streak)
-
-                        Timer(state.needToAlarm, state.nextQuizzesTimer)
-
+                    ScreenState.CONTENT ->
                         Column(
-                            modifier = Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(
-                                space = 16.dp,
-                                alignment = Alignment.CenterVertically,
-                            ),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            Text(
-                                text = stringResource(R.string.home_choose_level),
-                                style = MaterialTheme.typography.headlineMedium,
-                            )
-                            QuizSelectionWidget(state.streak.completion, onEvent)
-                        }
+                            StreakWidget(streak = state.streak)
 
-                        SocialButtonsWidget(onEvent)
-                    }
+                            Timer(state.needToAlarm, state.nextQuizzesTimer)
+
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                verticalArrangement = Arrangement.spacedBy(
+                                    space = 16.dp,
+                                    alignment = Alignment.CenterVertically,
+                                ),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.home_choose_level),
+                                    style = MaterialTheme.typography.headlineMedium,
+                                )
+                                QuizSelectionWidget(state.streak.completion, onEvent)
+                            }
+
+                            SocialButtonsWidget(onEvent)
+                        }
+                }
+            }
+
+            if (state.showExitDialog) {
+                ThreeButtonsDialog(
+                    title = stringResource(R.string.home_guest_exit),
+                    description = stringResource(R.string.home_guest_exit_description),
+                    okButtonDescription = ButtonDescription(
+                        text = stringResource(R.string.home_exit),
+                        onClick = { onEvent(HomeEvent.OnExiConfirmClick) },
+                    ),
+                    cancelButtonDescription = ButtonDescription(
+                        text = stringResource(R.string.home_cancel),
+                        onClick = { onEvent(HomeEvent.OnExitDismissClick) },
+                    ),
+                    onDismissRequest = { onEvent(HomeEvent.OnExitDismissClick) },
+                )
             }
         }
     }

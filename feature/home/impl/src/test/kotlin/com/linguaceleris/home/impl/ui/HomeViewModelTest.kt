@@ -77,6 +77,7 @@ internal class HomeViewModelTest : BehaviorSpec(
                     val streak = StreakUI.TodayNotCompleted(streak = 5)
                     coEvery { getStreakUseCase() } returns streak
                     coEvery { loadScheduleUseCase() } returns Unit
+                    coEvery { isGuestUseCase() } returns true
 
                     viewModel = createViewModel()
                     viewModel.state.value.screenState shouldBe ScreenState.LOADING
@@ -86,8 +87,10 @@ internal class HomeViewModelTest : BehaviorSpec(
                     coVerify { loadScheduleUseCase() }
                     coVerify { getStreakUseCase() }
                     coVerify { getNextDayUseCase() }
+                    coVerify { isGuestUseCase() }
                     coVerify { navigator.getResultFlow<QuizResult>() }
                     viewModel.state.value.screenState shouldBe ScreenState.CONTENT
+                    viewModel.state.value.isGuest shouldBe true
                 }
             }
 
@@ -117,11 +120,58 @@ internal class HomeViewModelTest : BehaviorSpec(
             }
 
             When("OnSignOutClick event received") {
-                Then("it should sign out") {
-                    viewModel.onEvent(HomeEvent.OnSignOutClick)
+                And("user is NOT a guest") {
+                    Then("it should sign out directly") {
+                        coEvery { isGuestUseCase() } returns false
+                        viewModel = createViewModel()
+                        testDispatcher.scheduler.advanceUntilIdle()
+
+                        viewModel.onEvent(HomeEvent.OnSignOutClick)
+
+                        verify { signOutUseCase() }
+                        verify { navigator.startWithSignIn() }
+                        viewModel.state.value.menuExpanded shouldBe false
+                        viewModel.state.value.showExitDialog shouldBe false
+                    }
+                }
+
+                And("user IS a guest") {
+                    Then("it should show exit dialog instead of signing out") {
+                        coEvery { isGuestUseCase() } returns true
+                        viewModel = createViewModel()
+                        testDispatcher.scheduler.advanceUntilIdle()
+
+                        viewModel.onEvent(HomeEvent.OnSignOutClick)
+
+                        verify(exactly = 0) { signOutUseCase() }
+                        viewModel.state.value.showExitDialog shouldBe true
+                        viewModel.state.value.menuExpanded shouldBe false
+                    }
+                }
+            }
+
+            When("OnExiConfirmClick event received") {
+                Then("it should hide dialog and sign out") {
+                    viewModel.onEvent(HomeEvent.OnExiConfirmClick)
+
+                    viewModel.state.value.showExitDialog shouldBe false
                     verify { signOutUseCase() }
                     verify { navigator.startWithSignIn() }
-                    viewModel.state.value.menuExpanded shouldBe false
+                }
+            }
+
+            When("OnExitDismissClick event received") {
+                Then("it should hide dialog") {
+                    coEvery { isGuestUseCase() } returns true
+                    viewModel = createViewModel()
+                    testDispatcher.scheduler.advanceUntilIdle()
+                    viewModel.onEvent(HomeEvent.OnSignOutClick)
+                    viewModel.state.value.showExitDialog shouldBe true
+
+                    viewModel.onEvent(HomeEvent.OnExitDismissClick)
+
+                    viewModel.state.value.showExitDialog shouldBe false
+                    verify(exactly = 0) { signOutUseCase() }
                 }
             }
 
@@ -172,6 +222,7 @@ internal class HomeViewModelTest : BehaviorSpec(
                         val streak = StreakUI.TodayNotCompleted(streak = 5)
                         coEvery { loadScheduleUseCase() } returns Unit
                         coEvery { getStreakUseCase() } returns streak
+                        coEvery { isGuestUseCase() } returns false
 
                         viewModel = createViewModel()
 
@@ -182,8 +233,10 @@ internal class HomeViewModelTest : BehaviorSpec(
 
                         coVerify { loadScheduleUseCase() }
                         coVerify { getStreakUseCase() }
+                        coVerify { isGuestUseCase() }
                         viewModel.state.value.screenState shouldBe ScreenState.CONTENT
                         viewModel.state.value.streak shouldBe streak
+                        viewModel.state.value.isGuest shouldBe false
                     }
                 }
 

@@ -12,4 +12,6 @@ internal sealed class HomeEvent {
     data object OnTelegramClick : HomeEvent()
     data object OnRefreshClick : HomeEvent()
     data object OnEnterToAccountClick : HomeEvent()
+    data object OnExiConfirmClick : HomeEvent()
+    data object OnExitDismissClick : HomeEvent()
 }
