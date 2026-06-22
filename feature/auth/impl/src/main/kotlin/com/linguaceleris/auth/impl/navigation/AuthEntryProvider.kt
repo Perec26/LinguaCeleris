@@ -4,12 +4,14 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import com.linguaceleris.auth.api.EmailVerificationNavKey
+import com.linguaceleris.auth.api.LinkAccountNavKey
 import com.linguaceleris.auth.api.SignInNavKey
 import com.linguaceleris.auth.impl.ui.email.EmailSignInScreen
 import com.linguaceleris.auth.impl.ui.emailverification.EmailVerificationScreen
 import com.linguaceleris.auth.impl.ui.emailverification.EmailVerificationViewModel
 import com.linguaceleris.auth.impl.ui.forgotpassword.ForgotPasswordScreen
 import com.linguaceleris.auth.impl.ui.forgotpassword.ForgotPasswordViewModel
+import com.linguaceleris.auth.impl.ui.linkaccount.LinkAccountScreen
 import com.linguaceleris.auth.impl.ui.registration.RegistrationScreen
 import com.linguaceleris.auth.impl.ui.signin.SignInScreen
 import com.linguaceleris.navigation.Navigator
@@ -45,6 +47,7 @@ fun EntryProviderScope<NavKey>.authEntry() {
             }
         EmailVerificationScreen(viewModel)
     }
+    entry<LinkAccountNavKey> { _ -> LinkAccountScreen() }
 }
 
 internal fun Navigator.navigateToEmailSignIn() = navigateTo(EmailSignInNavKey)
