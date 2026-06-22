@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "85939528454",
+    "project_id": "lingua-celeris-app",
+    "storage_bucket": "lingua-celeris-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85939528454:android:d702b38b5022b4424ef487",
+        "android_client_info": {
+          "package_name": "com.linguaceleris.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85939528454-05pql03j5p8a3s58r0kfoj29nbr7nnl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIXtBkbiOl71yXTulBR-MbHOKr8IFYviU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85939528454-05pql03j5p8a3s58r0kfoj29nbr7nnl8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85939528454:android:3b99d462b996c6fb4ef487",
+        "android_client_info": {
+          "package_name": "com.linguaceleris.app.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85939528454-05pql03j5p8a3s58r0kfoj29nbr7nnl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIXtBkbiOl71yXTulBR-MbHOKr8IFYviU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85939528454-05pql03j5p8a3s58r0kfoj29nbr7nnl8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
