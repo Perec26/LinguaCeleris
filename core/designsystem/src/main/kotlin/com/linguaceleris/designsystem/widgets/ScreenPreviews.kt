@@ -13,10 +13,18 @@ import androidx.compose.ui.tooling.preview.Preview
 //    device = LANDSCAPE_DEVICE,
 //    uiMode = Configuration.UI_MODE_NIGHT_YES,
 // )
+
 @Preview(
+    name = "Small",
+    showBackground = true,
+    device = "id:Galaxy Nexus",
+)
+@Preview(
+    name = "Medium",
     showBackground = true,
 )
 @Preview(
+    name = "Medium dark",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES,
 )

@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
+
+
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -29,6 +31,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":common:testing")
 include(":common:time")
+include(":core:config")
 include(":core:designsystem")
 include(":core:media")
 include(":core:navigation")

@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -106,7 +106,7 @@ private fun ImageTaskContent(task: WordCardUI) {
     AsyncImage(
         modifier = Modifier
             .padding(vertical = 16.dp)
-            .size(200.dp)
+            .sizeIn(maxHeight = 200.dp, maxWidth = 200.dp)
             .clip(RoundedCornerShape(48.dp)),
         model = model,
         contentDescription = null,

@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.linguaceleris.designsystem.R
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
         viewModel
         enableEdgeToEdge()
         setContent {
-            val state = viewModel.state.collectAsState().value
+            val state by viewModel.state.collectAsState()
             LinguaCelerisTheme(
                 useSystemTheme = state.useSystemTheme,
                 useDarkTheme = state.useDarkTheme,

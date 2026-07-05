@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.linguaceleris.quiz.impl.ui.quiz
 
 import com.linguaceleris.quiz.impl.ui.quiz.model.MatchingPairUI
@@ -46,6 +48,24 @@ internal val fillInBlankMock = selectCorrectAnswerMock.copy(
 
 internal val listenSelectTranslationMock = selectCorrectAnswerMock.copy(
     question = WordCardUI(audio = "audio", text = "I have a cat"),
+    type = TaskTypeUI.ListenSelectTranslation,
+)
+
+internal val selectAudioMock = TaskUI.SelectCorrectAnswer(
+    question = WordCardUI(audio = "audio", text = "Кошка"),
+    correctAnswer = WordCardUI(audio = "audio", text = "cat"),
+    selectedVariant = WordCardUI(audio = "audio", text = "bat"),
+    answerVariants = fourEnVariantsMock,
+    id = "",
+    type = TaskTypeUI.SelectAudio,
+)
+
+internal val listenMock = TaskUI.SelectCorrectAnswer(
+    question = WordCardUI(audio = "audio", text = "Кошка"),
+    correctAnswer = WordCardUI(audio = "audio", text = "cat"),
+    selectedVariant = WordCardUI(audio = "audio", text = "bat"),
+    answerVariants = fourEnVariantsMock,
+    id = "",
     type = TaskTypeUI.ListenSelectTranslation,
 )
 

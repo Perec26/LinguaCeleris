@@ -10,6 +10,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,7 +25,7 @@ import com.linguaceleris.testing.PendingUiTests
 
 @Composable
 internal fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
-    val state = viewModel.state.collectAsState().value
+    val state by viewModel.state.collectAsState()
     SettingsScreenContent(state = state, onEvent = viewModel::onEvent)
 }
 

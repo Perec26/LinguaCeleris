@@ -33,9 +33,5 @@ internal fun Project.configureAndroidCompose(commonExtension: CommonExtension) {
         project.providers.gradleProperty("enableComposeCompilerReports").onlyIfTrue()
             .relativeToRootProject("compose-reports")
             .let(reportsDestination::set)
-
-        stabilityConfigurationFiles.addAll(
-            rootProject.layout.projectDirectory.file("compose_compiler_config.conf"),
-        )
     }
 }

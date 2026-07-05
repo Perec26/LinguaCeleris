@@ -38,7 +38,6 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             isMinifyEnabled = false
-            isShrinkResources = false
             isDebuggable = true
         }
         release {
@@ -65,7 +64,9 @@ dependencies {
     // Project
     implementation(projects.core.ui)
     implementation(projects.core.designsystem)
+    implementation(projects.core.network)
     implementation(projects.core.navigation)
+    implementation(projects.core.config)
     implementation(projects.data.auth)
     implementation(projects.data.settings)
     implementation(projects.feature.auth.impl)

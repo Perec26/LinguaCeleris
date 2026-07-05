@@ -5,13 +5,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import com.google.firebase.auth.userProfileChangeRequest
+import com.linguaceleris.network.di.WebClientId
 import javax.inject.Inject
-import javax.inject.Named
 import kotlinx.coroutines.tasks.await
 
-class CredentialService @Inject constructor(
-    @param:Named("web_client_id") private val webClientId: String,
-) {
+class CredentialService @Inject constructor(@param:WebClientId private val webClientId: String) {
 
     private val auth = Firebase.auth
 

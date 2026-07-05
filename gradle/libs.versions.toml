@@ -2,49 +2,48 @@
 minSdk = "28"
 targetSdk = "37"
 compileSdk = "37"
-agp = "9.1.1"
-kotlin = "2.3.21"
-coreKtx = "1.18.0"
+agp = "9.2.1"
+kotlin = "2.4.0"
+coreKtx = "1.19.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.10.0"
+lifecycleRuntimeKtx = "2.11.0"
 activityCompose = "1.13.0"
-composeBom = "2026.05.00"
-hilt = "2.59.2"
-hiltNavigationCompose = "1.3.0"
+composeBom = "2026.06.01"
+hilt = "2.60"
+hiltNavigationCompose = "1.4.0"
 serialization = "1.11.0"
-firebaseBom = "34.13.0"
-lifecycleViewmodelCompose = "2.10.0"
-uiTooling = "1.11.1"
-nav3Core = "1.1.1"
-lifecycleViewmodelNav3 = "2.10.0"
+firebaseBom = "34.15.0"
+lifecycleViewmodelCompose = "2.11.0"
+uiTooling = "1.11.4"
+nav3Core = "1.1.4"
+lifecycleViewmodelNav3 = "2.11.0"
 kotlinSerialization = "2.1.21"
 kotlinxSerializationCore = "1.8.1"
-material3AdaptiveNav3 = "1.3.0-beta01"
+material3AdaptiveNav3 = "1.3.0-rc01"
 turbine = "1.2.1"
-junitJupiter = "6.0.3"
-kotest = "6.1.11"
-mock = "1.14.9"
+junitJupiter = "6.1.1"
+kotest = "6.2.1"
+mock = "1.14.11"
 coroutinesTest = "1.11.0"
-androidxSavedStateCompose = "1.4.0"
+androidxSavedStateCompose = "1.5.0"
 splashScreen = "1.2.0"
-coil = "3.4.0"
+coil = "3.5.0"
 media3 = "1.10.1"
 playServicesTime = "16.0.1"
 coroutinesPlayServicesTime = "1.11.0"
 datetime = "0.8.0"
-material3Alpha = "1.5.0-alpha19"
+material3Alpha = "1.5.0-alpha23"
 androidxCredentials = "1.6.0"
 googleid = "1.2.0"
 datastore = "1.2.1"
 kover = "0.9.8"
 
 ktlint = "14.2.0"
-kspPlugin = "2.3.6"
-firebasePlugin = "4.4.4"
+kspPlugin = "2.3.7"
+firebasePlugin = "4.5.0"
 crashlyticsPlugin = "3.0.7"
-jetbrainsKotlinJvm = "2.3.21"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -87,6 +86,7 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3Alpha" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashScreen" }
+androidx-compose-windowsize = { group = "androidx.compose.material3", name = "material3-window-size-class"}
 
 # Images
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
@@ -149,4 +149,4 @@ linguaceleris-unittest = { id = "linguaceleris.unittest", version = "unspecified
 linguaceleris-hilt = { id = "linguaceleris.hilt", version = "unspecified" }
 linguaceleris-ktlint = { id = "linguaceleris.ktlint", version = "unspecified" }
 linguaceleris-jvm-library = { id = "linguaceleris.jvm.library", version = "unspecified" }
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

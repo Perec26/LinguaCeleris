@@ -9,5 +9,6 @@ android {
 dependencies {
     implementation(projects.core.network)
     implementation(projects.core.services)
+    implementation(projects.core.config)
     implementation(libs.coil.network.okhttp)
 }

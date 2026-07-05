@@ -3,9 +3,11 @@
 package com.linguaceleris.home.impl.ui.widget
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,44 +25,53 @@ import com.linguaceleris.home.impl.ui.HomeEvent
 import com.linguaceleris.home.impl.ui.model.QuizCompletionUI
 import com.linguaceleris.testing.PendingUiTests
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 internal fun QuizSelectionWidget(completion: QuizCompletionUI, onEvent: (HomeEvent) -> Unit) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-    ) {
-        LCFilledButton(
-            modifier = Modifier.fillMaxWidth(),
-            colors = MaterialTheme.extendedColors.green.buttonColors(),
-            text = stringResource(R.string.home_quiz_level_basic),
-            icon = painterResource(R.drawable.home_check_circle).takeIf {
-                completion.basicIsCompleted
-            },
-            buttonSize = ButtonSize.LARGE,
-            onClick = { onEvent(HomeEvent.OnBasicQuizClick) },
-        )
+    BoxWithConstraints {
+        val buttonSize = when {
+            maxHeight < 200.dp -> ButtonSize.SMALL
+            maxHeight < 320.dp -> ButtonSize.MEDIUM
+            else -> ButtonSize.LARGE
+        }
 
-        LCFilledButton(
-            modifier = Modifier.fillMaxWidth(),
-            colors = MaterialTheme.extendedColors.yellow.buttonColors(),
-            icon = painterResource(R.drawable.home_check_circle).takeIf {
-                completion.intermediateIsCompleted
-            },
-            text = stringResource(R.string.home_quiz_level_intermediate),
-            buttonSize = ButtonSize.LARGE,
-            onClick = { onEvent(HomeEvent.OnIntermediateQuizClick) },
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+        ) {
+            LCFilledButton(
+                modifier = Modifier.fillMaxWidth(),
+                colors = MaterialTheme.extendedColors.green.buttonColors(),
+                text = stringResource(R.string.home_quiz_level_basic),
+                icon = painterResource(R.drawable.home_check_circle).takeIf {
+                    completion.basicIsCompleted
+                },
+                buttonSize = buttonSize,
+                onClick = { onEvent(HomeEvent.OnBasicQuizClick) },
+            )
 
-        LCFilledButton(
-            modifier = Modifier.fillMaxWidth(),
-            colors = MaterialTheme.extendedColors.red.buttonColors(),
-            icon = painterResource(R.drawable.home_check_circle).takeIf {
-                completion.advancedIsCompleted
-            },
-            text = stringResource(R.string.home_quiz_level_advanced),
-            buttonSize = ButtonSize.LARGE,
-            onClick = { onEvent(HomeEvent.OnAdvanceQuizClick) },
-        )
+            LCFilledButton(
+                modifier = Modifier.fillMaxWidth(),
+                colors = MaterialTheme.extendedColors.yellow.buttonColors(),
+                icon = painterResource(R.drawable.home_check_circle).takeIf {
+                    completion.intermediateIsCompleted
+                },
+                text = stringResource(R.string.home_quiz_level_intermediate),
+                buttonSize = buttonSize,
+                onClick = { onEvent(HomeEvent.OnIntermediateQuizClick) },
+            )
+
+            LCFilledButton(
+                modifier = Modifier.fillMaxWidth(),
+                colors = MaterialTheme.extendedColors.red.buttonColors(),
+                icon = painterResource(R.drawable.home_check_circle).takeIf {
+                    completion.advancedIsCompleted
+                },
+                text = stringResource(R.string.home_quiz_level_advanced),
+                buttonSize = buttonSize,
+                onClick = { onEvent(HomeEvent.OnAdvanceQuizClick) },
+            )
+        }
     }
 }
 
