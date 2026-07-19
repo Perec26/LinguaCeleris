@@ -3,7 +3,7 @@ package com.linguaceleris.auth.impl.domain
 import com.linguaceleris.auth.impl.ui.registration.model.AuthValidationResult
 import javax.inject.Inject
 
-private const val MIN_LENGTH = 8
+private const val MIN_LENGTH = 6
 private const val MAX_LENGTH = 4096
 
 internal class ValidatePasswordUseCase @Inject constructor() {
