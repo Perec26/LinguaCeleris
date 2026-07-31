@@ -10,4 +10,5 @@ android {
 dependencies {
     implementation(projects.feature.settings.api)
     implementation(projects.data.settings)
+    implementation(projects.core.config)
 }

@@ -14,15 +14,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.widgets.LCPreview
+import com.linguaceleris.designsystem.widgets.SmallScreenPreview
 import com.linguaceleris.designsystem.widgets.SpacerWidth
 import com.linguaceleris.testing.PendingUiTests
 
 @Composable
-internal fun SettingElement(
+internal fun SettingToggleElement(
     title: String,
     value: Boolean,
     enabled: Boolean = true,
@@ -49,16 +49,21 @@ internal fun SettingElement(
     }
 }
 
+@SmallScreenPreview
 @PreviewLightDark
-@Preview(device = "spec:width=600px,height=2340px,dpi=440")
 @Composable
-private fun SettingElementPreview() {
+private fun SettingToggleElementPreview() {
     LCPreview {
         Column {
-            SettingElement(title = "Selected", value = true, onClick = {})
-            SettingElement(title = "Not selected", value = false, onClick = {})
-            SettingElement(title = "Disabled selected", value = true, enabled = false, onClick = {})
-            SettingElement(
+            SettingToggleElement(title = "Selected", value = true, onClick = {})
+            SettingToggleElement(title = "Not selected", value = false, onClick = {})
+            SettingToggleElement(
+                title = "Disabled selected",
+                value = true,
+                enabled = false,
+                onClick = {},
+            )
+            SettingToggleElement(
                 title = "Disabled not selected",
                 value = false,
                 enabled = false,

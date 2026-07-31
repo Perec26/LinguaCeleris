@@ -20,7 +20,8 @@ import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.settings.impl.R
-import com.linguaceleris.settings.impl.ui.widget.SettingElement
+import com.linguaceleris.settings.impl.ui.widget.SettingInfoElement
+import com.linguaceleris.settings.impl.ui.widget.SettingToggleElement
 import com.linguaceleris.testing.PendingUiTests
 
 @Composable
@@ -48,17 +49,24 @@ private fun SettingsScreenContent(state: SettingsUiState, onEvent: (SettingsEven
                         .fillMaxSize()
                         .padding(paddingValues = paddingValues),
                 ) {
-                    SettingElement(
+                    SettingToggleElement(
                         title = stringResource(R.string.settings_use_system_theme),
                         value = state.useSystemTheme,
                         onClick = { onEvent(SettingsEvent.OnUseSystemThemeClick) },
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                    SettingElement(
+                    SettingToggleElement(
                         title = stringResource(R.string.settings_use_dark_theme),
                         value = state.useDarkTheme,
                         enabled = !state.useSystemTheme,
                         onClick = { onEvent(SettingsEvent.OnUseDarkThemeClick) },
+                    )
+
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+
+                    SettingInfoElement(
+                        title = "Версия",
+                        value = state.version,
                     )
                 }
             }
@@ -68,16 +76,16 @@ private fun SettingsScreenContent(state: SettingsUiState, onEvent: (SettingsEven
 
 @ScreenPreviews
 @Composable
-private fun SettingsScreenLoadingPreview() {
+private fun SettingsScreenPreview() {
     LCPreview {
-        SettingsScreenContent(SettingsUiState()) {}
+        SettingsScreenContent(SettingsUiState(isLoading = false, version = "0.0.25")) {}
     }
 }
 
 @ScreenPreviews
 @Composable
-private fun SettingsScreenPreview() {
+private fun SettingsScreenLoadingPreview() {
     LCPreview {
-        SettingsScreenContent(SettingsUiState(isLoading = false)) {}
+        SettingsScreenContent(SettingsUiState()) {}
     }
 }

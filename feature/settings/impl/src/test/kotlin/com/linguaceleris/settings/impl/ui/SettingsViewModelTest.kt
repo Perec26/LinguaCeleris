@@ -1,5 +1,6 @@
 package com.linguaceleris.settings.impl.ui
 
+import com.linguaceleris.settings.impl.ui.SettingsMocks.config
 import com.linguaceleris.settings.impl.ui.SettingsMocks.getUseDarkThemeUseCase
 import com.linguaceleris.settings.impl.ui.SettingsMocks.getUseSystemThemeUseCase
 import com.linguaceleris.settings.impl.ui.SettingsMocks.navigator
@@ -38,6 +39,7 @@ internal class SettingsViewModelTest : BehaviorSpec(
                 getUseDarkThemeUseCase = getUseDarkThemeUseCase,
                 updateUseSystemThemeUseCase = updateUseSystemThemeUseCase,
                 updateUseDarkThemeUseCase = updateUseDarkThemeUseCase,
+                config = config,
             )
         }
 
@@ -46,10 +48,12 @@ internal class SettingsViewModelTest : BehaviorSpec(
             When("initialized") {
                 Then("it should load settings values") {
                     testDispatcher.scheduler.advanceUntilIdle()
-
-                    viewModel.state.value.isLoading shouldBe false
-                    viewModel.state.value.useSystemTheme shouldBe true
-                    viewModel.state.value.useDarkTheme shouldBe true
+                    with(viewModel.state.value) {
+                        isLoading shouldBe false
+                        useSystemTheme shouldBe true
+                        useDarkTheme shouldBe true
+                        version shouldBe "1.0.0"
+                    }
                     coVerify { getUseSystemThemeUseCase() }
                     coVerify { getUseDarkThemeUseCase() }
                 }

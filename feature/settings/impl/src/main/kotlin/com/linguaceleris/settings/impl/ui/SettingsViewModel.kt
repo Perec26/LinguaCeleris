@@ -1,5 +1,6 @@
 package com.linguaceleris.settings.impl.ui
 
+import com.linguaceleris.config.AppConfig
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.settings.impl.domain.GetUseDarkThemeUseCase
 import com.linguaceleris.settings.impl.domain.GetUseSystemThemeUseCase
@@ -16,6 +17,7 @@ internal class SettingsViewModel @Inject constructor(
     private val getUseDarkThemeUseCase: GetUseDarkThemeUseCase,
     private val updateUseSystemThemeUseCase: UpdateUseSystemThemeUseCase,
     private val updateUseDarkThemeUseCase: UpdateUseDarkThemeUseCase,
+    private val config: AppConfig,
 ) : BaseViewModel<SettingsUiState, SettingsEvent>(initialState = SettingsUiState()) {
 
     init {
@@ -34,7 +36,8 @@ internal class SettingsViewModel @Inject constructor(
         launch {
             val useSystemTheme = getUseSystemThemeUseCase()
             val useDarkTheme = getUseDarkThemeUseCase()
-            updateState { settingsLoaded(useSystemTheme, useDarkTheme) }
+            val version = config.version
+            updateState { settingsLoaded(useSystemTheme, useDarkTheme, version) }
         }
     }
 

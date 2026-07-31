@@ -90,5 +90,5 @@ fun getBuildNumber(): Int {
             return buildNumberString.toInt()
         }
     }
-    return 2
+    return 4
 }

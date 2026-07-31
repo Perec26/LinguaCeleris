@@ -16,5 +16,6 @@ internal object ConfigModule {
     @Singleton
     fun provideAppConfig(): AppConfig = object : AppConfig {
         override val isDebug = BuildConfig.DEBUG
+        override val version = BuildConfig.VERSION_NAME
     }
 }

@@ -1,5 +1,6 @@
 package com.linguaceleris.settings.impl.ui
 
+import com.linguaceleris.config.AppConfig
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.settings.impl.domain.GetUseDarkThemeUseCase
 import com.linguaceleris.settings.impl.domain.GetUseSystemThemeUseCase
@@ -13,4 +14,8 @@ internal object SettingsMocks {
     val getUseDarkThemeUseCase = mockk<GetUseDarkThemeUseCase>(relaxed = true)
     val updateUseSystemThemeUseCase = mockk<UpdateUseSystemThemeUseCase>(relaxed = true)
     val updateUseDarkThemeUseCase = mockk<UpdateUseDarkThemeUseCase>(relaxed = true)
+    val config = object : AppConfig {
+        override val isDebug = false
+        override val version = "1.0.0"
+    }
 }
