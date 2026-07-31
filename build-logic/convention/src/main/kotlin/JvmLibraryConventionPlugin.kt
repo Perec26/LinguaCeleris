@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 import com.linguaceleris.convention.configureKotlinJvm
 import org.gradle.api.Plugin
 import org.gradle.api.Project

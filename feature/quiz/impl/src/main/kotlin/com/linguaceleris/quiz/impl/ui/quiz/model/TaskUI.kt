@@ -52,6 +52,6 @@ internal sealed class TaskUI(open val id: String, open val type: TaskTypeUI) {
 
 internal data class WordCardUI(
     val text: String,
-    val audio: String?,
+    val audio: String? = null,
     val image: String? = null,
 )

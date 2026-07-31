@@ -5,12 +5,15 @@ package com.linguaceleris.quiz.impl.ui.summary
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,9 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.linguaceleris.designsystem.theme.buttonColors
 import com.linguaceleris.designsystem.widgets.CommonErrorWidget
@@ -67,90 +72,103 @@ private fun QuizSummaryScreenContent(
 @Composable
 private fun QuizSummaryContent(state: QuizSummaryUiState, onEvent: (QuizSummaryEvent) -> Unit) {
     LoadingScaffold { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(
-                space = 16.dp,
-                alignment = Alignment.CenterVertically,
-            ),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        BoxWithConstraints(
+            modifier = Modifier.fillMaxSize(),
         ) {
+            val buttonSize = if (maxHeight > 700.dp) ButtonSize.MEDIUM else ButtonSize.SMALL
             Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(
+                    space = 16.dp,
+                    alignment = Alignment.CenterVertically,
+                ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Image(
-                    modifier = Modifier
-                        .sizeIn(maxWidth = 240.dp, maxHeight = 240.dp)
-                        .fillMaxWidth()
-                        .weight(1f),
-                    painter = painterResource(state.result.icon),
-                    contentDescription = null,
-                )
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .weight(1f, fill = false)
+                            .sizeIn(maxHeight = 240.dp, maxWidth = 240.dp)
+                            .fillMaxSize(),
+                        painter = painterResource(state.result.icon),
+                        contentDescription = null,
+                    )
 
-                SpacerHeight(40.dp)
+                    SpacerHeight(40.dp)
 
-                Text(
-                    textAlign = TextAlign.Center,
-                    text = stringResource(state.result.title),
-                    style = MaterialTheme.typography.displayMedium,
-                )
+                    Text(
+                        textAlign = TextAlign.Center,
+                        text = stringResource(state.result.title),
+                        style = MaterialTheme.typography.displayMedium,
+                    )
 
-                Text(
-                    modifier = Modifier.padding(16.dp),
-                    textAlign = TextAlign.Center,
-                    text = stringResource(state.result.description),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-            }
-
-            if (state.isSuccessful) {
-                val completionText = if (state.hasUnfinishedQuizzes) {
-                    R.string.quiz_summary_not_finished_task
-                } else {
-                    R.string.quiz_summary_all_complete
+                    BasicText(
+                        text = stringResource(state.result.description),
+                        maxLines = 3,
+                        style = TextStyle(
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                            textAlign = TextAlign.Center,
+                        ),
+                        autoSize = TextAutoSize.StepBased(
+                            minFontSize = 8.sp,
+                            maxFontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        ),
+                    )
                 }
-                Text(
-                    modifier = Modifier,
-                    textAlign = TextAlign.Center,
-                    text = stringResource(completionText),
-                )
 
-                if (state.hasUnfinishedQuizzes) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    ) {
-                        state.unfinishedQuizzes.forEach {
-                            LCFilledButton(
-                                modifier = Modifier.weight(1f),
-                                text = stringResource(it.title),
-                                colors = it.buttonColors(),
-                                buttonSize = ButtonSize.MEDIUM,
-                                onClick = { onEvent(QuizSummaryEvent.OnNextQuizClick(it)) },
-                            )
+                if (state.isSuccessful) {
+                    val completionText = if (state.hasUnfinishedQuizzes) {
+                        R.string.quiz_summary_not_finished_task
+                    } else {
+                        R.string.quiz_summary_all_complete
+                    }
+                    Text(
+                        modifier = Modifier,
+                        textAlign = TextAlign.Center,
+                        text = stringResource(completionText),
+                    )
+
+                    if (state.hasUnfinishedQuizzes) {
+                        FlowRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            state.unfinishedQuizzes.forEach {
+                                LCFilledButton(
+                                    modifier = Modifier.weight(1f),
+                                    text = stringResource(it.title),
+                                    colors = it.buttonColors(),
+                                    buttonSize = buttonSize,
+                                    onClick = { onEvent(QuizSummaryEvent.OnNextQuizClick(it)) },
+                                )
+                            }
                         }
                     }
+                } else {
+                    LCFilledButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(R.string.quiz_summary_try_again),
+                        colors = MaterialTheme.colorScheme.tertiaryContainer.buttonColors(),
+                        buttonSize = buttonSize,
+                        onClick = { onEvent(QuizSummaryEvent.OnTryAgainClicked) },
+                    )
                 }
-            } else {
-                LCFilledButton(
+                LCTextButton(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(R.string.quiz_summary_try_again),
-                    colors = MaterialTheme.colorScheme.tertiaryContainer.buttonColors(),
-                    buttonSize = ButtonSize.MEDIUM,
-                    onClick = { onEvent(QuizSummaryEvent.OnTryAgainClicked) },
+                    buttonSize = buttonSize,
+                    text = stringResource(R.string.quiz_summary_return),
+                    onClick = { onEvent(QuizSummaryEvent.OnBackClick) },
                 )
             }
-            LCTextButton(
-                modifier = Modifier.fillMaxWidth(),
-                buttonSize = ButtonSize.MEDIUM,
-                text = stringResource(R.string.quiz_summary_return),
-                onClick = { onEvent(QuizSummaryEvent.OnBackClick) },
-            )
         }
     }
 }

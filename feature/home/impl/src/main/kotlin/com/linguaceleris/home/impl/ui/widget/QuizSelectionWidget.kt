@@ -2,11 +2,13 @@
 
 package com.linguaceleris.home.impl.ui.widget
 
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,19 +32,26 @@ import com.linguaceleris.testing.PendingUiTests
 internal fun QuizSelectionWidget(completion: QuizCompletionUI, onEvent: (HomeEvent) -> Unit) {
     BoxWithConstraints {
         val buttonSize = when {
-            maxHeight < 200.dp -> ButtonSize.SMALL
+            maxHeight < 200.dp || maxWidth < 300.dp -> ButtonSize.SMALL
             maxHeight < 320.dp -> ButtonSize.MEDIUM
             else -> ButtonSize.LARGE
         }
+        val space = if (buttonSize == ButtonSize.LARGE) 16.dp else 8.dp
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(space, Alignment.CenterVertically),
         ) {
             LCFilledButton(
                 modifier = Modifier.fillMaxWidth(),
                 colors = MaterialTheme.extendedColors.green.buttonColors(),
-                text = stringResource(R.string.home_quiz_level_basic),
+                textWidget = {
+                    Text(
+                        modifier = Modifier.basicMarquee(),
+                        maxLines = 1,
+                        text = stringResource(R.string.home_quiz_level_basic),
+                    )
+                },
                 icon = painterResource(R.drawable.home_check_circle).takeIf {
                     completion.basicIsCompleted
                 },
@@ -56,7 +65,13 @@ internal fun QuizSelectionWidget(completion: QuizCompletionUI, onEvent: (HomeEve
                 icon = painterResource(R.drawable.home_check_circle).takeIf {
                     completion.intermediateIsCompleted
                 },
-                text = stringResource(R.string.home_quiz_level_intermediate),
+                textWidget = {
+                    Text(
+                        modifier = Modifier.basicMarquee(),
+                        maxLines = 1,
+                        text = stringResource(R.string.home_quiz_level_intermediate),
+                    )
+                },
                 buttonSize = buttonSize,
                 onClick = { onEvent(HomeEvent.OnIntermediateQuizClick) },
             )
@@ -67,7 +82,13 @@ internal fun QuizSelectionWidget(completion: QuizCompletionUI, onEvent: (HomeEve
                 icon = painterResource(R.drawable.home_check_circle).takeIf {
                     completion.advancedIsCompleted
                 },
-                text = stringResource(R.string.home_quiz_level_advanced),
+                textWidget = {
+                    Text(
+                        modifier = Modifier.basicMarquee(),
+                        maxLines = 1,
+                        text = stringResource(R.string.home_quiz_level_advanced),
+                    )
+                },
                 buttonSize = buttonSize,
                 onClick = { onEvent(HomeEvent.OnAdvanceQuizClick) },
             )

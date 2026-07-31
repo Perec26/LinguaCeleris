@@ -9,15 +9,18 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
 import com.linguaceleris.designsystem.widgets.buttons.LCFilledButton
@@ -32,6 +35,7 @@ import com.linguaceleris.testing.PendingUiTests
 internal fun MatchWidget(
     modifier: Modifier = Modifier,
     task: TaskUI.Matching,
+    isBigScreen: Boolean = false,
     onAudioClick: (String?) -> Unit = {},
     onContinueButtonClick: () -> Unit,
     onVariantSelected: (WordCardUI) -> Unit,
@@ -40,11 +44,19 @@ internal fun MatchWidget(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
+        val textColor = MaterialTheme.colorScheme.onSurface
+        BasicText(
             modifier = Modifier.padding(16.dp),
             text = stringResource(task.type.text),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.headlineSmall,
+            maxLines = 2,
+            style = TextStyle(
+                textAlign = TextAlign.Center,
+            ),
+            color = { textColor },
+            autoSize = TextAutoSize.StepBased(
+                minFontSize = 8.sp,
+                maxFontSize = MaterialTheme.typography.headlineSmall.fontSize,
+            ),
         )
 
         Row(
@@ -62,6 +74,7 @@ internal fun MatchWidget(
                 selectedVariant = task.selectedVariant,
                 correctVariant = task.correctVariant,
                 disabledVariants = task.disabledVariants,
+                isBigScreen = isBigScreen,
                 isAudio = task.type.answerType == AnswerType.AUDIO,
                 onAudioClick = onAudioClick,
                 onVariantSelected = onVariantSelected,
@@ -73,6 +86,7 @@ internal fun MatchWidget(
                 errorVariant = task.errorVariant,
                 selectedVariant = task.selectedVariant,
                 correctVariant = task.correctVariant,
+                isBigScreen = isBigScreen,
                 disabledVariants = task.disabledVariants,
                 onAudioClick = onAudioClick,
                 onVariantSelected = onVariantSelected,

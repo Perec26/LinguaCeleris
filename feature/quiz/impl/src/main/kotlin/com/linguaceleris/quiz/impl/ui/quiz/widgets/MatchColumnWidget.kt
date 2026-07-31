@@ -25,6 +25,7 @@ internal fun MatchColumnWidget(
     correctVariant: WordCardUI? = null,
     errorVariant: WordCardUI? = null,
     variants: List<WordCardUI>,
+    isBigScreen: Boolean = false,
     disabledVariants: List<WordCardUI> = emptyList(),
     isAudio: Boolean = false,
     onAudioClick: (String?) -> Unit = {},
@@ -50,6 +51,7 @@ internal fun MatchColumnWidget(
                 enabled = !disabledVariants.contains(variant) && !hasError,
                 text = variant.text,
                 isAudio = isAudio,
+                bigSize = isBigScreen,
                 onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.KeyboardTap)
                     onAudioClick(variant.audio)

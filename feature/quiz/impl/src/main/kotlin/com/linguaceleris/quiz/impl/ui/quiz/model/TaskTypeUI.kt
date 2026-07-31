@@ -29,6 +29,7 @@ internal sealed class TaskTypeUI(
             answerType = AnswerType.AUDIO,
         )
 
+    @ExcludeFromKover
     object FillInBlank :
         TaskTypeUI(
             text = R.string.quiz_short_fill_in_blank,
@@ -55,6 +56,7 @@ internal sealed class TaskTypeUI(
             answerType = AnswerType.TEXT,
         )
 
+    @ExcludeFromKover
     object ImageSelectWordTranslation :
         TaskTypeUI(
             text = R.string.quiz_short_image_select_word,
@@ -63,6 +65,7 @@ internal sealed class TaskTypeUI(
             answerType = AnswerType.TEXT,
         )
 
+    @ExcludeFromKover
     object ListenSelectTranslation :
         TaskTypeUI(
             text = R.string.quiz_short_listen_select_translation,
@@ -71,6 +74,7 @@ internal sealed class TaskTypeUI(
             answerType = AnswerType.TEXT,
         )
 
+    @ExcludeFromKover
     object Matching :
         TaskTypeUI(
             text = R.string.quiz_short_matching,
@@ -88,6 +92,7 @@ internal sealed class TaskTypeUI(
             answerType = AnswerType.AUDIO,
         )
 
+    @ExcludeFromKover
     object SelectTranslation :
         TaskTypeUI(
             text = R.string.quiz_short_select_translation,

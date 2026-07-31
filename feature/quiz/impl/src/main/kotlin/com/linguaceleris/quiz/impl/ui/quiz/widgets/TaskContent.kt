@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,10 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.linguaceleris.designsystem.R as designR
 import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
 import com.linguaceleris.designsystem.widgets.buttons.LCFilledImageButton
@@ -42,7 +47,7 @@ internal fun TaskContentWidget(
     onAudioClick: (String?) -> Unit,
 ) {
     Box(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
         when (task.type.contentType) {
@@ -56,12 +61,19 @@ internal fun TaskContentWidget(
 
 @Composable
 private fun TextTaskContent(task: WordCardUI) {
-    Text(
-        modifier = Modifier.padding(vertical = 32.dp, horizontal = 16.dp),
+    val textColor = MaterialTheme.colorScheme.primary
+    BasicText(
+        modifier = Modifier.padding(16.dp),
         text = task.text,
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colorScheme.primary,
-        style = MaterialTheme.typography.displaySmall,
+        maxLines = 3,
+        style = TextStyle(
+            textAlign = TextAlign.Center,
+        ),
+        color = { textColor },
+        autoSize = TextAutoSize.StepBased(
+            minFontSize = 8.sp,
+            maxFontSize = MaterialTheme.typography.displaySmall.fontSize,
+        ),
     )
 }
 
@@ -99,14 +111,14 @@ private fun TextAudioTaskContent(task: WordCardUI, onAudioClick: (String?) -> Un
 @Composable
 private fun ImageTaskContent(task: WordCardUI) {
     val model = if (LocalInspectionMode.current) {
-        com.linguaceleris.designsystem.R.drawable.landscape_placeholder
+        designR.drawable.landscape_placeholder
     } else {
         task.image
     }
     AsyncImage(
         modifier = Modifier
             .padding(vertical = 16.dp)
-            .sizeIn(maxHeight = 200.dp, maxWidth = 200.dp)
+            .sizeIn(minHeight = 2.dp, minWidth = 2.dp, maxHeight = 200.dp, maxWidth = 200.dp)
             .clip(RoundedCornerShape(48.dp)),
         model = model,
         contentDescription = null,
@@ -130,7 +142,9 @@ private fun TaskContentWidgetTextPreview() {
 @Preview
 private fun TaskContentWidgetAudioPreview() {
     LCPreview {
-        TaskContentWidget(task = listenSelectTranslationMock) {}
+        Column {
+            TaskContentWidget(task = listenSelectTranslationMock) {}
+        }
     }
 }
 
@@ -138,7 +152,9 @@ private fun TaskContentWidgetAudioPreview() {
 @Preview
 private fun TaskContentWidgetTextAudioPreview() {
     LCPreview {
-        TaskContentWidget(task = selectCorrectAnswerMock) {}
+        Column {
+            TaskContentWidget(task = selectCorrectAnswerMock) {}
+        }
     }
 }
 
@@ -146,6 +162,8 @@ private fun TaskContentWidgetTextAudioPreview() {
 @Preview
 private fun TaskContentWidgetImageAudioPreview() {
     LCPreview {
-        TaskContentWidget(task = imageSelectWordTranslation) {}
+        Column(Modifier.size(100.dp)) {
+            TaskContentWidget(task = imageSelectWordTranslation) {}
+        }
     }
 }

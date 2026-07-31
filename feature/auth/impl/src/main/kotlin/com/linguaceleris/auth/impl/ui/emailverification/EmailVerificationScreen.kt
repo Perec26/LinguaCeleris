@@ -4,10 +4,12 @@ package com.linguaceleris.auth.impl.ui.emailverification
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,8 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.linguaceleris.auth.impl.R
 import com.linguaceleris.auth.impl.ui.registration.openEmailApp
@@ -96,11 +100,17 @@ private fun EmailVerificationScreenContent(
                     style = MaterialTheme.typography.displaySmall,
                 )
 
-                Text(
+                BasicText(
                     text = stringResource(state.verificationState.message, state.email),
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = TextStyle(
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                        textAlign = TextAlign.Center
+                    ),
+                    autoSize = TextAutoSize.StepBased(
+                        minFontSize = 2.sp,
+                        maxFontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                    ),
                 )
             }
 
@@ -122,11 +132,14 @@ private fun EmailVerificationScreenContent(
                     } else {
                         0f
                     }
-                Row(
+                FlowRow(
                     modifier = Modifier
                         .fillMaxWidth()
                         .alpha(rowAlpha),
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalArrangement = Arrangement.spacedBy(
+                        space = 8.dp,
+                        alignment = Alignment.CenterVertically,
+                    ),
                     horizontalArrangement = Arrangement.spacedBy(
                         space = 8.dp,
                         alignment = Alignment.CenterHorizontally,
@@ -212,6 +225,21 @@ private fun EmailVerificationSuccessScreenPreview() {
     LCPreview {
         EmailVerificationScreenContent(
             EmailVerificationUiState(
+                email = "test@test.com",
+                verificationState = EmailVerificationState.SUCCESS,
+            ),
+        ) {
+        }
+    }
+}
+
+@ScreenPreviews
+@Composable
+private fun EmailVerificationLoadingScreenPreview() {
+    LCPreview {
+        EmailVerificationScreenContent(
+            EmailVerificationUiState(
+                isLoading = true,
                 email = "test@test.com",
                 verificationState = EmailVerificationState.SUCCESS,
             ),

@@ -2,6 +2,7 @@
 
 package com.linguaceleris.quiz.impl.ui.quiz.widgets
 
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ internal fun AnswerCard(
     state: CardState = CardState.DEFAULT,
     enabled: Boolean = true,
     isAudio: Boolean = false,
+    bigSize: Boolean = true,
     onClick: () -> Unit,
 ) {
     Card(
@@ -53,17 +55,28 @@ internal fun AnswerCard(
             contentAlignment = Alignment.Center,
         ) {
             if (isAudio) {
+                val padding = if (bigSize) 16.dp else 12.dp
                 Icon(
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(padding)
                         .size(24.dp),
                     painter = painterResource(R.drawable.quiz_volume_up),
                     contentDescription = null,
                 )
             } else {
+                val style = if (bigSize) {
+                    MaterialTheme.typography.bodyLarge
+                } else {
+                    MaterialTheme.typography.bodyMedium
+                }
+                val padding = if (bigSize) 16.dp else 8.dp
                 Text(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier
+                        .basicMarquee()
+                        .padding(padding),
                     text = text,
+                    maxLines = 1,
+                    style = style,
                     textAlign = TextAlign.Center,
                 )
             }
@@ -106,10 +119,32 @@ private fun AnswerCardPreview() {
             AnswerCard(text = "Right Preview", state = CardState.RIGHT) {}
             AnswerCard(text = "Wrong Preview", state = CardState.WRONG) {}
             AnswerCard(text = "Disabled Preview") {}
+            AnswerCard(bigSize = false, modifier = Modifier.fillMaxWidth(), text = "Preview") {}
+            AnswerCard(bigSize = false, text = "Selected Preview", state = CardState.SELECTED) {}
+            AnswerCard(bigSize = false, text = "Right Preview", state = CardState.RIGHT) {}
+            AnswerCard(bigSize = false, text = "Wrong Preview", state = CardState.WRONG) {}
+            AnswerCard(bigSize = false, text = "Disabled Preview") {}
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun AnswerCardIconPreview() {
+    LCPreview {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             AnswerCard(isAudio = true, state = CardState.SELECTED) {}
             AnswerCard(isAudio = true, state = CardState.RIGHT) {}
             AnswerCard(isAudio = true, state = CardState.WRONG) {}
             AnswerCard(isAudio = true) {}
+            AnswerCard(bigSize = false, isAudio = true, state = CardState.SELECTED) {}
+            AnswerCard(bigSize = false, isAudio = true, state = CardState.RIGHT) {}
+            AnswerCard(bigSize = false, isAudio = true, state = CardState.WRONG) {}
+            AnswerCard(bigSize = false, isAudio = true) {}
         }
     }
 }

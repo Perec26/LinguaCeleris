@@ -5,6 +5,7 @@ package com.linguaceleris.home.impl.ui
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -159,16 +160,23 @@ private fun Timer(isAlarm: Boolean, timerText: UiText) {
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier
+                    .basicMarquee()
+                    .padding(16.dp),
                 text = stringResource(R.string.home_timer_alarm, timerText.asString()),
                 color = MaterialTheme.colorScheme.onErrorContainer,
+                maxLines = 1,
                 style = MaterialTheme.typography.titleMedium,
             )
         }
     } else {
         Text(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier
+                .padding(8.dp)
+                .basicMarquee(),
             text = stringResource(R.string.home_timer, timerText.asString()),
+            maxLines = 1,
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
         )
     }

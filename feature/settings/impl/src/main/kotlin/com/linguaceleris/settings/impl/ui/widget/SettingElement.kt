@@ -14,9 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.widgets.LCPreview
+import com.linguaceleris.designsystem.widgets.SpacerWidth
 import com.linguaceleris.testing.PendingUiTests
 
 @Composable
@@ -28,6 +30,7 @@ internal fun SettingElement(
 ) {
     Row(
         modifier = Modifier
+            .fillMaxWidth()
             .clickable(enabled = enabled, onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 16.dp)
             .alpha(if (enabled) 1f else 0.38f)
@@ -35,12 +38,19 @@ internal fun SettingElement(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Text(text = title)
+        Text(
+            modifier = Modifier
+                .weight(1f),
+            maxLines = 2,
+            text = title,
+        )
+        SpacerWidth(8.dp)
         Switch(checked = value, enabled = enabled, onCheckedChange = null)
     }
 }
 
 @PreviewLightDark
+@Preview(device = "spec:width=600px,height=2340px,dpi=440")
 @Composable
 private fun SettingElementPreview() {
     LCPreview {

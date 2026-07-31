@@ -27,14 +27,20 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.linguaceleris.auth.impl.R
 import com.linguaceleris.designsystem.widgets.HapticElement
 import com.linguaceleris.designsystem.widgets.LCPreview
+import com.linguaceleris.designsystem.widgets.buttons.ButtonSize
+import com.linguaceleris.designsystem.widgets.buttons.toContainerSize
 import com.linguaceleris.testing.PendingUiTests
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-internal fun GoogleSignInButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
-    val size = ButtonDefaults.MediumContainerHeight
+internal fun GoogleSignInButton(
+    modifier: Modifier = Modifier,
+    buttonSize: ButtonSize = ButtonSize.SMALL,
+    onClick: () -> Unit,
+) {
+    val size = buttonSize.toContainerSize()
 
     val colors = ButtonDefaults.buttonColors().copy(
         containerColor = MaterialTheme.colorScheme.surface,

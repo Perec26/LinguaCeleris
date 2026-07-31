@@ -41,6 +41,26 @@ internal val selectCorrectAnswerMock = TaskUI.SelectCorrectAnswer(
     type = TaskTypeUI.SelectTranslation,
 )
 
+internal val selectCorrectAnswerFillInBlankMock = TaskUI.SelectCorrectAnswer(
+    question = WordCardUI(
+        text = "Very long example with a lot of words that can't fit to a single line of text",
+    ),
+    correctAnswer = WordCardUI(audio = "words", text = "cat"),
+    selectedVariant = WordCardUI(audio = "audio", text = "bat"),
+    answerVariants = fourEnVariantsMock,
+    id = "",
+    type = TaskTypeUI.FillInBlank,
+)
+
+internal val selectCorrectAnswerInThreeMock = TaskUI.SelectCorrectAnswer(
+    question = WordCardUI(audio = "audio", text = "Кошка"),
+    correctAnswer = WordCardUI(audio = "audio", text = "cat"),
+    selectedVariant = WordCardUI(audio = "audio", text = "bat"),
+    answerVariants = fourEnVariantsMock.takeLast(3),
+    id = "",
+    type = TaskTypeUI.SelectTranslation,
+)
+
 internal val fillInBlankMock = selectCorrectAnswerMock.copy(
     question = WordCardUI(audio = "audio", text = "I have a cat"),
     type = TaskTypeUI.FillInBlank,

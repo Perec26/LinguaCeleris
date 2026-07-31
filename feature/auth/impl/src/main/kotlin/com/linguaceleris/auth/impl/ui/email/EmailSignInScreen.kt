@@ -132,3 +132,25 @@ private fun EmailSignInScreenPreview() {
         EmailSignInScreenContent(EmailSignInUiState()) {}
     }
 }
+
+@ScreenPreviews
+@Composable
+private fun EmailSignInScreenErrorPreview() {
+    LCPreview {
+        EmailSignInScreenContent(
+            EmailSignInUiState(signInError = EmailSignInError.UNKNOWN_ERROR),
+        ) {
+        }
+    }
+}
+
+@ScreenPreviews
+@Composable
+private fun EmailSignInScreenLoadingPreview() {
+    LCPreview {
+        EmailSignInScreenContent(
+            EmailSignInUiState(signInError = EmailSignInError.UNKNOWN_ERROR, isLoading = true),
+        ) {
+        }
+    }
+}

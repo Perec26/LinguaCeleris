@@ -8,16 +8,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,9 +30,11 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.linguaceleris.designsystem.theme.extendedColors
 import com.linguaceleris.designsystem.widgets.Gradients.toLightBaseGradient
 import com.linguaceleris.designsystem.widgets.LCPreview
+import com.linguaceleris.designsystem.widgets.SmallScreenPreview
 import com.linguaceleris.home.impl.R
 import com.linguaceleris.home.impl.ui.model.StreakUI
 import com.linguaceleris.testing.PendingUiTests
@@ -122,19 +125,20 @@ private fun StreakBase(
     ) {
         Box(
             modifier = Modifier
+                .heightIn(max = 100.dp)
                 .background(backgroundColor.toLightBaseGradient()),
         ) {
             Row(
                 modifier = Modifier
-                    .height(IntrinsicSize.Min)
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Image(
                     contentScale = ContentScale.Fit,
                     modifier = Modifier
-                        .width(48.dp)
+                        .size(48.dp)
                         .fillMaxHeight(),
                     painter = painterResource(icon),
                     contentDescription = null,
@@ -143,15 +147,26 @@ private fun StreakBase(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Text(
-                        color = contentColorFor(backgroundColor),
+                    val color = contentColorFor(backgroundColor)
+
+                    BasicText(
+                        color = { color },
                         text = title,
-                        style = MaterialTheme.typography.headlineMedium,
+                        maxLines = 1,
+                        autoSize = TextAutoSize.StepBased(
+                            minFontSize = 2.sp,
+                            maxFontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                        ),
                     )
-                    Text(
-                        color = contentColorFor(backgroundColor),
+
+                    BasicText(
+                        color = { color },
                         text = subtitle,
-                        style = MaterialTheme.typography.labelLarge,
+                        maxLines = 2,
+                        autoSize = TextAutoSize.StepBased(
+                            minFontSize = 2.sp,
+                            maxFontSize = MaterialTheme.typography.labelLarge.fontSize,
+                        ),
                     )
                 }
             }
@@ -170,6 +185,36 @@ private fun StreakWidgetPreview() {
             StreakWidget(StreakUI.Dead(150))
             StreakWidget(StreakUI.Freeze.OneFreeze)
             StreakWidget(StreakUI.Freeze.NoneFreeze)
+            StreakWidget(StreakUI.NeverStarted)
+            StreakWidget(StreakUI.TodayCompleted(1, subtitle = R.string.home_streak_completed_any3))
+            StreakWidget(StreakUI.TodayNotCompleted(2))
+        }
+    }
+}
+
+@SmallScreenPreview
+@Composable
+private fun StreakWidgetPreviewSmall1() {
+    LCPreview {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            StreakWidget(StreakUI.Dead(150))
+            StreakWidget(StreakUI.Freeze.OneFreeze)
+            StreakWidget(StreakUI.Freeze.NoneFreeze)
+        }
+    }
+}
+
+@SmallScreenPreview
+@Composable
+private fun StreakWidgetPreviewSmall2() {
+    LCPreview {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
             StreakWidget(StreakUI.NeverStarted)
             StreakWidget(StreakUI.TodayCompleted(1, subtitle = R.string.home_streak_completed_any3))
             StreakWidget(StreakUI.TodayNotCompleted(2))

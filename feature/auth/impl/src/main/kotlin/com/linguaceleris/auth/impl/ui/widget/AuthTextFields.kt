@@ -2,6 +2,7 @@
 
 package com.linguaceleris.auth.impl.ui.widget
 
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.linguaceleris.auth.impl.R
 import com.linguaceleris.auth.impl.ui.registration.model.AuthValidationResult
@@ -88,8 +90,15 @@ internal fun PasswordTextField(
     TextField(
         modifier = modifier,
         value = value,
-        label = { Text(labelText) },
-        placeholder = { Text(placeholderText) },
+        label = { Text(modifier = Modifier.basicMarquee(), text = labelText, maxLines = 1) },
+        placeholder = {
+            Text(
+                modifier = Modifier.basicMarquee(),
+                text = placeholderText,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        },
         supportingText = { SupportText(validationResult) },
         isError = validationResult.isError,
         singleLine = true,
@@ -148,7 +157,7 @@ private fun VisibilityIcon(isVisible: Boolean, onClick: () -> Unit) {
     }
 }
 
-@Preview
+@Preview(device = "spec:width=600px,height=2340px,dpi=440")
 @Composable
 private fun NicknameTextFieldPreview() {
     LCPreview {

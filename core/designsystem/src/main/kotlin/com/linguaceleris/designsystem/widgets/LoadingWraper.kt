@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.linguaceleris.designsystem.R
 
@@ -42,6 +43,7 @@ fun LoadingWrapper(
                 contentAlignment = Alignment.Center,
             ) {
                 Column(
+                    modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterVertically),
                 ) {
@@ -52,6 +54,7 @@ fun LoadingWrapper(
                     Text(
                         text = text ?: stringResource(R.string.loading),
                         style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
                         color = Color.White,
                     )
                 }

@@ -33,7 +33,8 @@ import com.linguaceleris.designsystem.widgets.LCPreview
 fun LCFilledButton(
     modifier: Modifier = Modifier,
     isEnable: Boolean = true,
-    text: String,
+    text: String? = null,
+    textWidget: @Composable () -> Unit = { },
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     icon: Painter? = null,
     buttonSize: ButtonSize = ButtonSize.SMALL,
@@ -51,7 +52,7 @@ fun LCFilledButton(
                 haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
                 onClick.invoke()
             },
-            content = { ButtonContent(icon, size, text) },
+            content = { ButtonContent(icon, size, text, textWidget) },
         )
     }
 }
@@ -61,7 +62,8 @@ fun LCFilledButton(
 fun LCTextButton(
     modifier: Modifier = Modifier,
     isEnable: Boolean = true,
-    text: String,
+    text: String? = null,
+    textWidget: @Composable () -> Unit = { },
     icon: Painter? = null,
     buttonSize: ButtonSize = ButtonSize.SMALL,
     onClick: () -> Unit,
@@ -77,7 +79,7 @@ fun LCTextButton(
                 haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
                 onClick.invoke()
             },
-            content = { ButtonContent(icon, size, text) },
+            content = { ButtonContent(icon, size, text, textWidget) },
         )
     }
 }
@@ -87,7 +89,8 @@ fun LCTextButton(
 fun LCFilledTonalButton(
     modifier: Modifier = Modifier,
     isEnable: Boolean = true,
-    text: String,
+    text: String? = null,
+    textWidget: @Composable () -> Unit = { },
     icon: Painter? = null,
     buttonSize: ButtonSize = ButtonSize.SMALL,
     onClick: () -> Unit,
@@ -103,7 +106,8 @@ fun LCFilledTonalButton(
                 haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
                 onClick.invoke()
             },
-            content = { ButtonContent(icon, size, text) },
+            content = { ButtonContent(icon, size, text, textWidget) },
+
         )
     }
 }
@@ -113,7 +117,8 @@ fun LCFilledTonalButton(
 fun LCOutlineButton(
     modifier: Modifier = Modifier,
     isEnable: Boolean = true,
-    text: String,
+    text: String? = null,
+    textWidget: @Composable () -> Unit = { },
     icon: Painter? = null,
     buttonSize: ButtonSize = ButtonSize.SMALL,
     onClick: () -> Unit,
@@ -129,14 +134,20 @@ fun LCOutlineButton(
                 haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
                 onClick.invoke()
             },
-            content = { ButtonContent(icon, size, text) },
+            content = { ButtonContent(icon, size, text, textWidget) },
+
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun ButtonContent(icon: Painter? = null, size: Dp, text: String) {
+private fun ButtonContent(
+    icon: Painter? = null,
+    size: Dp,
+    text: String?,
+    textWidget: @Composable () -> Unit = { },
+) {
     if (icon != null) {
         Icon(
             painter = icon,
@@ -145,10 +156,14 @@ private fun ButtonContent(icon: Painter? = null, size: Dp, text: String) {
         )
         Spacer(Modifier.size(ButtonDefaults.iconSpacingFor(size)))
     }
-    Text(
-        text = text,
-        style = ButtonDefaults.textStyleFor(size),
-    )
+    if (text != null) {
+        Text(
+            text = text,
+            style = ButtonDefaults.textStyleFor(size),
+        )
+    } else {
+        textWidget.invoke()
+    }
 }
 
 @PreviewLightDark

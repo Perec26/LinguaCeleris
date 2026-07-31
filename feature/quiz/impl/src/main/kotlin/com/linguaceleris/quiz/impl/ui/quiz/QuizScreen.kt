@@ -13,6 +13,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -102,48 +103,57 @@ private fun Quiz(state: QuizUiState, onEvent: (QuizEvent) -> Unit) {
             )
         },
     ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            AnimatedContent(
-                modifier = Modifier.weight(1f),
-                targetState = state.currentTask,
-                contentKey = { it?.id },
-                transitionSpec = {
-                    slideInHorizontally(tween(ANIMATION_DURATION)) { it } +
-                        fadeIn(tween(ANIMATION_DURATION)) togetherWith
-                        slideOutHorizontally(tween(ANIMATION_DURATION)) { -it } +
-                        fadeOut(tween(ANIMATION_DURATION))
-                },
-            ) { task ->
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            val isBigScreen = maxHeight > 700.dp
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                AnimatedContent(
+                    modifier = Modifier.weight(1f),
+                    targetState = state.currentTask,
+                    contentKey = { it?.id },
+                    transitionSpec = {
+                        slideInHorizontally(tween(ANIMATION_DURATION)) { it } +
+                            fadeIn(tween(ANIMATION_DURATION)) togetherWith
+                            slideOutHorizontally(tween(ANIMATION_DURATION)) { -it } +
+                            fadeOut(tween(ANIMATION_DURATION))
+                    },
+                ) { task ->
 
-                when (task) {
-                    is TaskUI.SelectCorrectAnswer -> {
-                        SelectCorrectWidget(
-                            modifier = Modifier.weight(0.5f),
-                            task = task,
-                            onAudioClick = { onEvent(QuizEvent.OnAudioClick(it)) },
-                            onCheckButtonClick = { onEvent(QuizEvent.OnCheckButtonClick) },
-                            onContinueButtonClick = { onEvent(QuizEvent.OnContinueButtonClick) },
-                            onVariantSelected = { variant ->
-                                onEvent(QuizEvent.SelectAnswer(variant))
-                            },
-                        )
+                    when (task) {
+                        is TaskUI.SelectCorrectAnswer -> {
+                            SelectCorrectWidget(
+                                modifier = Modifier.weight(0.5f),
+                                task = task,
+                                isBigScreen = isBigScreen,
+                                onAudioClick = { onEvent(QuizEvent.OnAudioClick(it)) },
+                                onCheckButtonClick = { onEvent(QuizEvent.OnCheckButtonClick) },
+                                onContinueButtonClick = {
+                                    onEvent(QuizEvent.OnContinueButtonClick)
+                                },
+                                onVariantSelected = { variant ->
+                                    onEvent(QuizEvent.SelectAnswer(variant))
+                                },
+                            )
+                        }
+
+                        is TaskUI.Matching -> {
+                            MatchWidget(
+                                task = task,
+                                isBigScreen = isBigScreen,
+                                onContinueButtonClick = {
+                                    onEvent(QuizEvent.OnContinueButtonClick)
+                                },
+                                onAudioClick = { onEvent(QuizEvent.OnAudioClick(it)) },
+                                onVariantSelected = { onEvent(QuizEvent.SelectAnswer(it)) },
+                            )
+                        }
+
+                        null -> {}
                     }
-
-                    is TaskUI.Matching -> {
-                        MatchWidget(
-                            task = task,
-                            onContinueButtonClick = { onEvent(QuizEvent.OnContinueButtonClick) },
-                            onAudioClick = { onEvent(QuizEvent.OnAudioClick(it)) },
-                            onVariantSelected = { onEvent(QuizEvent.SelectAnswer(it)) },
-                        )
-                    }
-
-                    null -> {}
                 }
             }
         }

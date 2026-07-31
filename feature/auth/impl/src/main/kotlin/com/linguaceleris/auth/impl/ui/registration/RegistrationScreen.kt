@@ -7,11 +7,14 @@ import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -97,9 +100,11 @@ private fun RegistrationScreenContent(
                 .fillMaxSize()
                 .padding(paddingValues),
         ) {
+            val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier
                     .weight(1f)
+                    .verticalScroll(scrollState)
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -175,23 +180,21 @@ private fun RegistrationScreenContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(
-                    8.dp,
-                    Alignment.CenterVertically,
-                ),
+                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 val rowAlpha =
                     if (state.registrationState == RegistrationState.SUCCESS) 1f else 0f
-                Row(
+                FlowRow(
                     modifier = Modifier
                         .fillMaxWidth()
                         .alpha(rowAlpha),
-                    verticalAlignment = Alignment.CenterVertically,
+
                     horizontalArrangement = Arrangement.spacedBy(
                         space = 8.dp,
                         alignment = Alignment.CenterHorizontally,
                     ),
+                    verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
                 ) {
                     LCOutlineButton(
                         text = stringResource(R.string.auth_open_mail),
@@ -243,6 +246,77 @@ private fun RegistrationScreenContent(
                 onClick = { onEvent(RegistrationEvent.OnHideEmailVerificationDialog) },
             ),
             onDismissRequest = { onEvent(RegistrationEvent.OnHideEmailVerificationDialog) },
+        )
+    }
+}
+
+@Composable
+private fun ColumnWithButtons(
+    onEvent: (RegistrationEvent) -> Unit,
+    alpha: Float,
+    sendAgainEnable: Boolean,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .alpha(alpha),
+    ) {
+        LCOutlineButton(
+            modifier = Modifier.weight(1f),
+            text = stringResource(R.string.auth_open_mail),
+            buttonSize = ButtonSize.SMALL,
+            onClick = { onEvent(RegistrationEvent.OnOpenMailClicked) },
+        )
+
+        val sendAgainText = if (sendAgainEnable) {
+            stringResource(R.string.auth_send_again)
+        } else {
+            stringResource(R.string.auth_send_again_delay, sendAgainEnable)
+        }
+        LCOutlineButton(
+            modifier = Modifier.weight(1f),
+            text = sendAgainText,
+            isEnable = sendAgainEnable,
+            buttonSize = ButtonSize.SMALL,
+            onClick = { onEvent(RegistrationEvent.OnSendAgainClicked) },
+        )
+    }
+}
+
+@Composable
+private fun RowWithButtons(
+    onEvent: (RegistrationEvent) -> Unit,
+    alpha: Float,
+    sendAgainEnable: Boolean,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .alpha(alpha),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(
+            space = 8.dp,
+            alignment = Alignment.CenterHorizontally,
+        ),
+    ) {
+        LCOutlineButton(
+            modifier = Modifier.weight(1f),
+            text = stringResource(R.string.auth_open_mail),
+            buttonSize = ButtonSize.SMALL,
+            onClick = { onEvent(RegistrationEvent.OnOpenMailClicked) },
+        )
+
+        val sendAgainText = if (sendAgainEnable) {
+            stringResource(R.string.auth_send_again)
+        } else {
+            stringResource(R.string.auth_send_again_delay, sendAgainEnable)
+        }
+        LCOutlineButton(
+            modifier = Modifier.weight(1f),
+            text = sendAgainText,
+            isEnable = sendAgainEnable,
+            buttonSize = ButtonSize.SMALL,
+            onClick = { onEvent(RegistrationEvent.OnSendAgainClicked) },
         )
     }
 }

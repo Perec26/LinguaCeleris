@@ -28,4 +28,15 @@ import androidx.compose.ui.tooling.preview.Preview
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
+@Preview(
+    name = "Medium big Font",
+    showBackground = true,
+    fontScale = 2f,
+)
+@Preview(
+    name = "Small big Font",
+    showBackground = true,
+    device = "id:Galaxy Nexus",
+    fontScale = 2f,
+)
 annotation class ScreenPreviews
