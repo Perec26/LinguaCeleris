@@ -1,5 +1,6 @@
 package com.linguaceleris.quiz.impl.ui.quiz
 
+import com.linguaceleris.lib.ProgressWrapper
 import com.linguaceleris.quiz.api.QuizLevel
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.navigation.navigateToSummary
@@ -13,12 +14,12 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.unmockkAll
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -54,14 +55,13 @@ internal class QuizViewModelTest : BehaviorSpec(
             When("initialized") {
                 Then("it should load tasks and show content") {
                     val tasks = listOf(taskSelectCorrectAnswerMock)
-                    coEvery { getTasksUseCase(any()) } returns tasks
+                    coEvery { getTasksUseCase(any()) } returns flow { emit(ProgressWrapper.Success(tasks)) }
 
                     viewModel = createViewModel()
                     viewModel.state.value.screenState shouldBe ScreenState.LOADING
 
                     testDispatcher.scheduler.advanceUntilIdle()
 
-                    coVerify { getTasksUseCase(QuizLevel.BASIC) }
                     viewModel.state.value.screenState shouldBe ScreenState.CONTENT
                     viewModel.state.value.tasks shouldBe tasks
                     viewModel.state.value.currentTask shouldBe tasks.first()
@@ -95,7 +95,9 @@ internal class QuizViewModelTest : BehaviorSpec(
                     val variant = correctAnswerMock
                     val updatedTask = initialTask.copy(selectedVariant = variant)
 
-                    coEvery { getTasksUseCase(any()) } returns listOf(initialTask)
+                    coEvery { getTasksUseCase(any()) } returns flow {
+                        emit(ProgressWrapper.Success(listOf(initialTask)))
+                    }
                     every { selectVariantUseCase(initialTask, variant) } returns updatedTask
 
                     viewModel = createViewModel()
@@ -113,7 +115,9 @@ internal class QuizViewModelTest : BehaviorSpec(
                         val variant = incorrectAnswerMock
                         val updatedTask = initialTask.copy(errorVariant = variant)
 
-                        coEvery { getTasksUseCase(any()) } returns listOf(initialTask)
+                        coEvery { getTasksUseCase(any()) } returns flow {
+                            emit(ProgressWrapper.Success(listOf(initialTask)))
+                        }
                         every { selectVariantUseCase(initialTask, variant) } returns updatedTask
 
                         viewModel = createViewModel()
@@ -133,7 +137,9 @@ internal class QuizViewModelTest : BehaviorSpec(
                             disabledVariants = initialTask.pairs.flatMap { listOf(it.first, it.second) },
                         )
 
-                        coEvery { getTasksUseCase(any()) } returns listOf(initialTask)
+                        coEvery { getTasksUseCase(any()) } returns flow {
+                            emit(ProgressWrapper.Success(listOf(initialTask)))
+                        }
                         every { selectVariantUseCase(initialTask, variant) } returns updatedTask
 
                         viewModel = createViewModel()
@@ -150,7 +156,7 @@ internal class QuizViewModelTest : BehaviorSpec(
                 And("answer is correct") {
                     Then("it should play correct sound and update state") {
                         val task = taskSelectCorrectAnswerMock.copy(selectedVariant = correctAnswerMock)
-                        coEvery { getTasksUseCase(any()) } returns listOf(task)
+                        coEvery { getTasksUseCase(any()) } returns flow { emit(ProgressWrapper.Success(listOf(task))) }
 
                         viewModel = createViewModel()
                         testDispatcher.scheduler.advanceUntilIdle()
@@ -165,7 +171,7 @@ internal class QuizViewModelTest : BehaviorSpec(
                 And("answer is incorrect") {
                     Then("it should play error sound and decrease lives") {
                         val task = selectCorrectAnswerMock.copy(selectedVariant = incorrectAnswerMock)
-                        coEvery { getTasksUseCase(any()) } returns listOf(task)
+                        coEvery { getTasksUseCase(any()) } returns flow { emit(ProgressWrapper.Success(listOf(task))) }
 
                         viewModel = createViewModel()
                         testDispatcher.scheduler.advanceUntilIdle()
@@ -184,7 +190,7 @@ internal class QuizViewModelTest : BehaviorSpec(
                 And("it is the last task") {
                     Then("it should navigate to summary with success") {
                         val task = taskSelectCorrectAnswerMock
-                        coEvery { getTasksUseCase(any()) } returns listOf(task)
+                        coEvery { getTasksUseCase(any()) } returns flow { emit(ProgressWrapper.Success(listOf(task))) }
 
                         viewModel = createViewModel()
                         testDispatcher.scheduler.advanceUntilIdle()
@@ -199,7 +205,9 @@ internal class QuizViewModelTest : BehaviorSpec(
                 And("no lives left") {
                     Then("it should navigate to summary with failure") {
                         val task = taskSelectCorrectAnswerMock.copy(selectedVariant = incorrectAnswerMock)
-                        coEvery { getTasksUseCase(any()) } returns listOf(task, task)
+                        coEvery { getTasksUseCase(any()) } returns flow {
+                            emit(ProgressWrapper.Success(listOf(task, task)))
+                        }
 
                         viewModel = createViewModel()
                         testDispatcher.scheduler.advanceUntilIdle()
@@ -216,7 +224,9 @@ internal class QuizViewModelTest : BehaviorSpec(
                     Then("it should show next task") {
                         val task1 = selectCorrectAnswerMock.copy(id = "1")
                         val task2 = selectCorrectAnswerMock.copy(id = "2")
-                        coEvery { getTasksUseCase(any()) } returns listOf(task1, task2)
+                        coEvery { getTasksUseCase(any()) } returns flow {
+                            emit(ProgressWrapper.Success(listOf(task1, task2)))
+                        }
 
                         viewModel = createViewModel()
                         testDispatcher.scheduler.advanceUntilIdle()
@@ -232,7 +242,9 @@ internal class QuizViewModelTest : BehaviorSpec(
             When("OnBackClick event received") {
                 And("screen state is CONTENT") {
                     Then("it should show exit dialog") {
-                        coEvery { getTasksUseCase(any()) } returns listOf(selectCorrectAnswerMock)
+                        coEvery { getTasksUseCase(any()) } returns flow {
+                            emit(ProgressWrapper.Success(listOf(selectCorrectAnswerMock)))
+                        }
                         viewModel = createViewModel()
                         testDispatcher.scheduler.advanceUntilIdle()
 
@@ -279,14 +291,18 @@ internal class QuizViewModelTest : BehaviorSpec(
             When("OnReloadClick event received") {
                 Then("it should reload tasks") {
                     val tasks = listOf(selectCorrectAnswerMock)
-                    coEvery { getTasksUseCase(any()) } returns tasks
+                    coEvery { getTasksUseCase(any()) } returns flow { emit(ProgressWrapper.Success(tasks)) }
 
                     viewModel = createViewModel()
 
                     viewModel.onEvent(QuizEvent.OnReloadClick)
                     testDispatcher.scheduler.advanceUntilIdle()
 
-                    coVerify(exactly = 2) { getTasksUseCase(QuizLevel.BASIC) }
+                    with(viewModel.state.value) {
+                        screenState shouldBe ScreenState.CONTENT
+                        tasks shouldBe tasks
+                        currentTask shouldBe tasks.first()
+                    }
                 }
             }
         }

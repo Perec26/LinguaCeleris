@@ -1,5 +1,6 @@
 package com.linguaceleris.quiz
 
+import com.linguaceleris.lib.ProgressWrapper
 import com.linguaceleris.network.AudioLoadService
 import com.linguaceleris.network.ImageLoadService
 import com.linguaceleris.quiz.dataSource.QuizDataSource
@@ -9,6 +10,8 @@ import com.linguaceleris.quiz.model.TaskDTO
 import com.linguaceleris.quiz.model.TaskDataDTO
 import com.linguaceleris.services.time.TrustedTimeManager
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class QuizRepository @Inject constructor(
     private val imageLoadService: ImageLoadService,
@@ -23,25 +26,46 @@ class QuizRepository @Inject constructor(
         storage.saveSchedule(schedule)
     }
 
-    suspend fun getTasks(level: QuizLevelDTO): QuizDTO? {
+    suspend fun getTasks(level: QuizLevelDTO): Flow<ProgressWrapper<QuizDTO>> {
         val date = timeManager.getCurrentDate()
-        val quizId = storage.getQuizId(date, level) ?: return null
+        val quizId = storage.getQuizId(date, level) ?: return flow {
+            emit(ProgressWrapper.Failure(IllegalStateException("QuizId is null")))
+        }
         return getQuiz(quizId)
     }
 
-    private suspend fun getQuiz(quizId: String): QuizDTO? {
-        val quiz = dataSource.getQuiz(quizId) ?: return null
+    private fun getQuiz(quizId: String) = flow {
+        val quiz = dataSource.getQuiz(quizId)
 
-        quiz.tasks
+        if (quiz == null) {
+            emit(ProgressWrapper.Failure(IllegalStateException("Quiz is null")))
+            return@flow
+        }
+
+        val images = quiz.tasks
             .map(TaskDTO::data)
             .flatMap(TaskDataDTO::getImages)
-            .forEach { imageLoadService.loadImage(it) }
 
-        quiz.tasks
+        val audios = quiz.tasks
             .map(TaskDTO::data)
             .flatMap(TaskDataDTO::getAudios)
-            .forEach { audioLoadService.loadAudio(it) }
+        val sum = images.size + audios.size
+        var current = 0
 
-        return quiz
+        emit(ProgressWrapper.Loading(0f))
+
+        images.forEach {
+            imageLoadService.loadImage(it)
+            current++
+            emit(ProgressWrapper.Loading(current.toFloat() / sum))
+        }
+
+        audios.forEach {
+            audioLoadService.loadAudio(it)
+            current++
+            emit(ProgressWrapper.Loading(current.toFloat() / sum))
+        }
+
+        emit(ProgressWrapper.Success(quiz))
     }
 }
