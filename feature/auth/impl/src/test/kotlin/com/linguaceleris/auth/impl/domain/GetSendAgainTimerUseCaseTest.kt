@@ -3,6 +3,7 @@ package com.linguaceleris.auth.impl.domain
 import app.cash.turbine.test
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
@@ -33,7 +34,7 @@ internal class GetSendAgainTimerUseCaseTest : BehaviorSpec(
                             awaitItem() shouldBe 60
                             expectNoEvents()
 
-                            advanceTimeBy(1000)
+                            advanceTimeBy(1.seconds)
                             awaitItem() shouldBe 59
 
                             cancelAndIgnoreRemainingEvents()

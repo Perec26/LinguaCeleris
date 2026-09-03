@@ -1,5 +1,7 @@
 package com.linguaceleris.quiz
 
+import app.cash.turbine.test
+import com.linguaceleris.lib.ProgressWrapper
 import com.linguaceleris.quiz.QuizDataMocks.audioLoadService
 import com.linguaceleris.quiz.QuizDataMocks.dataSource
 import com.linguaceleris.quiz.QuizDataMocks.dateMock
@@ -10,9 +12,12 @@ import com.linguaceleris.quiz.QuizDataMocks.quizWithMatchingMock
 import com.linguaceleris.quiz.QuizDataMocks.scheduleMock
 import com.linguaceleris.quiz.QuizDataMocks.storage
 import com.linguaceleris.quiz.QuizDataMocks.timeManager
+import com.linguaceleris.quiz.model.QuizDTO
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.beInstanceOf
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -80,7 +85,14 @@ internal class QuizRepositoryTest : BehaviorSpec(
                             every { storage.getQuizId(any(), any()) } returns quizIdMock
                             coEvery { dataSource.getQuiz(any()) } returns quizWithMatchingMock
 
-                            val result = repository.getTasks(levelMock)
+                            repository.getTasks(levelMock).test {
+                                awaitItem() shouldBe ProgressWrapper.Loading(0f)
+                                repeat(8) {
+                                    awaitItem() shouldBe ProgressWrapper.Loading((it.toFloat() + 1) / 8)
+                                }
+                                awaitItem() shouldBe ProgressWrapper.Success(quizWithMatchingMock)
+                                awaitComplete()
+                            }
 
                             coVerify { imageLoadService.loadImage("image_url") }
                             coVerify { audioLoadService.loadAudio("audio_url") }
@@ -88,7 +100,6 @@ internal class QuizRepositoryTest : BehaviorSpec(
                             coVerify { imageLoadService.loadImage("image_r") }
                             coVerify { audioLoadService.loadAudio("audio_l") }
                             coVerify { audioLoadService.loadAudio("audio_r") }
-                            result shouldBe quizWithMatchingMock
                         }
                     }
 
@@ -96,9 +107,10 @@ internal class QuizRepositoryTest : BehaviorSpec(
                         Then("it should return null") {
                             coEvery { timeManager.getCurrentDate() } returns dateMock
                             coEvery { dataSource.getQuiz(any()) } returns null
-                            val result = repository.getTasks(levelMock)
-
-                            result shouldBe null
+                            repository.getTasks(levelMock).test {
+                                awaitItem() should beInstanceOf<ProgressWrapper.Failure<QuizDTO>>()
+                                awaitComplete()
+                            }
                         }
                     }
                 }
@@ -108,8 +120,10 @@ internal class QuizRepositoryTest : BehaviorSpec(
                         coEvery { timeManager.getCurrentDate() } returns dateMock
                         every { storage.getQuizId(any(), any()) } returns null
 
-                        val result = repository.getTasks(levelMock)
-                        result shouldBe null
+                        repository.getTasks(levelMock).test {
+                            awaitItem() should beInstanceOf<ProgressWrapper.Failure<QuizDTO>>()
+                            awaitComplete()
+                        }
                     }
                 }
             }

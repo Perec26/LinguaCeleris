@@ -22,10 +22,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -44,6 +45,7 @@ import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.designsystem.widgets.ThreeButtonsDialog
+import com.linguaceleris.designsystem.widgets.TransparentSurface
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.quiz.widgets.LivesIndicator
@@ -69,7 +71,7 @@ private fun QuizScreenContent(state: QuizUiState, onEvent: (QuizEvent) -> Unit) 
         contentAlignment = Alignment.Center,
     ) {
         when (state.screenState) {
-            ScreenState.LOADING -> CircularProgressIndicator()
+            ScreenState.LOADING -> QuizLoading(state.loadingProgress)
             ScreenState.CONTENT -> Quiz(state, onEvent)
             ScreenState.ERROR -> CommonErrorWidget { onEvent(QuizEvent.OnReloadClick) }
         }
@@ -191,11 +193,30 @@ private fun TopPanel(progress: Float, lives: Int, onBackClick: () -> Unit) {
             IconButton(onClick = onBackClick) {
                 Icon(
                     painter = painterResource(UiR.drawable.arrow_back),
-                    contentDescription = "",
+                    contentDescription = null,
                 )
             }
         },
     )
+}
+
+@Composable
+private fun QuizLoading(progress: Float) {
+    TransparentSurface {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = stringResource(R.string.quiz_loading_text),
+                style = MaterialTheme.typography.titleLarge,
+            )
+            LinearProgressIndicator(
+                progress = { progress },
+            )
+        }
+    }
 }
 
 @ScreenPreviews
