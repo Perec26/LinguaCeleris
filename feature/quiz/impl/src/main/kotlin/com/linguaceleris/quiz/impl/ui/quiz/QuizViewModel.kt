@@ -1,5 +1,6 @@
 package com.linguaceleris.quiz.impl.ui.quiz
 
+import com.linguaceleris.lib.ProgressWrapper
 import com.linguaceleris.media.PlayerManager
 import com.linguaceleris.navigation.Navigator
 import com.linguaceleris.quiz.api.QuizLevel
@@ -46,10 +47,18 @@ internal class QuizViewModel @AssistedInject constructor(
         updateState { onLoading() }
 
         launch(
-            onError = { updateState { onError() } },
+            onError = {
+                updateState { onError() }
+            },
         ) {
-            val tasks = getTasksUseCase(quizLevel)
-            updateState { onTaskLoaded(tasks) }
+            getTasksUseCase(quizLevel)
+                .collect {
+                    when (it) {
+                        is ProgressWrapper.Failure -> updateState { onError() }
+                        is ProgressWrapper.Loading -> updateState { onLoading(it.progress) }
+                        is ProgressWrapper.Success -> updateState { onTaskLoaded(it.value) }
+                    }
+                }
         }
     }
 
@@ -107,7 +116,6 @@ internal class QuizViewModel @AssistedInject constructor(
     }
 
     override fun onCleared() {
-        super.onCleared()
         playerManager.release()
     }
 

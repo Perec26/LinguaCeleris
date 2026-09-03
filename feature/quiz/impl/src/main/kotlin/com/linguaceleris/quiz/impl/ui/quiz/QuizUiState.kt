@@ -8,6 +8,7 @@ internal data class QuizUiState(
     val currentTaskIndex: Int = 0,
     val currentTask: TaskUI? = null,
     val screenState: ScreenState = ScreenState.LOADING,
+    val loadingProgress: Float = 0f,
     val lives: Int = 3,
     val showExitDialog: Boolean = false,
 ) {
@@ -22,7 +23,10 @@ internal data class QuizUiState(
 
     fun onError() = copy(screenState = ScreenState.ERROR)
 
-    fun onLoading() = copy(screenState = ScreenState.LOADING)
+    fun onLoading(process: Float = 0f) = copy(
+        screenState = ScreenState.LOADING,
+        loadingProgress = process,
+    )
 
     fun onVariantSelected(task: TaskUI) = copy(
         currentTask = task,
