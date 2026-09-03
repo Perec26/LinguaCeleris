@@ -26,7 +26,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -46,6 +45,7 @@ import com.linguaceleris.designsystem.widgets.LCPreview
 import com.linguaceleris.designsystem.widgets.LoadingScaffold
 import com.linguaceleris.designsystem.widgets.ScreenPreviews
 import com.linguaceleris.designsystem.widgets.ThreeButtonsDialog
+import com.linguaceleris.designsystem.widgets.TransparentSurface
 import com.linguaceleris.quiz.impl.R
 import com.linguaceleris.quiz.impl.ui.quiz.model.TaskUI
 import com.linguaceleris.quiz.impl.ui.quiz.widgets.LivesIndicator
@@ -202,7 +202,7 @@ private fun TopPanel(progress: Float, lives: Int, onBackClick: () -> Unit) {
 
 @Composable
 private fun QuizLoading(progress: Float) {
-    Surface {
+    TransparentSurface {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterVertically),

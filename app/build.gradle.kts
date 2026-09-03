@@ -87,7 +87,8 @@ fun getBuildNumber(): Int {
     if (project.hasProperty("buildNumber")) {
         val buildNumberString = project.property("buildNumber").toString()
         if (buildNumberString.all { it.isDigit() }) {
-            return buildNumberString.toInt()
+            val buildNumber = buildNumberString.toInt()
+            return if (buildNumber > 5) buildNumber else 5
         }
     }
     return 5
