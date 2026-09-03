@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "85939528454-gek9dtacrtt80ue2mogvmup2a8sd32nf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.linguaceleris.app",
+            "certificate_hash": "a4857954e3f51fea8d6131e41535310b799787f6"
+          }
+        },
+        {
           "client_id": "85939528454-ldfo5nmven2iq7o85jvahd6r3un409d1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
