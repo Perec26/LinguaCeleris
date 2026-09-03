@@ -236,7 +236,7 @@ private fun Menu(expanded: Boolean, isGuest: Boolean, onEvent: (HomeEvent) -> Un
                     )
                 },
                 shape = MaterialTheme.shapes.small,
-                trailingIcon = { Badge() },
+                trailingContent = { Badge() },
                 supportingText = { Text(stringResource(R.string.home_enter_description)) },
                 onClick = { onEvent(HomeEvent.OnEnterToAccountClick) },
             )
